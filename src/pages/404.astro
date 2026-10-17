@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base lang="ar" noindex title="الصفحة مش موجودة | 404" desc="الصفحة المطلوبة غير موجودة.">
+  <main class="wrap" style="min-height:100vh;display:grid;place-content:center;text-align:center;gap:1rem;padding:2rem 0">
+    <span class="kicker" style="justify-content:center">ERROR 404</span>
+    <h1 style="font-size:clamp(1.8rem,5vw,3rem)">الصفحة مش موجودة</h1>
+    <p style="color:var(--muted)">اللينك ده غلط أو اتنقل. ارجع للرئيسية وكمّل من هناك.</p>
+    <p style="color:var(--muted);direction:ltr">This page does not exist.</p>
+    <div class="cta-row" style="justify-content:center">
+      <a class="btn btn-primary" href="/">الرئيسية</a>
+      <a class="btn btn-ghost" href="/en/">English</a>
+    </div>
+  </main>
+</Base>

@@ -1,0 +1,28 @@
+# Zeftawii | Decoding Data
+
+> Data analyst and Business Intelligence specialist (Albaraa Ehab Elzeftawy) serving businesses in Saudi Arabia and Egypt. Arabic-first, English supported.
+
+## Services
+- Dashboards and Business Intelligence (Power BI and web dashboards)
+- Marketing analytics (CPA, ROAS, funnel analysis, campaign reporting)
+- Report automation and data cleaning (Python, SQL, advanced Excel)
+- Smart tools and predictive models
+- Account management (outsourced account manager for agencies and companies)
+- Project management for marketing and digital projects
+
+## Track record
+- Managed delivery and close-out of 23 website and store projects in 2026 (WordPress and Salla), median 36 days from kickoff to sign-off
+- Built AMMS, a production account-management monitoring system for a marketing agency
+- Public analysis notebooks: https://github.com/albraa2002
+
+## Who it is for
+- E-commerce stores (ROAS, CPA, COD returns analysis)
+- Marketing agencies and service businesses (automated client reports, scope protection)
+- Companies with scattered data (unified KPI dashboards)
+
+## Pages
+- [Arabic home](https://zeftawii-site-bkxt.vercel.app/): main page in Arabic
+- [English home](https://zeftawii-site-bkxt.vercel.app/en/): main page in English
+
+## Contact
+- Website contact form and WhatsApp: https://zeftawii-site-bkxt.vercel.app/#contact
