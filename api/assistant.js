@@ -3,7 +3,8 @@
 import { SYSTEM } from './_knowledge.js';
 
 // المزودين المجانيين المدعومين (بالترتيب): Gemini ثم Groq. Anthropic اختياري (مدفوع).
-const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+// نجرب الموديلات بالترتيب لأن أسماء الموديلات المجانية بتتغير: لو واحد اتسحب ننتقل للتاني
+const GEMINI_MODELS = [process.env.GEMINI_MODEL, 'gemini-2.5-flash', 'gemini-flash-latest', 'gemini-2.0-flash', 'gemini-2.5-flash-lite'].filter(Boolean);
 const GROQ_MODEL = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
 const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || 'claude-haiku-5-5';
 const providers = () => [
@@ -32,10 +33,11 @@ const clean = (s, n) => String(s ?? '').replace(/\u0000/g, '').slice(0, n);
 
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
-  if (req.method === 'GET') return res.status(200).json({ enabled: providers().length > 0 });
-  if (req.method !== 'POST') return res.status(405).json({ error: 'method' });
+  const isTest = req.method === 'GET' && /[?&]test=1/.test(req.url || '');
+  if (req.method === 'GET' && !isTest) return res.status(200).json({ enabled: providers().length > 0 });
+  if (req.method !== 'POST' && !isTest) return res.status(405).json({ error: 'method' });
   if (!providers().length) return res.status(503).json({ error: 'disabled' });
-  if (!allowedOrigin(req.headers.origin, req.headers.host)) return res.status(403).json({ error: 'origin' });
+  if (!isTest && !allowedOrigin(req.headers.origin, req.headers.host)) return res.status(403).json({ error: 'origin' });
 
   const ip = String(req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'x').split(',')[0].trim();
   const now = Date.now();
@@ -45,7 +47,7 @@ export default async function handler(req, res) {
   if (today !== day) { day = today; dayCount = 0; }
   if (dayCount >= DAILY_CAP) return res.status(429).json({ error: 'cap' });
 
-  let body = req.body;
+  let body = isTest ? { messages: [{ role: 'user', content: 'ping, reply with one short word' }], lang: 'en' } : req.body;
   if (typeof body === 'string') { try { body = JSON.parse(body); } catch { body = null; } }
   const msgs = Array.isArray(body?.messages) ? body.messages : null;
   if (!msgs || !msgs.length) return res.status(400).json({ error: 'bad' });
@@ -67,17 +69,28 @@ export default async function handler(req, res) {
 
   const callers = {
     gemini: async (signal) => {
-      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`, {
-        method: 'POST', signal, headers: { 'content-type': 'application/json', 'x-goog-api-key': process.env.GEMINI_API_KEY },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: system }] },
-          contents: merged.map((m) => ({ role: m.role === 'assistant' ? 'model' : 'user', parts: [{ text: m.content }] })),
-          generationConfig: { maxOutputTokens: MAX_TOKENS, temperature: 0.6 },
-        }),
-      });
-      if (!r.ok) throw new Error('gemini ' + r.status);
-      const j = await r.json();
-      return (j.candidates?.[0]?.content?.parts || []).map((x) => x.text || '').join('').trim();
+      let lastErr = 'gemini';
+      for (const model of GEMINI_MODELS) {
+        const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+          method: 'POST', signal, headers: { 'content-type': 'application/json', 'x-goog-api-key': process.env.GEMINI_API_KEY },
+          body: JSON.stringify({
+            systemInstruction: { parts: [{ text: system }] },
+            contents: merged.map((m) => ({ role: m.role === 'assistant' ? 'model' : 'user', parts: [{ text: m.content }] })),
+            generationConfig: { maxOutputTokens: MAX_TOKENS, temperature: 0.6 },
+          }),
+        });
+        if (r.ok) {
+          const j = await r.json();
+          const t = (j.candidates?.[0]?.content?.parts || []).map((x) => x.text || '').join('').trim();
+          if (t) return t;
+          lastErr = `gemini ${model}: empty (${j.candidates?.[0]?.finishReason || j.promptFeedback?.blockReason || 'no reason'})`;
+          continue;
+        }
+        let msg = ''; try { msg = (await r.json())?.error?.message || ''; } catch {}
+        lastErr = `gemini ${model}: HTTP ${r.status} ${String(msg).slice(0, 160)}`;
+        if (r.status === 401 || r.status === 403 || r.status === 429) break; // المفتاح/الحد: تغيير الموديل مش هيفيد
+      }
+      throw new Error(lastErr);
     },
     groq: async (signal) => {
       const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -101,12 +114,15 @@ export default async function handler(req, res) {
   };
 
   // جرّب المزودين بالترتيب: لو الأول وصل لحده المجاني (429) أو وقع، ننتقل للتاني
+  const errors = [];
   for (const name of providers()) {
     const ac = new AbortController(); const to = setTimeout(() => ac.abort(), 22000);
     try {
       const text = await callers[name](ac.signal);
       if (text) return res.status(200).json({ reply: text });
-    } catch { /* نجرّب اللي بعده */ } finally { clearTimeout(to); }
+      errors.push(name + ': empty');
+    } catch (e) { errors.push(String(e?.message || e).slice(0, 220)); } finally { clearTimeout(to); }
   }
-  return res.status(502).json({ error: 'upstream' });
+  console.error('assistant upstream failed:', errors.join(' | '));
+  return res.status(502).json({ error: 'upstream', detail: errors });
 }
