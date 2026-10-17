@@ -4,14 +4,14 @@
 
 # Zeftawii | Decoding Data
 
-**Bilingual (Arabic RTL + English) lead-generation website for a data analyst and account manager.**
+**A bilingual Arabic/English personal service website for Albaraa Ehab Elzeftawy — combining data analytics, business intelligence, marketing analytics, automation, and account/project management.**
 
-[![Live](https://img.shields.io/badge/live-zeftawii--site--bkxt.vercel.app-00e5ff?style=flat-square)](https://zeftawii-site-bkxt.vercel.app/)
+[![Live](https://img.shields.io/badge/live-zeftawii--site--bkxt.vercel.app-00e5ff?style=flat-square)](https://zeftawii-site-46vp.vercel.app/)
 [![Astro](https://img.shields.io/badge/Astro-static-ff5d01?style=flat-square&logo=astro&logoColor=white)](https://astro.build)
 ![Languages](https://img.shields.io/badge/AR%20%7C%20EN-RTL%20%2F%20LTR-00ff9d?style=flat-square)
 ![JS](https://img.shields.io/badge/client%20JS-vanilla-0a0f1c?style=flat-square)
 
-[العربية](#-ملخص-بالعربي) · [Live site](https://zeftawii-site-bkxt.vercel.app/) · [English version](https://zeftawii-site-bkxt.vercel.app/en/)
+[العربية](#-ملخص-بالعربي) · [Live site](https://zeftawii-site-46vp.vercel.app/) · [English version](https://zeftawii-site-bkxt.vercel.app/en/)
 
 </div>
 
@@ -30,7 +30,7 @@ The visitor path is simple: understand the offer, see proof, and contact via Wha
 - Services carousel (CSS scroll-snap, arrows, dots, swipe, RTL-aware) with a per-service "Request" button that pre-selects the service in the form
 - "Who it is for" pain and fix cards, "Selected work" proof cards, process, why-me with photo, FAQ
 - Lead form (Web3Forms) with honeypot spam protection and automatic WhatsApp fallback when no key is set
-- Built-in assistant chatbot (rule-based, no server, no cost): answers from site content in Arabic or English, then collects name, contact and service and sends the lead via Web3Forms (or WhatsApp fallback). Edit its answers in the `chat` block and `chatKeys` of `src/i18n.ts`
+- Built-in bilingual assistant chatbot with an optional AI consultation mode: works with built-in answers by default and can use Gemini or Groq through a Vercel serverless function for broader questions about Albaraa and the services. Lead capture stays separate from AI requests. Edit site copy in `src/i18n.ts` and assistant knowledge in `api/_knowledge.js`
 - Floating WhatsApp button and a booking button that hides itself while the link is still a placeholder
 
 **SEO**
