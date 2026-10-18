@@ -417,7 +417,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
     ];
     const expand = (text: string) => {
       const base = norm(text);
-      const extra = aliases.filter((a) => a.re.test(base)).map((a) => a.add).join(' ');
+      const extra = aliases.filter((a) => new RegExp(a.re.source.replace(/\\b/g, ''), a.re.flags).test(base)).map((a) => a.add).join(' ');
       return prep(base + ' ' + extra);
     };
     const match = (text: string) => {
