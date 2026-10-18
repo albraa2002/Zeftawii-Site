@@ -1,6 +1,7 @@
 ---
 import { T, type Lang } from '../i18n';
 import { chatKB } from '../chatKB';
+import { SF } from '../serviceFields';
 import { CONFIG, hasKey, hasBooking, hasLog } from '../config';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -174,6 +175,31 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
     </div>
   </section>
 
+  <section id="calc">
+    <div class="wrap">
+      <div class="sec-head rv"><h2>{t.calc.title}</h2><p>{t.calc.sub}</p></div>
+      <div class="calc rv" id="calc-box" data-c={JSON.stringify(t.calc)} data-lang={lang} data-wa={CONFIG.whatsapp}>
+        <div class="calc-in">
+          {(['spend', 'orders', 'aov', 'cogs', 'ship', 'ret'] as const).map((k) => (
+            <label>{t.calc.f[k]}<input data-k={k} inputmode="decimal" dir="ltr" autocomplete="off" /></label>
+          ))}
+        </div>
+        <div class="calc-out" aria-live="polite">
+          <div class="calc-grid" hidden>
+            {(['roas', 'be', 'cpa', 'becpa', 'profit'] as const).map((k) => (<div class="calc-k"><small>{t.calc.r[k]}</small><b data-o={k}>-</b></div>))}
+          </div>
+          <p class="calc-verdict">{t.calc.empty}</p>
+          <p class="calc-note">{t.calc.note}</p>
+          <div class="calc-cta" hidden>
+            <span>{t.calc.cta}</span>
+            <a class="btn btn-primary btn-sm" href="#contact" data-service="1" data-evt="cta_click" data-loc="calc">{t.calc.ctaBtn}</a>
+            <a class="btn btn-wa btn-sm" id="calc-wa" target="_blank" rel="noopener" data-evt="whatsapp_click" data-loc="calc">{t.calc.waBtn}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="process">
     <div class="wrap">
       <div class="sec-head rv"><h2>{t.processTitle}</h2><p>{t.processSub}</p></div>
@@ -217,7 +243,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
       <form id="lead" class="form rv" novalidate
         data-key={hasKey() ? CONFIG.web3formsKey : ''}
         data-wa={CONFIG.whatsapp}
-        data-lang={lang} data-ui={JSON.stringify(t.contact.ui)}
+        data-lang={lang} data-ui={JSON.stringify(t.contact.ui)} data-sf={JSON.stringify(SF[lang])} data-opt={lang === 'ar' ? 'اختار (اختياري)' : 'Choose (optional)'}
         data-ok={t.contact.ok} data-err={t.contact.err} data-req={t.contact.required} data-sending={t.contact.sending}>
         <input type="text" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <div class="row2">
@@ -233,7 +259,9 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
             <select name="budget">{t.contact.budgetOpts.map((o) => <option>{o}</option>)}</select>
           </label>
         </div>
-        <label>{t.contact.msg}<textarea name="message" placeholder={t.contact.msgPh} required aria-required="true"></textarea></label>
+        <p class="svc-hint" id="svc-hint"></p>
+        <div class="row2 svc-fields" id="svc-fields"></div>
+        <label><span id="msg-l">{t.contact.msg}</span><textarea name="message" placeholder={t.contact.msgPh} required aria-required="true"></textarea></label>
         <button class="btn btn-primary" type="submit">{t.contact.send}</button>
         <p class="status" role="status" aria-live="polite"></p>
       </form>
@@ -262,6 +290,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
         <ul>
           <li><a href="#services">{t.nav.services}</a></li>
           <li><a href="#work">{t.nav.work}</a></li>
+          <li><a href="#calc">{t.calc.title}</a></li>
           <li><a href="#process">{t.nav.process}</a></li>
           <li><a href="#faq">{t.nav.faq}</a></li>
           <li><a href="#contact">{t.nav.contact}</a></li>
@@ -321,7 +350,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
 <script type="application/json" id="chat-data" is:inline set:html={JSON.stringify(chatData)} />
 
 <script>
-  import { getCtx, makeRef, cleanPhone, validPhone, validEmail, stripHtml, validate, waText, waLink, enrichWaClick, throttle, submitLead, noteSentViaWa, type Lead } from '../lib/lead';
+  import { toLatinDigits, getCtx, makeRef, cleanPhone, validPhone, validEmail, stripHtml, validate, waText, waLink, enrichWaClick, throttle, submitLead, noteSentViaWa, type Lead } from '../lib/lead';
   getCtx();
   document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
     const track = root.querySelector('.track') as HTMLElement;
@@ -370,7 +399,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
     const sv = (e.target as Element).closest<HTMLElement>('[data-service]');
     if (sv) {
       const sel = document.querySelector<HTMLSelectElement>('#lead select[name="service"]');
-      if (sel) sel.selectedIndex = Number(sv.dataset.service);
+      if (sel) { sel.selectedIndex = Number(sv.dataset.service); sel.dispatchEvent(new Event('change', { bubbles: true })); }
     }
   });
 
@@ -471,7 +500,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
     // ---------- جلسات الاستشارة الموجّهة (ستاتيك) ----------
     let topic = '';
     const userMsgs: string[] = [];
-    let preset = ''; let summary = '';
+    let preset = ''; let details: [string, string][] = [];
     type Fl = { f: any; i: number; picks: { q: string; l: string; t: string }[] };
     let fl: Fl | null = null;
     const flowChips = (f: any, i: number) => {
@@ -487,7 +516,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
     };
     const flowFinish = async () => {
       if (!fl) return; const f = fl.f; const picks = fl.picks; fl = null;
-      preset = D.services[f.svc] || ''; summary = picks.map((p) => `- ${p.q} ${p.l}`).join('\n');
+      preset = D.services[f.svc] || ''; details = picks.map((p) => [p.q.replace(/[؟?:\s]+$/, ''), p.l] as [string, string]);
       trk('chat_flow_done', { flow: f.id }); logEv('flow', { id: f.id, picks: picks.map((p) => p.l).join(' | ').slice(0, 200) });
       await bot(f.intro + '\n\n' + picks.map((p) => '• ' + p.t).join('\n') + '\n\n' + f.outro, { act: ['lead', 'wa'] });
     };
@@ -505,9 +534,9 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
 
     const finishLead = async () => {
       busy = true; input.disabled = true;
-      const msg = (lead.msg || '') + (summary ? `\n\n[${D.lang === 'ar' ? 'ملخص الاستشارة' : 'Consultation summary'}]\n${summary}` : '') + (userMsgs.length ? `\n\n[${D.lang === 'ar' ? 'من محادثة الشات' : 'From chat'}]\n${userMsgs.slice(-4).map((m) => '- ' + m).join('\n').slice(0, 700)}` : '');
+      const msg = (lead.msg || '') + (userMsgs.length ? `\n\n[${D.lang === 'ar' ? 'من محادثة الشات' : 'From chat'}]\n${userMsgs.slice(-4).map((m) => '- ' + m).join('\n').slice(0, 700)}` : '');
       const isMail = lead.contact.includes('@');
-      const L: Lead = { name: stripHtml(lead.name), phone: isMail ? '' : cleanPhone(lead.contact), email: isMail ? lead.contact.trim() : '', service: lead.service, budget: D.budgetDefault, message: msg.trim(), source: 'chatbot' };
+      const L: Lead = { name: stripHtml(lead.name), phone: isMail ? '' : cleanPhone(lead.contact), email: isMail ? lead.contact.trim() : '', service: lead.service, budget: D.budgetDefault, message: msg.trim(), source: 'chatbot', details };
       const ref = makeRef();
       await bot(D.sending, { wait: false });
       const waBox = (label: string, loc: string) => {
@@ -531,7 +560,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
           await bot(D.ui.failTitle + ' ' + D.ui.failBody, { wait: false }); waBox(D.ui.waSend, 'chat_lead_fail');
         }
       }
-      step = ''; busy = false; input.disabled = false; input.placeholder = D.placeholder; Object.keys(lead).forEach((k) => delete lead[k]); preset = ''; summary = ''; input.focus();
+      step = ''; busy = false; input.disabled = false; input.placeholder = D.placeholder; Object.keys(lead).forEach((k) => delete lead[k]); preset = ''; details = []; input.focus();
     };
 
     const ask = async (text: string) => {
@@ -577,6 +606,43 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
     formEl.addEventListener('submit', (e) => { e.preventDefault(); ask(input.value); });
   })();
 
+
+  // ===== حاسبة ربحية الإعلانات =====
+  (() => {
+    const box = document.getElementById('calc-box'); if (!box) return;
+    const C = JSON.parse(box.dataset.c || '{}'); const CL = box.dataset.lang as 'ar' | 'en';
+    const ins = Array.from(box.querySelectorAll<HTMLInputElement>('input[data-k]'));
+    const grid = box.querySelector('.calc-grid') as HTMLElement; const verdict = box.querySelector('.calc-verdict') as HTMLElement;
+    const cta = box.querySelector('.calc-cta') as HTMLElement; const waA = document.getElementById('calc-wa') as HTMLAnchorElement;
+    const num = (s: string) => { const v = parseFloat(toLatinDigits(s).replace(/[,،٬\s]/g, '').replace('٫', '.')); return isFinite(v) ? v : NaN; };
+    const f = (n: number) => n.toLocaleString('en-US', { maximumFractionDigits: 2 });
+    const out = (k: string, v: string) => { const e = box.querySelector(`[data-o="${k}"]`); if (e) e.textContent = v; };
+    let sent = false;
+    const calc = () => {
+      const v: Record<string, number> = {}; ins.forEach((i) => { v[i.dataset.k!] = num(i.value); });
+      const need = ['spend', 'orders', 'aov'].every((k) => v[k] > 0);
+      if (!need) { grid.hidden = true; cta.hidden = true; verdict.className = 'calc-verdict'; verdict.textContent = C.empty; return; }
+      const cogs = Math.min(Math.max(isNaN(v.cogs) ? 0 : v.cogs, 0), 100) / 100, ret = Math.min(Math.max(isNaN(v.ret) ? 0 : v.ret, 0), 100) / 100, ship = Math.max(isNaN(v.ship) ? 0 : v.ship, 0);
+      const gross = v.orders * v.aov, net = gross * (1 - ret);
+      const contrib = net * (1 - cogs) - ship * v.orders, profit = contrib - v.spend;
+      const roas = gross / v.spend, cpa = v.spend / v.orders;
+      out('roas', f(roas)); out('cpa', f(cpa)); out('profit', f(profit));
+      const ok = contrib > 0; const be = ok ? gross / contrib : NaN;
+      out('be', ok ? f(be) : '-'); out('becpa', ok ? f(contrib / v.orders) : '-');
+      grid.hidden = false; cta.hidden = false;
+      let msg = '', cls = '';
+      if (!ok) { msg = C.broke; cls = 'bad'; }
+      else if (profit >= 0) { const mg = Math.round((roas / be - 1) * 100); msg = C.win.replace('{x}', String(mg)).replace('{m}', mg < 25 ? C.winTight : C.winOk); cls = 'good'; }
+      else { msg = C.lose.replace('{b}', f(be)).replace('{c}', f(contrib / v.orders)); cls = 'bad'; }
+      verdict.textContent = msg; verdict.className = 'calc-verdict ' + cls;
+      const lines = [C.waHead, '', ...ins.filter((i) => i.value).map((i) => `• ${C.f[i.dataset.k!]}: ${toLatinDigits(i.value)}`), '', `ROAS ${f(roas)} / ${C.r.be} ${ok ? f(be) : '-'} / ${C.r.profit} ${f(profit)}`];
+      const cx = getCtx(); lines.push('——', `${CL === 'ar' ? 'المصدر' : 'Source'}: calculator${cx.utm_source ? ' · ' + cx.utm_source : ''}`);
+      waA.href = waLink(box.dataset.wa!, lines.join('\n'));
+      if (!sent) { sent = true; trk('calc_used'); }
+    };
+    ins.forEach((i) => i.addEventListener('input', calc));
+  })();
+
   // ===== الهيدر: قائمة الموبايل + السكشن النشط + ظل عند السكرول =====
   (() => {
     const nav = document.getElementById('nav'); const burger = document.getElementById('burger') as HTMLButtonElement | null;
@@ -604,6 +670,24 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
   const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
   const UI = JSON.parse(form.dataset.ui || '{}'); const FL = (form.dataset.lang || 'ar') as 'ar' | 'en';
   const openedAt = Date.now();
+  const SFD = JSON.parse(form.dataset.sf || '[]') as { hint: string; msgLabel: string; msgPh: string; fields: { name: string; label: string; o: string[] }[] }[];
+  const svcSel = form.elements.namedItem('service') as HTMLSelectElement;
+  const fieldsBox = document.getElementById('svc-fields') as HTMLElement; const hintEl = document.getElementById('svc-hint') as HTMLElement;
+  const msgLabel = document.getElementById('msg-l') as HTMLElement; const msgTa = form.elements.namedItem('message') as HTMLTextAreaElement;
+  const defLabel = msgLabel.textContent || ''; const defPh = msgTa.placeholder;
+  const renderSvc = () => {
+    const c = SFD[svcSel.selectedIndex]; fieldsBox.textContent = '';
+    if (!c) { hintEl.textContent = ''; msgLabel.textContent = defLabel; msgTa.placeholder = defPh; return; }
+    hintEl.textContent = c.hint; msgLabel.textContent = c.msgLabel; msgTa.placeholder = c.msgPh;
+    c.fields.forEach((f) => {
+      const lab = document.createElement('label'); lab.append(f.label);
+      const sel = document.createElement('select'); sel.dataset.sf = f.label; sel.name = 'sf_' + f.name;
+      const o0 = document.createElement('option'); o0.value = ''; o0.textContent = form.dataset.opt || ''; sel.appendChild(o0);
+      f.o.forEach((x) => { const o = document.createElement('option'); o.textContent = x; sel.appendChild(o); });
+      lab.appendChild(sel); fieldsBox.appendChild(lab);
+    });
+  };
+  svcSel.addEventListener('change', renderSvc); renderSvc();
   const setErr = (name: string, msg: string) => {
     const f = form.elements.namedItem(name) as HTMLInputElement | null; if (!f) return;
     const lab = f.closest('label') as HTMLElement; lab.querySelector('.ferr')?.remove();
@@ -621,7 +705,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
     const a = document.createElement('a'); a.className = 'btn btn-wa'; a.target = '_blank'; a.rel = 'noopener'; a.textContent = UI.waContinue;
     a.href = waLink(form.dataset.wa!, waText(FL, L, ref)); a.dataset.evt = 'whatsapp_click'; a.dataset.loc = 'form_done';
     const again = document.createElement('button'); again.type = 'button'; again.className = 'btn btn-ghost btn-sm'; again.textContent = UI.newReq;
-    again.addEventListener('click', () => { box.remove(); form.hidden = false; form.reset(); });
+    again.addEventListener('click', () => { box.remove(); form.hidden = false; form.reset(); renderSvc(); });
     box.append(h, p, r, a, again); form.after(box); form.hidden = true; box.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
   const showFail = (L: Lead, ref: string) => {
@@ -638,6 +722,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
     const L: Lead = {
       name: stripHtml(String(d.get('name') || '')), phone: cleanPhone(String(d.get('phone') || '')), email: String(d.get('email') || '').trim(),
       service: String(d.get('service') || ''), budget: String(d.get('budget') || ''), message: String(d.get('message') || '').trim().slice(0, 2000), source: 'form',
+      details: Array.from(fieldsBox.querySelectorAll<HTMLSelectElement>('select')).filter((x) => x.value).map((x) => [x.dataset.sf || '', x.value] as [string, string]),
     };
     status.className = 'status'; status.textContent = ''; clearErrs();
     if (d.get('botcheck') || Date.now() - openedAt < 2500) return; // سبام/بوت: تجاهل بصمت

@@ -12,6 +12,8 @@ export const CONFIG = {
   chatLogUrl: '',
   email: 'albraa.alzeftawi2002@gmail.com',
   // التتبع (اختياري، الفاضي = مش شغّال). GA4 مثال: 'G-XXXXXXXXXX' | Microsoft Clarity (heatmaps مجاني) مثال: 'abcd1234ef'
+  // Vercel Web Analytics (مجاني على Hobby): شغّله من Vercel > Project > Analytics > Enable، وبعدها خلّي ده true
+  vercelAnalytics: true,
   ga4Id: '',
   clarityId: '',
   // ضيف رابط كل حساب بين الفاصلتين. الفاضي بيتخفي تلقائياً من الفوتر.

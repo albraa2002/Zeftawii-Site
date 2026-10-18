@@ -6,6 +6,7 @@ export type Lead = {
   name: string; phone: string; email: string;
   service: string; budget: string; message: string;
   source: 'form' | 'chatbot';
+  details?: [string, string][];
 };
 type Ctx = { utm_source?: string; utm_medium?: string; utm_campaign?: string; utm_term?: string; utm_content?: string; referrer?: string; landing?: string; first_seen?: string };
 
@@ -56,21 +57,24 @@ export const validate = (l: Pick<Lead, 'name' | 'phone' | 'email' | 'message'>, 
 
 // ---------- رسالة واتساب منظمة ----------
 const L = {
-  ar: { hi: 'أهلاً البراء، أنا', svc: 'الخدمة', bud: 'الميزانية', det: 'التفاصيل', con: 'التواصل', ref: 'مرجع', src: 'المصدر', plain: 'أهلاً، حابب أستفسر عن خدماتك.' },
-  en: { hi: 'Hi Albaraa, I am', svc: 'Service', bud: 'Budget', det: 'Details', con: 'Contact', ref: 'Ref', src: 'Source', plain: 'Hi, I would like to ask about your services.' },
+  ar: { hi: 'السلام عليكم أستاذ البراء،', intro: (n: string) => `أنا *${n}*، وحابب أطلب استشارة مجانية بخصوص:`, svc: 'الخدمة', det: 'تفاصيل الطلب', bud: 'الميزانية التقريبية', desc: 'وصف الطلب', con: 'وسيلة التواصل', ref: 'رقم المرجع', src: 'المصدر', bye: 'شكراً لحضرتك، وفي انتظار ردك.', plain: 'أهلاً، حابب أستفسر عن خدماتك.', form: 'نموذج الموقع', chat: 'مساعد الموقع' },
+  en: { hi: 'Hello Albaraa,', intro: (n: string) => `I am *${n}*, and I would like to request a free consultation about:`, svc: 'Service', det: 'Request details', bud: 'Approximate budget', desc: 'Description', con: 'Contact', ref: 'Reference', src: 'Source', bye: 'Thank you, I look forward to your reply.', plain: 'Hi, I would like to ask about your services.', form: 'Website form', chat: 'Website assistant' },
 };
 export const waText = (lang: Lang, l: Lead, ref: string) => {
   const t = L[lang]; const c = getCtx();
   const contact = [l.phone, l.email].filter(Boolean).join(' / ');
+  const det = [...(l.details || []), ...(l.budget ? [[t.bud, l.budget] as [string, string]] : [])];
   return [
-    `${t.hi} ${l.name}`,
-    `${t.svc}: ${l.service}`,
-    l.budget ? `${t.bud}: ${l.budget}` : '',
-    l.message ? `${t.det}: ${l.message}` : '',
-    contact ? `${t.con}: ${contact}` : '',
-    `—`,
-    `${t.ref}: ${ref} · ${t.src}: ${l.source}${c.utm_source ? ' · ' + c.utm_source : ''}`,
-  ].filter(Boolean).join('\n');
+    t.hi,
+    t.intro(l.name),
+    `\n*${t.svc}:* ${l.service}`,
+    det.length ? `\n*${t.det}:*\n` + det.map(([k, v]) => `• ${k}: ${v}`).join('\n') : '',
+    l.message ? `\n*${t.desc}:*\n${l.message}` : '',
+    contact ? `\n*${t.con}:* ${contact}` : '',
+    `\n${t.bye}`,
+    '——',
+    `${t.ref}: ${ref} · ${t.src}: ${l.source === 'form' ? t.form : t.chat}${c.utm_source ? ' · ' + c.utm_source : ''}`,
+  ].filter((x) => x !== '').join('\n');
 };
 export const waLink = (number: string, text: string) => `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
 
@@ -111,6 +115,7 @@ export const submitLead = async (key: string, lang: Lang, l: Lead, ref: string):
     replyto: l.email || undefined,
     ref, source: l.source, lang,
     name: l.name, phone: l.phone, email: l.email, service: l.service, budget: l.budget, message: l.message,
+    service_details: (l.details || []).map(([k, v]) => `${k}: ${v}`).join('\n') || undefined,
     page: location.pathname, referrer: c.referrer, landing: c.landing,
     utm_source: c.utm_source, utm_medium: c.utm_medium, utm_campaign: c.utm_campaign, utm_term: c.utm_term, utm_content: c.utm_content,
     device: /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',

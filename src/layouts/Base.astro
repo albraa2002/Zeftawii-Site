@@ -158,6 +158,10 @@ const fontsHref =
 
     {!noindex && <script type="application/ld+json" set:html={JSON.stringify(ld)} />}
 
+    {!noindex && CONFIG.vercelAnalytics && (
+      <script is:inline>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+      <script is:inline defer src="/_vercel/insights/script.js"></script>
+    )}
     {!noindex && CONFIG.ga4Id && (
       <>
         <script async src={`https://www.googletagmanager.com/gtag/js?id=${CONFIG.ga4Id}`}></script>
