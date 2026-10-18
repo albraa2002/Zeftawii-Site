@@ -121,7 +121,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
             <h3>{s.t}</h3>
             <p>{s.d}</p>
             <ul>{s.pts.map((p) => <li>{p}</li>)}</ul>
-            <a class="card-cta" href="#contact" data-service={i} data-service-label={s.t} data-evt="service_click" data-loc="services">{t.serviceCta}<span aria-hidden="true">{lang === 'ar' ? '←' : '→'}</span></a>
+            <a class="card-cta" href="#contact" data-service={i} data-evt="service_click" data-loc={s.icon}>{t.serviceCta}<span aria-hidden="true">{lang === 'ar' ? '←' : '→'}</span></a>
           </article>
         ))}
         </div>
@@ -213,7 +213,6 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
         </div>
       </div>
 
-      <p class="form-hint">{t.contact.formHint}</p>
       <form id="lead" class="form rv" novalidate
         data-key={hasKey() ? CONFIG.web3formsKey : ''}
         data-wa={CONFIG.whatsapp}
@@ -321,7 +320,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
 <script type="application/json" id="chat-data" is:inline set:html={JSON.stringify(chatData)} />
 
 <script>
-  import { getCtx, makeRef, cleanPhone, validPhone, validEmail, stripHtml, validate, waText, waLink, enrichWaClick, throttle, submitLead, trackConversionEvent, type Lead } from '../lib/lead';
+  import { getCtx, makeRef, cleanPhone, validPhone, validEmail, stripHtml, validate, waText, waLink, enrichWaClick, throttle, submitLead, noteSentViaWa, type Lead } from '../lib/lead';
   getCtx();
   document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
     const track = root.querySelector('.track') as HTMLElement;
@@ -360,28 +359,17 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
     buildDots(); update();
   });
 
-  // Local-only event dispatch; no gtag call and no external transmission.
-  const trk = trackConversionEvent;
+  const trk = (name: string, params: Record<string, unknown> = {}) => {
+    const g = (window as any).gtag;
+    if (typeof g === 'function') g('event', name, { lang: document.documentElement.lang, ...params });
+  };
   document.addEventListener('click', (e) => {
-    const target = e.target as Element;
-    const el = target.closest<HTMLElement>('[data-evt]');
-    if (el) {
-      const eventParams: Record<string, unknown> = { location: el.dataset.loc };
-      if (el.dataset.evt === 'service_click') eventParams.service = el.dataset.serviceLabel;
-      trk(el.dataset.evt!, eventParams);
-      if (el.dataset.evt === 'whatsapp_click' && ['form_done', 'form_fail', 'chat_lead', 'chat_lead_fail'].includes(el.dataset.loc || '')) {
-        const serviceSelect = document.querySelector<HTMLSelectElement>('#lead select[name="service"]');
-        trk('lead_whatsapp_handoff', { location: el.dataset.loc, service: el.dataset.leadService || serviceSelect?.value });
-      }
-    }
-    const sv = target.closest<HTMLElement>('[data-service]');
+    const el = (e.target as Element).closest<HTMLElement>('[data-evt]');
+    if (el) trk(el.dataset.evt!, { location: el.dataset.loc });
+    const sv = (e.target as Element).closest<HTMLElement>('[data-service]');
     if (sv) {
       const sel = document.querySelector<HTMLSelectElement>('#lead select[name="service"]');
-      const index = Number(sv.dataset.service);
-      if (sel && Number.isInteger(index) && index >= 0 && index < sel.options.length) {
-        sel.selectedIndex = index;
-        sel.dispatchEvent(new Event('change', { bubbles: true }));
-      }
+      if (sel) sel.selectedIndex = Number(sv.dataset.service);
     }
   });
 
@@ -449,14 +437,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
             sc += Math.max(1, Math.floor(k.w.length * 0.55));
           } else {
             // Partial word overlap catches natural phrasing without accepting a single generic word.
-            const overlap = k.words.filter((w) => {
-              if (w.length < 4) return false;
-              return toks.some((t) => {
-                if (t === w) return true;
-                if (t.length < 5 || w.length < 5) return false;
-                return t.startsWith(w.slice(0, 5)) || w.startsWith(t.slice(0, 5));
-              });
-            }).length;
+            const overlap = k.words.filter((w) => w.length >= 4 && toks.some((t) => t === w || (t.length >= 5 && w.length >= 5 && (t.startsWith(w.slice(0, 5)) || w.startsWith(t.slice(0, 5))))).length;
             if (overlap >= 2) sc += overlap * 2;
           }
         }
@@ -468,6 +449,9 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
       return best;
     };
 
+    const trk = (name: string, p: Record<string, unknown> = {}) => {
+      const g = (window as any).gtag; if (typeof g === 'function') g('event', name, { lang: D.lang, ...p });
+    };
     const scroll = () => { log.scrollTop = log.scrollHeight; };
     const el = (tag: string, cls?: string, text?: string) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; };
 
@@ -543,7 +527,6 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
     };
 
     const finishLead = async () => {
-      trk('lead_submit_attempt', { method: D.key ? 'chatbot_email' : 'chatbot_whatsapp', service: lead.service || preset || '' });
       busy = true; input.disabled = true;
       const msg = (lead.msg || '') + (summary ? `\n\n[${D.lang === 'ar' ? 'ملخص الاستشارة' : 'Consultation summary'}]\n${summary}` : '') + (userMsgs.length ? `\n\n[${D.lang === 'ar' ? 'من محادثة الشات' : 'From chat'}]\n${userMsgs.slice(-4).map((m) => '- ' + m).join('\n').slice(0, 700)}` : '');
       const isMail = lead.contact.includes('@');
@@ -553,18 +536,19 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
       const waBox = (label: string, loc: string) => {
         const box = el('div', 'chat-opts');
         const x = el('a', 'act-btn wa', label) as HTMLAnchorElement;
-        x.href = waLink(D.wa, waText(D.lang, L, ref)); x.target = '_blank'; x.rel = 'noopener'; x.dataset.evt = 'whatsapp_click'; x.dataset.loc = loc; x.dataset.leadService = L.service;
+        x.href = waLink(D.wa, waText(D.lang, L, ref)); x.target = '_blank'; x.rel = 'noopener'; x.dataset.evt = 'whatsapp_click'; x.dataset.loc = loc;
+        x.addEventListener('click', () => noteSentViaWa(L));
         box.appendChild(x); log.appendChild(box); scroll();
       };
       const thr = throttle(L);
       if (thr === 'dup') { await bot(D.ui.dup, { wait: false }); }
       else if (!D.key) {
-        trk('lead_whatsapp_handoff', { method: 'chatbot_whatsapp', location: 'chat', service: L.service });
+        trk('generate_lead', { method: 'chatbot_whatsapp', service: L.service });
         await bot(D.doneWa, { wait: false }); waBox(D.sendWa, 'chat_lead');
       } else {
         const res = await submitLead(D.key, D.lang, L, ref);
         if (res === 'ok') {
-          trk('lead_submit_success', { method: 'chatbot_email', service: L.service });
+          trk('generate_lead', { method: 'chatbot', service: L.service });
           await bot(D.done.replace('{n}', L.name) + `\n${D.ui.refLabel}: ${ref}`, { act: ['wa'], wait: false });
         } else {
           await bot(D.ui.failTitle + ' ' + D.ui.failBody, { wait: false }); waBox(D.ui.waSend, 'chat_lead_fail');
@@ -650,12 +634,6 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
   };
   const clearErrs = () => ['name', 'phone', 'email', 'message'].forEach((n) => setErr(n, ''));
   form.addEventListener('input', (e) => { const n = (e.target as HTMLInputElement).name; if (n) setErr(n, ''); });
-  let formStartTracked = false;
-  form.addEventListener('focusin', () => {
-    if (formStartTracked) return;
-    formStartTracked = true;
-    trk('lead_form_start', { location: 'contact' });
-  });
 
   const showSuccess = (L: Lead, ref: string, viaWa: boolean) => {
     const box = document.createElement('div'); box.className = 'form-done'; box.setAttribute('role', 'status');
@@ -663,7 +641,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
     const p = document.createElement('p'); p.textContent = viaWa ? UI.waOpened : UI.okBody;
     const r = document.createElement('p'); r.className = 'ref'; r.textContent = `${UI.refLabel}: ${ref}`;
     const a = document.createElement('a'); a.className = 'btn btn-wa'; a.target = '_blank'; a.rel = 'noopener'; a.textContent = UI.waContinue;
-    a.href = waLink(form.dataset.wa!, waText(FL, L, ref)); a.dataset.evt = 'whatsapp_click'; a.dataset.loc = 'form_done'; a.dataset.leadService = L.service;
+    a.href = waLink(form.dataset.wa!, waText(FL, L, ref)); a.dataset.evt = 'whatsapp_click'; a.dataset.loc = 'form_done';
     const again = document.createElement('button'); again.type = 'button'; again.className = 'btn btn-ghost btn-sm'; again.textContent = UI.newReq;
     again.addEventListener('click', () => { box.remove(); form.hidden = false; form.reset(); });
     box.append(h, p, r, a, again); form.after(box); form.hidden = true; box.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -672,14 +650,13 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
     status.className = 'status err'; status.textContent = '';
     const t = document.createElement('span'); t.textContent = UI.failTitle + ' ' + UI.failBody + ' ';
     const a = document.createElement('a'); a.href = waLink(form.dataset.wa!, waText(FL, L, ref)); a.target = '_blank'; a.rel = 'noopener'; a.className = 'status-link'; a.textContent = UI.waSend;
-    a.dataset.evt = 'whatsapp_click'; a.dataset.loc = 'form_fail'; a.dataset.leadService = L.service;
+    a.addEventListener('click', () => noteSentViaWa(L));
     status.append(t, a);
   };
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const d = new FormData(form);
-    trk('lead_submit_attempt', { method: form.dataset.key ? 'email_form' : 'whatsapp_prefill', service: String(d.get('service') || '') });
     const L: Lead = {
       name: stripHtml(String(d.get('name') || '')), phone: cleanPhone(String(d.get('phone') || '')), email: String(d.get('email') || '').trim(),
       service: String(d.get('service') || ''), budget: String(d.get('budget') || ''), message: String(d.get('message') || '').trim().slice(0, 2000), source: 'form',
@@ -699,14 +676,15 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
     const key = form.dataset.key;
     // لو مفتاح Web3Forms لسه متضافش: نفتح واتساب بالرسالة جاهزة
     if (!key) {
-      trk('lead_whatsapp_handoff', { method: 'whatsapp_prefill', location: 'form', service: L.service });
+      trk('generate_lead', { method: 'whatsapp_prefill', service: L.service });
+      noteSentViaWa(L);
       window.open(waLink(form.dataset.wa!, waText(FL, L, ref)), '_blank');
       showSuccess(L, ref, true); return;
     }
     btn.disabled = true; const label = btn.textContent; btn.textContent = form.dataset.sending!;
     const res = await submitLead(key, FL, L, ref);
     btn.disabled = false; btn.textContent = label;
-    if (res === 'ok') { trk('lead_submit_success', { method: 'email_form', service: L.service, budget: L.budget }); showSuccess(L, ref, false); }
+    if (res === 'ok') { trk('generate_lead', { method: 'form', service: L.service, budget: L.budget }); showSuccess(L, ref, false); }
     else { trk('lead_send_failed', { method: 'form' }); showFail(L, ref); }
   });
 

@@ -11,31 +11,6 @@ type Ctx = { utm_source?: string; utm_medium?: string; utm_campaign?: string; ut
 
 const safe = <T>(fn: () => T, d: T): T => { try { return fn(); } catch { return d; } };
 
-// ---------- Conversion events (local only; never sends data to an external tool) ----------
-export const trackConversionEvent = (name: string, params: Record<string, unknown> = {}) => safe(() => {
-  if (typeof window === 'undefined') return;
-  const c = getCtx();
-  const referrerHost = c.referrer && c.referrer !== 'direct'
-    ? safe(() => new URL(c.referrer!).hostname, 'unknown')
-    : (c.referrer || 'direct');
-  const detail = {
-    event: name,
-    lang: document.documentElement.lang || 'unknown',
-    timestamp: new Date().toISOString(),
-    context: {
-      utm_source: c.utm_source,
-      utm_medium: c.utm_medium,
-      utm_campaign: c.utm_campaign,
-      utm_term: c.utm_term,
-      utm_content: c.utm_content,
-      referrer_host: referrerHost,
-      landing: c.landing || location.pathname,
-    },
-    ...params,
-  };
-  window.dispatchEvent(new CustomEvent('zeftawii:conversion', { detail }));
-}, undefined);
-
 // ---------- سياق الزيارة (UTM + مصدر الزيارة) ----------
 export const getCtx = (): Ctx => safe(() => {
   const k = 'zf_ctx';

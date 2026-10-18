@@ -118,7 +118,6 @@ export const T = {
     contact: {
       title: 'خلّينا نبدأ',
       sub: 'ابعت تفاصيل بسيطة وهرد عليك خلال يوم عمل. أو احجز مكالمة مباشرة.',
-      formHint: 'واتساب هو وسيلة التواصل الأساسية. لو نموذج البريد غير مفعّل، هتتجهز رسالة واتساب ببياناتك؛ راجعها واضغط إرسال بنفسك.',
       name: 'الاسم',
       phone: 'واتساب / رقم التواصل',
       email: 'الإيميل',
@@ -316,7 +315,6 @@ export const T = {
     contact: {
       title: "Let's get started",
       sub: 'Send a few details and I will reply within one business day, or book a call directly.',
-      formHint: 'WhatsApp is the primary contact channel. If email submission is not configured, your details will be prepared in a WhatsApp draft; review it and tap Send yourself.',
       name: 'Name',
       phone: 'WhatsApp / phone',
       email: 'Email',
