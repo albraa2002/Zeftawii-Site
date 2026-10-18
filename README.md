@@ -54,6 +54,8 @@ All three channels share one library (`src/lib/lead.ts`): the same validation (A
 
 The chatbot is fully static: no AI, no server, no keys. Every answer and every guided consultation is written by hand in `src/chatKB.ts` (Arabic `ar` and English `en`). To add or change an answer, edit an entry (`k` = keywords, `a` = answer, `v` = per-topic variants, `chips`, `act`). Guided consultations live under `flows`: each has questions with options and a tip per option. Keep the chip labels equal to a keyword of the entry they should open.
 
+The bot can also learn from real visitors, for free and under your review: see `docs/chat-log.md` (anonymous Google Sheet log of unanswered questions and 👍/👎 feedback).
+
 ## Tech stack
 
 | Layer | Choice |

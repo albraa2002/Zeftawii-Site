@@ -318,3 +318,7 @@ footer { margin-top: 6rem; border-top: 1px solid var(--panel-b); background: lin
 .form-done { background: var(--panel); border: 1px solid rgba(0, 255, 157, .4); border-radius: 20px; padding: 28px; display: grid; gap: 12px; justify-items: start; }
 .form-done h3 { color: var(--green); font-size: 1.3rem; }
 .form-done .ref { font-family: var(--font-mono); color: var(--cyan); letter-spacing: .08em; direction: ltr; }
+
+.fb { display: flex; align-items: center; gap: 6px; font-size: .74rem; color: var(--muted); margin: -4px 0 6px; }
+.fb-b { font: inherit; cursor: pointer; border: 1px solid rgba(255,255,255,.14); background: transparent; border-radius: 999px; padding: 2px 9px; line-height: 1.4; transition: background .2s; }
+.fb-b:hover { background: rgba(0,229,255,.14); }

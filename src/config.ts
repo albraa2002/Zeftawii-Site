@@ -8,6 +8,8 @@ export const CONFIG = {
   web3formsKey: 'YOUR_WEB3FORMS_KEY',
   // رابط الحجز المجاني (Cal.com أو Calendly)
   bookingUrl: 'https://cal.com/your-username/discovery',
+  // رابط Google Apps Script (Web App) اللي بيسجّل أسئلة الشات في شيت مجاني. الفاضي = التسجيل مقفول. الشرح في docs/chat-log.md
+  chatLogUrl: '',
   email: 'albraa.alzeftawi2002@gmail.com',
   // التتبع (اختياري، الفاضي = مش شغّال). GA4 مثال: 'G-XXXXXXXXXX' | Microsoft Clarity (heatmaps مجاني) مثال: 'abcd1234ef'
   ga4Id: '',
@@ -33,3 +35,5 @@ export const CONFIG = {
 export const hasKey = () => CONFIG.web3formsKey !== 'YOUR_WEB3FORMS_KEY';
 // لو لينك الحجز لسه placeholder بنخفي الزرار بدل ما يفتح 404
 export const hasBooking = () => !!CONFIG.bookingUrl && !CONFIG.bookingUrl.includes('your-username');
+
+export const hasLog = () => /^https:\/\/script\.google\.com\//.test(CONFIG.chatLogUrl);
