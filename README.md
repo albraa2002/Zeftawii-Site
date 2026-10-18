@@ -4,14 +4,14 @@
 
 # Zeftawii | Decoding Data
 
-**A bilingual Arabic/English personal service website for Albaraa Ehab Elzeftawy — combining data analytics, business intelligence, marketing analytics, automation, and account/project management.**
+**Bilingual (Arabic RTL + English) lead-generation website for a data analyst and account manager.**
 
-[![Live](https://img.shields.io/badge/live-zeftawii--site--bkxt.vercel.app-00e5ff?style=flat-square)](https://zeftawii-site-46vp.vercel.app/)
+[![Live](https://img.shields.io/badge/live-zeftawii--site--bkxt.vercel.app-00e5ff?style=flat-square)](https://zeftawii-site-bkxt.vercel.app/)
 [![Astro](https://img.shields.io/badge/Astro-static-ff5d01?style=flat-square&logo=astro&logoColor=white)](https://astro.build)
 ![Languages](https://img.shields.io/badge/AR%20%7C%20EN-RTL%20%2F%20LTR-00ff9d?style=flat-square)
 ![JS](https://img.shields.io/badge/client%20JS-vanilla-0a0f1c?style=flat-square)
 
-[العربية](#-ملخص-بالعربي) · [Live site](https://zeftawii-site-46vp.vercel.app/) · [English version](https://zeftawii-site-bkxt.vercel.app/en/)
+[العربية](#-ملخص-بالعربي) · [Live site](https://zeftawii-site-bkxt.vercel.app/) · [English version](https://zeftawii-site-bkxt.vercel.app/en/)
 
 </div>
 
@@ -30,7 +30,7 @@ The visitor path is simple: understand the offer, see proof, and contact via Wha
 - Services carousel (CSS scroll-snap, arrows, dots, swipe, RTL-aware) with a per-service "Request" button that pre-selects the service in the form
 - "Who it is for" pain and fix cards, "Selected work" proof cards, process, why-me with photo, FAQ
 - Lead form (Web3Forms) with honeypot spam protection and automatic WhatsApp fallback when no key is set
-- Built-in bilingual assistant chatbot with an optional AI consultation mode: works with built-in answers by default and can use Gemini or Groq through a Vercel serverless function for broader questions about Albaraa and the services. Lead capture stays separate from AI requests. Edit site copy in `src/i18n.ts` and assistant knowledge in `api/_knowledge.js`
+- Built-in assistant chatbot (rule-based, no server, no cost): answers from site content in Arabic or English, then collects name, contact and service and sends the lead via Web3Forms (or WhatsApp fallback). Edit its answers in `src/chatKB.ts`
 - Floating WhatsApp button and a booking button that hides itself while the link is still a placeholder
 
 **SEO**
@@ -50,20 +50,9 @@ The visitor path is simple: understand the offer, see proof, and contact via Wha
 
 All three channels share one library (`src/lib/lead.ts`): the same validation (Arabic digits normalized, phone/email checks), a short reference number per request (`ZF-XXXX`), UTM and referrer capture, duplicate and cooldown protection, a honeypot plus minimum-fill-time check, timeout with one retry, and a WhatsApp fallback that carries the full request if sending fails. Plain WhatsApp buttons get a context line (source, selected service, reference) added on click.
 
-## AI consultation mode (optional, free)
+## Chatbot (static, no API)
 
-The chatbot works out of the box with built-in answers. To switch on the AI consultation mode (free-form dialogue, knowledge about Albaraa and every service) using a **free** API key, add one of these in Vercel (Project, Settings, Environment Variables) and redeploy:
-
-| Variable | Purpose |
-| --- | --- |
-| `GEMINI_API_KEY` | Free key from Google AI Studio (aistudio.google.com). Tried first. Default model `gemini-2.5-flash` (override with `GEMINI_MODEL`) |
-| `GROQ_API_KEY` | Free key from console.groq.com. Used if Gemini is missing or rate-limited. Default model `llama-3.3-70b-versatile` (`GROQ_MODEL`) |
-| `ANTHROPIC_API_KEY` | Optional and paid. Tried last |
-| `CHAT_IP_LIMIT` / `CHAT_DAILY_CAP` | Optional rate limits (default 25 per 10 min per IP, 400 per day) |
-| `ALLOWED_ORIGINS` | Optional, extra allowed origins (comma separated) for a custom domain |
-| `BOOKING_AVAILABLE` | Set to `1` once a real booking link exists |
-
-With no key, the site silently stays on the built-in answers. Free tiers have daily limits and their terms can change, so check each provider's data policy: visitors are told not to share sensitive data in the chat, and name/phone/email are collected by the lead flow, never sent to the AI. What the assistant knows lives in `api/_knowledge.js`. The function is a Vercel serverless function, so on Cloudflare Pages it would need to be moved to `functions/`.
+The chatbot is fully static: no AI, no server, no keys. Every answer and every guided consultation is written by hand in `src/chatKB.ts` (Arabic `ar` and English `en`). To add or change an answer, edit an entry (`k` = keywords, `a` = answer, `v` = per-topic variants, `chips`, `act`). Guided consultations live under `flows`: each has questions with options and a tip per option. Keep the chip labels equal to a keyword of the entry they should open.
 
 ## Tech stack
 

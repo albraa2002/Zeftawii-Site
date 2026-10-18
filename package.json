@@ -10,24 +10,5 @@
   },
   "dependencies": {
     "astro": "^7.3.8"
-  },
-  "description": "Bilingual Arabic/English personal service website for data analytics, business intelligence, marketing analytics, automation, and account/project management.",
-  "homepage": "https://zeftawii-site-46vp.vercel.app/",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/albraa2002/Zeftawii-site.git"
-  },
-  "author": "Albaraa Ehab Elzeftawy",
-  "keywords": [
-    "astro",
-    "personal-website",
-    "data-analytics",
-    "business-intelligence",
-    "marketing-analytics",
-    "account-management",
-    "arabic",
-    "rtl",
-    "bilingual",
-    "vercel"
-  ]
+  }
 }

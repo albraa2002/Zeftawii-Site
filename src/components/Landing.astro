@@ -1,5 +1,6 @@
 ---
-import { T, chatKeys, type Lang } from '../i18n';
+import { T, type Lang } from '../i18n';
+import { chatKB } from '../chatKB';
 import { CONFIG, hasKey, hasBooking } from '../config';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -7,7 +8,7 @@ const t = T[lang];
 const wa = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(t.contact.waMsg)}`;
 const chatData = {
   ...t.chat,
-  keys: chatKeys,
+  kb: chatKB[lang],
   wa: CONFIG.whatsapp,
   waMsg: t.contact.waMsg,
   key: hasKey() ? CONFIG.web3formsKey : '',
@@ -390,13 +391,13 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
       .replace(/[^\p{L}\p{N}\s]/gu, ' ').replace(/\s+/g, ' ').trim();
     const prep = (s: string) => norm(s).split(' ').filter(Boolean).map((w) => (w.startsWith('ال') && w.length > 4 ? w.slice(2) : w));
     const kn: Record<string, { w: string; short: boolean }[]> = {};
-    Object.entries(D.keys as Record<string, string[]>).forEach(([id, arr]) => {
-      kn[id] = arr.map((k) => { const w = prep(k).join(' '); return { w, short: w.length <= 3 && !w.includes(' ') }; });
+    D.kb.entries.forEach((e: any) => {
+      kn[e.id] = (e.k as string[]).map((k) => { const w = prep(k).join(' '); return { w, short: w.length <= 3 && !w.includes(' ') }; });
     });
     const match = (text: string) => {
       const toks = prep(text); const joined = ' ' + toks.join(' ') + ' ';
       let best: any = null, bs = 0;
-      for (const e of D.kb) {
+      for (const e of D.kb.entries) {
         let sc = 0;
         for (const k of kn[e.id] || []) if (k.short ? toks.includes(k.w) : joined.includes(k.w)) sc += k.w.length;
         if (sc > bs) { bs = sc; best = e; }
@@ -446,34 +447,44 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
       input.focus();
     };
 
-    // ---------- الوضع الذكي (اختياري): /api/chat ----------
-    let ai = false; const hist: { role: 'user' | 'assistant'; content: string }[] = [];
-    fetch('/api/assistant', { method: 'GET' }).then((r) => r.ok ? r.json() : null).then((j) => { if (j && j.enabled) ai = true; }).catch(() => {});
-    const cleanReply = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '$1').replace(/^#{1,4}\s*/gm, '').replace(/^\s*[\*\-]\s+/gm, '• ').trim();
-    const askAI = async (text: string): Promise<boolean> => {
-      hist.push({ role: 'user', content: text });
-      const t = typing(); input.disabled = true; busy = true;
-      const ac = new AbortController(); const to = setTimeout(() => ac.abort(), 28000);
-      try {
-        const r = await fetch('/api/assistant', { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ac.signal, body: JSON.stringify({ messages: hist.slice(-12), lang: D.lang }) });
-        if (!r.ok) { try { console.warn('assistant:', await r.json()); } catch {} throw new Error(String(r.status)); }
-        const j = await r.json(); let reply = String(j.reply || '');
-        const acts: string[] = [];
-        reply = reply.replace(/\[\[(LEAD|WA|BOOK)\]\]/g, (_, k) => { acts.push(k.toLowerCase()); return ''; });
-        reply = cleanReply(reply); if (!reply) throw new Error('empty');
-        hist.push({ role: 'assistant', content: reply });
-        t.remove(); busy = false; input.disabled = false;
-        await bot(reply, { act: Array.from(new Set(acts)), wait: false, chips: [] });
-        input.focus(); return true;
-      } catch (e) {
-        t.remove(); hist.pop(); busy = false; input.disabled = false; return false;
-      } finally { clearTimeout(to); }
+    // ---------- جلسات الاستشارة الموجّهة (ستاتيك) ----------
+    let topic = '';
+    const userMsgs: string[] = [];
+    let preset = ''; let summary = '';
+    type Fl = { f: any; i: number; picks: { q: string; l: string; t: string }[] };
+    let fl: Fl | null = null;
+    const flowChips = (f: any, i: number) => {
+      const c = f.steps[i].o.map((o: any) => o.l);
+      if (i > 0) c.push(D.kb.flowBack);
+      c.push(D.kb.flowCancel); return c;
     };
-    const transcript = () => hist.filter((m) => m.role === 'user').slice(-4).map((m) => '- ' + m.content).join('\n').slice(0, 700);
+    const flowAsk = async () => { if (fl) await bot(fl.f.steps[fl.i].q, { chips: flowChips(fl.f, fl.i) }); };
+    const flowStart = async (id: string) => {
+      const f = D.kb.flows.find((x: any) => x.id === id); if (!f) return;
+      fl = { f, i: 0, picks: [] }; topic = id === 'any' ? '' : id; trk('chat_flow_start', { flow: id });
+      await bot(f.intro, { wait: true }); await flowAsk();
+    };
+    const flowFinish = async () => {
+      if (!fl) return; const f = fl.f; const picks = fl.picks; fl = null;
+      preset = D.services[f.svc] || ''; summary = picks.map((p) => `- ${p.q} ${p.l}`).join('\n');
+      trk('chat_flow_done', { flow: f.id });
+      await bot(f.intro + '\n\n' + picks.map((p) => '• ' + p.t).join('\n') + '\n\n' + f.outro, { act: ['lead', 'wa'] });
+    };
+    const flowStep = async (text: string) => {
+      if (!fl) return; const n = norm(text);
+      if (n === norm(D.kb.flowCancel)) { fl = null; await bot(D.kb.menuIntro || D.hello, { chips: D.kb.menu }); return; }
+      if (n === norm(D.kb.flowBack)) { fl.i = Math.max(0, fl.i - 1); fl.picks.length = fl.i; await flowAsk(); return; }
+      const st = fl.f.steps[fl.i];
+      let opt = st.o.find((o: any) => norm(o.l) === n);
+      if (!opt && n.length > 2) opt = st.o.find((o: any) => norm(o.l).includes(n) || (n.includes(norm(o.l)) && norm(o.l).length > 3));
+      if (!opt) { await bot(D.kb.flowPick, { chips: flowChips(fl.f, fl.i), wait: false }); return; }
+      fl.picks[fl.i] = { q: st.q, l: opt.l, t: opt.t }; fl.i++;
+      if (fl.i >= fl.f.steps.length) await flowFinish(); else await flowAsk();
+    };
 
     const finishLead = async () => {
       busy = true; input.disabled = true;
-      const msg = (lead.msg || '') + (hist.length ? `\n\n[${D.lang === 'ar' ? 'من محادثة الشات' : 'From chat'}]\n${transcript()}` : '');
+      const msg = (lead.msg || '') + (summary ? `\n\n[${D.lang === 'ar' ? 'ملخص الاستشارة' : 'Consultation summary'}]\n${summary}` : '') + (userMsgs.length ? `\n\n[${D.lang === 'ar' ? 'من محادثة الشات' : 'From chat'}]\n${userMsgs.slice(-4).map((m) => '- ' + m).join('\n').slice(0, 700)}` : '');
       const isMail = lead.contact.includes('@');
       const L: Lead = { name: stripHtml(lead.name), phone: isMail ? '' : cleanPhone(lead.contact), email: isMail ? lead.contact.trim() : '', service: lead.service, budget: D.budgetDefault, message: msg.trim(), source: 'chatbot' };
       const ref = makeRef();
@@ -499,7 +510,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
           await bot(D.ui.failTitle + ' ' + D.ui.failBody, { wait: false }); waBox(D.ui.waSend, 'chat_lead_fail');
         }
       }
-      step = ''; busy = false; input.disabled = false; input.placeholder = D.placeholder; Object.keys(lead).forEach((k) => delete lead[k]); input.focus();
+      step = ''; busy = false; input.disabled = false; input.placeholder = D.placeholder; Object.keys(lead).forEach((k) => delete lead[k]); preset = ''; summary = ''; input.focus();
     };
 
     const ask = async (text: string) => {
@@ -513,23 +524,28 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
         if (step === 'contact') {
           const isMail = text.includes('@');
           if (isMail ? !validEmail(text) : !validPhone(text)) { await bot(isMail ? D.ui.errEmail : D.ui.errPhone); return; }
-          lead.contact = text.slice(0, 80); step = 'service'; input.placeholder = D.askService; await bot(D.askService, { chips: D.services }); return;
+          lead.contact = text.slice(0, 80);
+          if (preset) { lead.service = preset; step = 'msg'; input.placeholder = D.askMsg; await bot(D.askMsg); return; }
+          step = 'service'; input.placeholder = D.askService; await bot(D.askService, { chips: D.services }); return;
         }
         if (step === 'service') { lead.service = text.slice(0, 80); step = 'msg'; input.placeholder = D.askMsg; await bot(D.askMsg); return; }
         if (step === 'msg') { lead.msg = (D.skip as string[]).includes(norm(text)) ? '' : text.slice(0, 600); await finishLead(); return; }
       }
-      trk('chat_message');
+      if (fl) { await flowStep(text); return; }
+      trk('chat_message'); userMsgs.push(text.slice(0, 200));
       const hit = match(text);
-      if (hit && hit.go) { hist.push({ role: 'user', content: text }); await bot(hit.a, { wait: true }); await startLead(); return; }
-      if (ai) { if (await askAI(text)) return; }
-      if (!hit) { await bot(D.fallback.a, { act: D.fallback.act }); return; }
-      await bot(hit.a, { chips: hit.chips, act: hit.act });
+      if (!hit) { await bot(D.fallback.a + '\n\n' + D.kb.didYouMean, { chips: D.kb.menu, act: D.fallback.act }); return; }
+      if (hit.flow) { await flowStart(hit.flow); return; }
+      if (hit.topic) topic = hit.topic;
+      if (hit.go) { await bot(hit.a, { wait: true }); await startLead(); return; }
+      const ans = (hit.v && topic && hit.v[topic]) || hit.a;
+      await bot(ans, { chips: hit.chips, act: hit.act });
     };
 
     let started = false;
     const open = () => {
       panel.hidden = false; launcher.setAttribute('aria-expanded', 'true'); launcher.classList.add('on');
-      if (!started) { started = true; bot(D.hello, { chips: D.chips, wait: false }); }
+      if (!started) { started = true; bot(D.hello, { chips: D.kb.menu, wait: false }); }
       setTimeout(() => input.focus(), 50);
     };
     const close = () => { panel.hidden = true; launcher.setAttribute('aria-expanded', 'false'); launcher.classList.remove('on'); launcher.focus(); };
