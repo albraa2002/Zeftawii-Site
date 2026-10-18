@@ -449,7 +449,14 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
             sc += Math.max(1, Math.floor(k.w.length * 0.55));
           } else {
             // Partial word overlap catches natural phrasing without accepting a single generic word.
-            const overlap = k.words.filter((w) => w.length >= 4 && toks.some((t) => t === w || (t.length >= 5 && w.length >= 5 && (t.startsWith(w.slice(0, 5)) || w.startsWith(t.slice(0, 5))))).length;
+            const overlap = k.words.filter((w) => {
+              if (w.length < 4) return false;
+              return toks.some((t) => {
+                if (t === w) return true;
+                if (t.length < 5 || w.length < 5) return false;
+                return t.startsWith(w.slice(0, 5)) || w.startsWith(t.slice(0, 5));
+              });
+            }).length;
             if (overlap >= 2) sc += overlap * 2;
           }
         }
