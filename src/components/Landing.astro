@@ -402,6 +402,10 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
         for (const k of kn[e.id] || []) if (k.short ? toks.includes(k.w) : joined.includes(k.w)) sc += k.w.length;
         if (sc > bs) { bs = sc; best = e; }
       }
+      // Avoid answering unrelated questions from a weak one-word keyword match.
+      // Short, intentional intents and common technical acronyms remain valid.
+      const shortIntents = new Set(['hi', 'hey', 'bye', 'ai', 'bi', 'ml', 'roas', 'cpa', 'cac', 'rfm', 'cod', 'kpi', 'seo', 'sql', 'crm', 'api', 'ga4', 'pm']);
+      if (best && bs < 3 && !['greet', 'thanks', 'bye', 'bot', 'human'].includes(best.id) && !toks.some((w: string) => shortIntents.has(w))) return null;
       return best;
     };
 
