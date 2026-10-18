@@ -388,24 +388,64 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
 
     const norm = (s: string) => s.toLowerCase()
       .replace(/[ً-ٰٟـ]/g, '').replace(/[إأآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه')
+      .replace(/[ؤئ]/g, 'ء').replace(/[٠-٩]/g, (d) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)))
       .replace(/[^\p{L}\p{N}\s]/gu, ' ').replace(/\s+/g, ' ').trim();
-    const prep = (s: string) => norm(s).split(' ').filter(Boolean).map((w) => (w.startsWith('ال') && w.length > 4 ? w.slice(2) : w));
-    const kn: Record<string, { w: string; short: boolean }[]> = {};
+    const prep = (s: string) => norm(s).split(' ').filter(Boolean)
+      .map((w) => (w.startsWith('ال') && w.length > 4 ? w.slice(2) : w));
+    const kn: Record<string, { w: string; short: boolean; words: string[] }[]> = {};
     D.kb.entries.forEach((e: any) => {
-      kn[e.id] = (e.k as string[]).map((k) => { const w = prep(k).join(' '); return { w, short: w.length <= 3 && !w.includes(' ') }; });
+      kn[e.id] = (e.k as string[]).map((k) => {
+        const words = prep(k);
+        const w = words.join(' ');
+        return { w, words, short: w.length <= 3 && !w.includes(' ') };
+      });
     });
+
+    // Expand common Egyptian Arabic / English phrasing into existing intents.
+    // This stays fully client-side and does not send messages to an external service.
+    const aliases: { re: RegExp; add: string }[] = [
+      { re: /\b(بكام|بكم|كام السعر|السعر كام|عايز اعرف السعر|عاوز اعرف السعر|الاسعار|تكلفتها|التكلفه كام|budget|how much does it cost|what does it cost|pricing details)\b/i, add: 'تكلفة price pricing cost how much' },
+      { re: /\b(قد ايه|هياخد وقت قد ايه|ياخد وقت|محتاج وقت|وقت قد ايه|المدة كام|امتى يخلص|timeline|delivery time|turnaround time)\b/i, add: 'مدة duration timeline how long' },
+      { re: /\b(عايز ابدا|عاوز ابدا|ابدأ ازاي|نبدأ ازاي|احجز استشارة|عايز استشارة|عاوز استشارة|محتاج استشارة|ساعدني اختار|recommend a service|where should i start)\b/i, add: 'استشارة مجانية consultation not sure where to start' },
+      { re: /\b(وريني شغلك|ممكن اشوف شغلك|عندك نماذج|نماذج شغل|شغل عملته|سابقة اعمال|سابقة أعمال|case studies|show me your work|show examples)\b/i, add: 'اعمال سابقة portfolio previous work examples' },
+      { re: /\b(اكلمك|اكلم البراء|عايز اتواصل|عاوز اتواصل|رقمك|رقم الواتس|واتساب|تواصل معاك|contact details|talk to albaraa|speak to someone)\b/i, add: 'اتواصل اكلم البراء واتساب contact human' },
+      { re: /\b(بتقدم ايه|بتعمل ايه|ايه اللي بتعمله|الخدمات المتاحة|تقدر تعمل ايه|what can you do|what services|services offered)\b/i, add: 'خدمات services what do you offer' },
+      { re: /\b(شيتات|جوجل شيت|جوجل شيتس|ملفات اكسل|ملف اكسيل|spreadsheet|google sheets|excel files)\b/i, add: 'اكسيل excel google sheets automation تقارير' },
+      { re: /\b(مبيعاتي واقعه|المبيعات قلت|الاعلانات مش جايبه|الحملات خسرانه|بحرق فلوس في الاعلانات|ads are not working|sales are down|campaigns losing money)\b/i, add: 'تحليلات تسويق تحليل حملات marketing analytics campaign performance' },
+      { re: /\b(الداتا ملخبطه|البيانات ملخبطه|بياناتي مش منظمه|الداتا مش نضيفه|تنضيف الداتا|clean my data|messy data|dirty data)\b/i, add: 'تنظيف بيانات automation no data' },
+      { re: /\b(داشبورد|لوحه بيانات|لوحة بيانات|متابعه الارقام|متابعة الارقام|dashboard report|track kpis)\b/i, add: 'لوحات تحكم dashboard bi kpi' },
+    ];
+    const expand = (text: string) => {
+      const base = norm(text);
+      const extra = aliases.filter((a) => a.re.test(base)).map((a) => a.add).join(' ');
+      return prep(base + ' ' + extra);
+    };
     const match = (text: string) => {
-      const toks = prep(text); const joined = ' ' + toks.join(' ') + ' ';
+      const toks = expand(text);
+      const joined = ' ' + toks.join(' ') + ' ';
+      const original = prep(text);
+      const originalJoined = ' ' + original.join(' ') + ' ';
       let best: any = null, bs = 0;
       for (const e of D.kb.entries) {
         let sc = 0;
-        for (const k of kn[e.id] || []) if (k.short ? toks.includes(k.w) : joined.includes(k.w)) sc += k.w.length;
+        for (const k of kn[e.id] || []) {
+          if (k.short ? original.includes(k.w) : originalJoined.includes(k.w)) {
+            // Prefer meaningful multi-word matches from the user's actual message.
+            sc += k.w.length + (k.words.length > 1 ? 5 : 0);
+          } else if (k.short ? toks.includes(k.w) : joined.includes(k.w)) {
+            // Expanded synonyms help recall, but carry less weight to avoid false matches.
+            sc += Math.max(1, Math.floor(k.w.length * 0.55));
+          } else {
+            // Partial word overlap catches natural phrasing without accepting a single generic word.
+            const overlap = k.words.filter((w) => w.length >= 4 && toks.some((t) => t === w || (t.length >= 5 && w.length >= 5 && (t.startsWith(w.slice(0, 5)) || w.startsWith(t.slice(0, 5))))).length;
+            if (overlap >= 2) sc += overlap * 2;
+          }
+        }
         if (sc > bs) { bs = sc; best = e; }
       }
-      // Avoid answering unrelated questions from a weak one-word keyword match.
-      // Short, intentional intents and common technical acronyms remain valid.
+      // Don't force a confident-sounding answer when the message is unrelated.
       const shortIntents = new Set(['hi', 'hey', 'bye', 'ai', 'bi', 'ml', 'roas', 'cpa', 'cac', 'rfm', 'cod', 'kpi', 'seo', 'sql', 'crm', 'api', 'ga4', 'pm']);
-      if (best && bs < 3 && !['greet', 'thanks', 'bye', 'bot', 'human'].includes(best.id) && !toks.some((w: string) => shortIntents.has(w))) return null;
+      if (best && bs < 3 && !['greet', 'thanks', 'bye', 'bot', 'human'].includes(best.id) && !original.some((w: string) => shortIntents.has(w))) return null;
       return best;
     };
 
