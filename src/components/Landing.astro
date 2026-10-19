@@ -2,10 +2,14 @@
 import { T, type Lang } from '../i18n';
 import { chatKB } from '../chatKB';
 import { SF } from '../serviceFields';
+import { UI, P } from '../content/ui';
+import { services as svcPages } from '../content/services';
+import { posts } from '../content/posts';
 import { CONFIG, hasKey, hasBooking, hasLog } from '../config';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = T[lang];
+const u = UI[lang];
 const wa = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(t.contact.waMsg)}`;
 const chatData = {
   ...t.chat,
@@ -58,6 +62,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
       <a href="#work">{t.nav.work}</a>
       <a href="#process">{t.nav.process}</a>
       <a href="#faq">{t.nav.faq}</a>
+      <a href={P(lang, '/blog/')}>{u.blog}</a>
       <a href="#contact">{t.nav.contact}</a>
       <a class="btn btn-primary btn-sm menu-cta" href="#contact" data-evt="cta_click" data-loc="menu">{t.nav.cta}</a>
     </nav>
@@ -124,6 +129,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
             <p>{s.d}</p>
             <ul>{s.pts.map((p) => <li>{p}</li>)}</ul>
             <a class="card-cta" href="#contact" data-service={i} data-evt="service_click" data-loc={s.icon}>{t.serviceCta}<span aria-hidden="true">{lang === 'ar' ? '←' : '→'}</span></a>
+            {svcPages.find((x) => x.idx === i) && <a class="card-more" href={P(lang, `/services/${svcPages.find((x) => x.idx === i)!.slug}/`)}>{lang === 'ar' ? 'تفاصيل الخدمة' : 'Service details'}</a>}
           </article>
         ))}
         </div>
@@ -221,6 +227,23 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
     </div>
   </section>
 
+  <section id="blog" class="latest">
+    <div class="wrap">
+      <div class="sec-head rv"><h2>{u.blogTitle}</h2><p>{u.blogSub}</p></div>
+      <div class="post-grid rv">
+        {posts.slice(0, 3).map((p) => (
+          <a class="post-card" href={P(lang, `/blog/${p.slug}/`)}>
+            <span class="meta">{p.mins} {u.min}</span>
+            <h3>{p[lang].title}</h3>
+            <p>{p[lang].desc}</p>
+            <span class="more">{u.read} <i aria-hidden="true">{lang === 'ar' ? '←' : '→'}</i></span>
+          </a>
+        ))}
+      </div>
+      <p style="margin-top:1rem"><a class="chip-link" href={P(lang, '/blog/')}>{lang === 'ar' ? 'كل المقالات' : 'All articles'}</a></p>
+    </div>
+  </section>
+
   <section id="faq">
     <div class="wrap" style="max-width: 820px">
       <div class="sec-head rv"><h2>{t.faqTitle}</h2></div>
@@ -237,6 +260,14 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
           {hasBooking() && <a class="btn btn-ghost" href={CONFIG.bookingUrl} target="_blank" rel="noopener" data-evt="booking_click" data-loc="contact">{t.contact.book}</a>}
           <a class="btn btn-ghost" href={`mailto:${CONFIG.email}`} style="direction:ltr" data-evt="email_click" data-loc="contact">{CONFIG.email}</a>
           <p class="assure">{t.contact.assure}</p>
+        </div>
+        <div class="fhelp" id="fhelp" data-sf={JSON.stringify(SF[lang])} data-prep={t.help.prepT} data-get={t.help.getT}>
+          <div class="fh-dyn" id="fh-dyn" aria-live="polite"></div>
+          <div class="fh-box">
+            <h3>{t.help.stepsT}</h3>
+            <ol class="fh-steps">{t.help.steps.map((x) => <li>{x}</li>)}</ol>
+            <p class="fh-tip">{t.help.tip}</p>
+          </div>
         </div>
       </div>
 
@@ -293,6 +324,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
           <li><a href="#calc">{t.calc.title}</a></li>
           <li><a href="#process">{t.nav.process}</a></li>
           <li><a href="#faq">{t.nav.faq}</a></li>
+          <li><a href={P(lang, '/blog/')}>{u.blog}</a></li>
           <li><a href="#contact">{t.nav.contact}</a></li>
           <li><a href={t.switchHref} hreflang={lang === 'ar' ? 'en' : 'ar'}>{t.switchLabel}</a></li>
         </ul>
@@ -687,7 +719,20 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
       lab.appendChild(sel); fieldsBox.appendChild(lab);
     });
   };
-  svcSel.addEventListener('change', renderSvc); renderSvc();
+  const fhDyn = document.getElementById('fh-dyn') as HTMLElement; const fh = document.getElementById('fhelp') as HTMLElement;
+  const renderHelp = () => {
+    const c = (SFD as any)[svcSel.selectedIndex]; fhDyn.textContent = ''; if (!c) return;
+    const mk = (title: string, items: string[], cls: string) => {
+      const b = document.createElement('div'); b.className = 'fh-box ' + cls;
+      const h = document.createElement('h3'); h.textContent = title; const ul = document.createElement('ul');
+      items.forEach((x) => { const li = document.createElement('li'); li.textContent = x; ul.appendChild(li); });
+      b.append(h, ul); fhDyn.appendChild(b);
+    };
+    mk(fh.dataset.prep || '', c.prep, 'prep'); mk(fh.dataset.get || '', c.get, 'get');
+  };
+  svcSel.addEventListener('change', () => { renderSvc(); renderHelp(); });
+  try { const q = Number(new URLSearchParams(location.search).get('service')); if (Number.isInteger(q) && q >= 0 && q < svcSel.options.length && new URLSearchParams(location.search).has('service')) svcSel.selectedIndex = q; } catch {}
+  renderSvc(); renderHelp();
   const setErr = (name: string, msg: string) => {
     const f = form.elements.namedItem(name) as HTMLInputElement | null; if (!f) return;
     const lab = f.closest('label') as HTMLElement; lab.querySelector('.ferr')?.remove();

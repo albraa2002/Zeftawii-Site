@@ -7,6 +7,13 @@ export const T = {
     title: 'محلل بيانات ولوحات تحكم Power BI – Zeftawii | Decoding Data',
     desc: 'محلل بيانات و Business Intelligence: لوحات Power BI، تحليلات تسويقية، أتمتة تقارير، وإدارة حسابات ومشاريع التسويق لشركات السعودية ومصر. احجز استشارة مجانية.',
     nav: { services: 'الخدمات', work: 'شغل فعلي', process: 'طريقة الشغل', faq: 'أسئلة شائعة', contact: 'تواصل', cta: 'احجز استشارة', menu: 'القائمة' },
+    help: {
+      prepT: 'جهّز الآتي (يساعدني أرد عليك أدق)',
+      getT: 'هتطلع من الاستشارة بـ',
+      stepsT: 'إيه اللي بيحصل بعد ما تبعت؟',
+      steps: ['براجع طلبك بنفسي خلال يوم عمل.', 'برد عليك بتوصية أولية وأسئلة توضيحية، أو نحدد مكالمة.', 'لو حبيت نكمل، بتستلم نطاق عمل وعرض مكتوب قبل أي بدء.'],
+      tip: 'نصيحة: اكتب رقمك بكود الدولة لو خارج مصر، ومتبعتش بيانات حساسة هنا.',
+    },
     calc: {
       title: 'حاسبة ربحية الإعلانات',
       sub: 'اعرف في 30 ثانية: حملتك بتكسّب ولا بتخسّر بعد تكلفة المنتج والشحن والمرتجعات. اكتب أرقامك بأي عملة (نفس العملة في كل الخانات).',
@@ -221,6 +228,13 @@ export const T = {
     title: 'Zeftawii | Decoding Data – Data Analyst & Power BI Dashboards',
     desc: 'Data analyst and BI specialist for businesses in Saudi Arabia and Egypt: Power BI dashboards, marketing analytics, automation and project management.',
     nav: { services: 'Services', work: 'Selected work', process: 'Process', faq: 'FAQ', contact: 'Contact', cta: 'Book a call', menu: 'Menu' },
+    help: {
+      prepT: 'Prepare this (helps me reply more precisely)',
+      getT: 'You will leave the consultation with',
+      stepsT: 'What happens after you send?',
+      steps: ['I review your request personally within one business day.', 'I reply with a first recommendation and clarifying questions, or we schedule a call.', 'If you want to continue, you get a written scope and quote before anything starts.'],
+      tip: 'Tip: include your country code if outside Egypt, and please do not send sensitive data here.',
+    },
     calc: {
       title: 'Ad profitability calculator',
       sub: 'Find out in 30 seconds whether your campaign earns or loses after product cost, shipping and returns. Use any currency, the same in every field.',

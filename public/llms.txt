@@ -23,6 +23,19 @@
 ## Pages
 - [Arabic home](https://zeftawii-site-bkxt.vercel.app/): main page in Arabic
 - [English home](https://zeftawii-site-bkxt.vercel.app/en/): main page in English
+- [Blog (Arabic)](https://zeftawii-site-bkxt.vercel.app/blog/) and [Blog (English)](https://zeftawii-site-bkxt.vercel.app/en/blog/)
+- [Service: dashboards-bi](https://zeftawii-site-bkxt.vercel.app/en/services/dashboards-bi/)
+- [Service: marketing-analytics](https://zeftawii-site-bkxt.vercel.app/en/services/marketing-analytics/)
+- [Service: report-automation](https://zeftawii-site-bkxt.vercel.app/en/services/report-automation/)
+- [Service: smart-tools](https://zeftawii-site-bkxt.vercel.app/en/services/smart-tools/)
+- [Service: account-management](https://zeftawii-site-bkxt.vercel.app/en/services/account-management/)
+- [Service: project-management](https://zeftawii-site-bkxt.vercel.app/en/services/project-management/)
+- [Article: roas-vs-break-even](https://zeftawii-site-bkxt.vercel.app/en/blog/roas-vs-break-even/)
+- [Article: cash-on-delivery-returns](https://zeftawii-site-bkxt.vercel.app/en/blog/cash-on-delivery-returns/)
+- [Article: scope-creep-agencies](https://zeftawii-site-bkxt.vercel.app/en/blog/scope-creep-agencies/)
+- [Article: choose-dashboard-kpis](https://zeftawii-site-bkxt.vercel.app/en/blog/choose-dashboard-kpis/)
+- [Article: excel-or-python-reports](https://zeftawii-site-bkxt.vercel.app/en/blog/excel-or-python-reports/)
+- [Article: rfm-customer-segments](https://zeftawii-site-bkxt.vercel.app/en/blog/rfm-customer-segments/)
 
 ## Contact
 - Website contact form and WhatsApp: https://zeftawii-site-bkxt.vercel.app/#contact

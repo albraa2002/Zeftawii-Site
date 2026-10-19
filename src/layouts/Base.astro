@@ -2,14 +2,16 @@
 import '../styles/global.css';
 import { T, type Lang } from '../i18n';
 import { CONFIG } from '../config';
-interface Props { lang: Lang; noindex?: boolean; title?: string; desc?: string }
-const { lang, noindex = false } = Astro.props;
+interface Props { lang: Lang; noindex?: boolean; title?: string; desc?: string; path?: string; alt?: { ar: string; en: string }; inner?: boolean; extraLd?: object[]; ogType?: string }
+const { lang, noindex = false, inner = false, extraLd = [], ogType = 'website' } = Astro.props;
 const t = T[lang];
 const title = Astro.props.title ?? t.title;
 const desc = Astro.props.desc ?? t.desc;
 
 const base = CONFIG.site.replace(/\/$/, '');
-const pageUrl = lang === 'ar' ? `${base}/` : `${base}/en/`;
+const pageUrl = Astro.props.path ? `${base}${Astro.props.path}` : (lang === 'ar' ? `${base}/` : `${base}/en/`);
+const altAr = `${base}${Astro.props.alt?.ar ?? '/'}`;
+const altEn = `${base}${Astro.props.alt?.en ?? '/en/'}`;
 const ogImage = `${base}/og-image.png`;
 const personName = 'Albaraa Ehab Elzeftawy';
 const brand = 'Zeftawii | Decoding Data';
@@ -98,7 +100,8 @@ const graph = [
     })),
   },
 ];
-const ld = { '@context': 'https://schema.org', '@graph': noindex ? [] : graph };
+const innerGraph = [graph[0], graph[1], ...extraLd];
+const ld = { '@context': 'https://schema.org', '@graph': noindex ? [] : (inner ? innerGraph : graph) };
 
 const fontsHref =
   'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans+Arabic:wght@400;700&family=Orbitron:wght@500;800&display=swap';
@@ -120,13 +123,13 @@ const fontsHref =
     {!noindex && (
       <>
         <link rel="canonical" href={pageUrl} />
-        <link rel="alternate" hreflang="ar" href={`${base}/`} />
-        <link rel="alternate" hreflang="en" href={`${base}/en/`} />
-        <link rel="alternate" hreflang="x-default" href={`${base}/`} />
+        <link rel="alternate" hreflang="ar" href={altAr} />
+        <link rel="alternate" hreflang="en" href={altEn} />
+        <link rel="alternate" hreflang="x-default" href={altAr} />
       </>
     )}
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={brand} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={desc} />
