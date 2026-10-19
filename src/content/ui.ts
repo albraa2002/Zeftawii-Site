@@ -1,6 +1,7 @@
 import type { Lang } from '../i18n';
 export const UI: Record<Lang, Record<string, string>> = {
   ar: {
+    about: 'عنّي', work: 'شغل فعلي', tools: 'أدوات مجانية', resources: 'قوالب مجانية', status: 'الحالة', stackT: 'التقنيات', contextT: 'المشكلة', didT: 'اللي اتعمل', valueT: 'إيه معنى ده لشغلك', moreCases: 'نماذج أخرى', allWork: 'كل النماذج',
     home: 'الرئيسية', blog: 'المدونة', services: 'الخدمات', calc: 'حاسبة الربحية', contact: 'تواصل', cta: 'احجز استشارة', menu: 'القائمة',
     blogTitle: 'المدونة', blogSub: 'شروحات عملية من شغلي الفعلي في تحليل البيانات والتسويق وإدارة المشاريع. بدون كلام نظري.', blogSeo: 'مدونة زفتاوي | تحليل بيانات وتسويق وإدارة مشاريع', blogDesc: 'مقالات عملية عن تحليل البيانات والتسويق الرقمي وإدارة الحسابات والمشاريع من خبرة فعلية.',
     read: 'اقرأ المقال', min: 'دقائق قراءة', tldr: 'الخلاصة', by: 'بقلم البراء إيهاب الزفتاوي', related: 'مقالات ذات صلة', relatedSvc: 'الخدمة المرتبطة', moreSvc: 'خدمات أخرى',
@@ -9,6 +10,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     allSvc: 'كل الخدمات', crumbHome: 'الرئيسية', footAbout: 'محلل بيانات و Business Intelligence ومدير حسابات ومشاريع تسويق رقمي. بحوّل بياناتك لقرارات.', rights: 'جميع الحقوق محفوظة', skip: 'تخطي للمحتوى', note: 'المحتوى تعليمي وتبسيطي، وأرقام الأمثلة توضيحية. كل نشاط له تفاصيله.',
   },
   en: {
+    about: 'About', work: 'Selected work', tools: 'Free tools', resources: 'Free templates', status: 'Status', stackT: 'Stack', contextT: 'The problem', didT: 'What was done', valueT: 'What this means for you', moreCases: 'More examples', allWork: 'All work',
     home: 'Home', blog: 'Blog', services: 'Services', calc: 'Profit calculator', contact: 'Contact', cta: 'Book a call', menu: 'Menu',
     blogTitle: 'Blog', blogSub: 'Practical write-ups from my real work in data analytics, marketing and project management. No theory for its own sake.', blogSeo: 'Zeftawii Blog | Data analytics, marketing and project management', blogDesc: 'Practical articles on data analytics, digital marketing, account and project management from hands-on experience.',
     read: 'Read article', min: 'min read', tldr: 'Key takeaway', by: 'By Albaraa Ehab Elzeftawy', related: 'Related articles', relatedSvc: 'Related service', moreSvc: 'Other services',

@@ -21,21 +21,35 @@
 - Companies with scattered data (unified KPI dashboards)
 
 ## Pages
-- [Arabic home](https://zeftawii-site-bkxt.vercel.app/): main page in Arabic
-- [English home](https://zeftawii-site-bkxt.vercel.app/en/): main page in English
-- [Blog (Arabic)](https://zeftawii-site-bkxt.vercel.app/blog/) and [Blog (English)](https://zeftawii-site-bkxt.vercel.app/en/blog/)
-- [Service: dashboards-bi](https://zeftawii-site-bkxt.vercel.app/en/services/dashboards-bi/)
-- [Service: marketing-analytics](https://zeftawii-site-bkxt.vercel.app/en/services/marketing-analytics/)
-- [Service: report-automation](https://zeftawii-site-bkxt.vercel.app/en/services/report-automation/)
-- [Service: smart-tools](https://zeftawii-site-bkxt.vercel.app/en/services/smart-tools/)
-- [Service: account-management](https://zeftawii-site-bkxt.vercel.app/en/services/account-management/)
-- [Service: project-management](https://zeftawii-site-bkxt.vercel.app/en/services/project-management/)
-- [Article: roas-vs-break-even](https://zeftawii-site-bkxt.vercel.app/en/blog/roas-vs-break-even/)
-- [Article: cash-on-delivery-returns](https://zeftawii-site-bkxt.vercel.app/en/blog/cash-on-delivery-returns/)
-- [Article: scope-creep-agencies](https://zeftawii-site-bkxt.vercel.app/en/blog/scope-creep-agencies/)
-- [Article: choose-dashboard-kpis](https://zeftawii-site-bkxt.vercel.app/en/blog/choose-dashboard-kpis/)
-- [Article: excel-or-python-reports](https://zeftawii-site-bkxt.vercel.app/en/blog/excel-or-python-reports/)
-- [Article: rfm-customer-segments](https://zeftawii-site-bkxt.vercel.app/en/blog/rfm-customer-segments/)
+- https://zeftawii-site-bkxt.vercel.app/en/
+- https://zeftawii-site-bkxt.vercel.app/en/about/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/cash-on-delivery-returns/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/choose-dashboard-kpis/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/data-cleaning-checklist/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/excel-or-python-reports/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/power-bi-vs-web-dashboard-vs-looker/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/read-campaign-report-10-minutes/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/rfm-customer-segments/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/roas-vs-break-even/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/scope-creep-agencies/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/weekly-status-report-one-page/
+- https://zeftawii-site-bkxt.vercel.app/en/resources/
+- https://zeftawii-site-bkxt.vercel.app/en/services/account-management/
+- https://zeftawii-site-bkxt.vercel.app/en/services/dashboards-bi/
+- https://zeftawii-site-bkxt.vercel.app/en/services/marketing-analytics/
+- https://zeftawii-site-bkxt.vercel.app/en/services/project-management/
+- https://zeftawii-site-bkxt.vercel.app/en/services/report-automation/
+- https://zeftawii-site-bkxt.vercel.app/en/services/smart-tools/
+- https://zeftawii-site-bkxt.vercel.app/en/tools/
+- https://zeftawii-site-bkxt.vercel.app/en/tools/automation-savings-calculator/
+- https://zeftawii-site-bkxt.vercel.app/en/tools/business-quick-check/
+- https://zeftawii-site-bkxt.vercel.app/en/tools/cod-returns-cost-calculator/
+- https://zeftawii-site-bkxt.vercel.app/en/work/
+- https://zeftawii-site-bkxt.vercel.app/en/work/amms/
+- https://zeftawii-site-bkxt.vercel.app/en/work/delivery-2026/
+- https://zeftawii-site-bkxt.vercel.app/en/work/python-analyses/
+- https://zeftawii-site-bkxt.vercel.app/en/work/scope-creep-sentinel/
 
 ## Contact
 - Website contact form and WhatsApp: https://zeftawii-site-bkxt.vercel.app/#contact

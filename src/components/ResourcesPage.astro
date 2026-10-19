@@ -1,0 +1,38 @@
+---
+import Shell from './Shell.astro';
+import type { Lang } from '../i18n';
+import { UI, P } from '../content/ui';
+import { CONFIG } from '../config';
+const { lang } = Astro.props as { lang: Lang };
+const u = UI[lang]; const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, '/resources/');
+const ar = lang === 'ar';
+const title = ar ? 'قوالب مجانية للتحميل | Zeftawii' : 'Free templates to download | Zeftawii';
+const desc = ar ? 'قوالب جاهزة ومجانية: نطاق عمل (SOW)، تقرير حالة أسبوعي، ومتابع KPIs. حمّلها وعدّل عليها.' : 'Free ready-to-use templates: scope of work (SOW), weekly status report and a KPI tracker. Download and adapt them.';
+const items = ar ? [
+  { t: 'قالب نطاق العمل (SOW)', d: 'مستند بـ 10 أقسام: التسليمات، خارج النطاق، الجدول، مسؤوليات العميل، جولات المراجعة، طلبات التغيير ومعايير القبول.', files: [{ n: 'تحميل بالعربي (Word)', h: '/downloads/scope-of-work-template-ar.docx' }, { n: 'Download English (Word)', h: '/downloads/scope-of-work-template-en.docx' }], link: '/blog/scope-creep-agencies/', ll: 'اقرأ: إزاي توقف التعديلات خارج النطاق' },
+  { t: 'قالب تقرير الحالة الأسبوعي', d: 'تقرير من صفحة واحدة: تم، جاري، متأخر، مخاطر، مطلوب من العميل وقرارات تحتاج موافقة، مع حالة عامة (أخضر/أصفر/أحمر).', files: [{ n: 'تحميل (Excel)', h: '/downloads/weekly-status-report-template.xlsx' }], link: '/services/project-management/', ll: 'خدمة إدارة المشاريع' },
+  { t: 'متابع مؤشرات الأداء KPIs', d: 'شيت لـ 5 إلى 8 مؤشرات: التعريف، المصدر، المسؤول، الهدف، الحالي، وحالة تلقائية والقرار لو المؤشر نزل.', files: [{ n: 'تحميل (Excel)', h: '/downloads/kpi-tracker-template.xlsx' }], link: '/blog/choose-dashboard-kpis/', ll: 'اقرأ: إزاي تختار KPIs للوحة التحكم' },
+] : [
+  { t: 'Scope of Work (SOW) template', d: 'A 10-section document: deliverables, out of scope, timeline, client responsibilities, review rounds, change requests and acceptance criteria.', files: [{ n: 'Download English (Word)', h: '/downloads/scope-of-work-template-en.docx' }, { n: 'تحميل بالعربي (Word)', h: '/downloads/scope-of-work-template-ar.docx' }], link: '/blog/scope-creep-agencies/', ll: 'Read: how to stop scope creep' },
+  { t: 'Weekly status report template', d: 'A one-page report: done, in progress, late, risks, needed from the client and decisions, with an overall status (green, amber, red).', files: [{ n: 'Download (Excel)', h: '/downloads/weekly-status-report-template.xlsx' }], link: '/services/project-management/', ll: 'Project management service' },
+  { t: 'KPI tracker', d: 'A sheet for 5 to 8 KPIs: definition, source, owner, target, current, an automatic status and the decision if it drops.', files: [{ n: 'Download (Excel)', h: '/downloads/kpi-tracker-template.xlsx' }], link: '/blog/choose-dashboard-kpis/', ll: 'Read: how to choose dashboard KPIs' },
+];
+const ld = [{ '@type': 'CollectionPage', name: title, url: base + path, inLanguage: lang }];
+---
+<Shell lang={lang} title={title} desc={desc} path={path} alt={{ ar: '/resources/', en: '/en/resources/' }} extraLd={ld}>
+  <div class="wrap page-head"><span class="kicker">TEMPLATES</span><h1>{u.resources}</h1><p>{desc}</p></div>
+  <div class="wrap post-grid">
+    {items.map((i) => (
+      <div class="post-card">
+        <h2>{i.t}</h2>
+        <p>{i.d}</p>
+        <div class="cta-row">{i.files.map((f) => <a class="btn btn-primary btn-sm" href={f.h} download data-evt="download" data-loc="resources">{f.n}</a>)}</div>
+        <a class="more" href={P(lang, i.link)}>{i.ll}</a>
+      </div>
+    ))}
+  </div>
+  <div class="wrap">
+    <div class="cta-box"><h2>{ar ? 'عاوز نطبقهم على شغلك؟' : 'Want these applied to your work?'}</h2><p>{ar ? 'احجز استشارة مجانية وأساعدك تظبط نطاق العمل والتقارير والمؤشرات لحالتك.' : 'Book a free consultation and I will help you set up the scope, reports and KPIs for your case.'}</p>
+      <div class="cta-row"><a class="btn btn-primary" href={P(lang, '/#contact')}>{u.ctaBtn}</a></div></div>
+  </div>
+</Shell>

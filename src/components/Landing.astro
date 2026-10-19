@@ -5,6 +5,8 @@ import { SF } from '../serviceFields';
 import { UI, P } from '../content/ui';
 import { services as svcPages } from '../content/services';
 import { posts } from '../content/posts';
+import { cases } from '../content/site';
+import { tools } from '../content/tools';
 import { CONFIG, hasKey, hasBooking, hasLog } from '../config';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -60,9 +62,9 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
     <nav class="links" id="nav-links" aria-label="main">
       <a href="#services">{t.nav.services}</a>
       <a href="#work">{t.nav.work}</a>
-      <a href="#process">{t.nav.process}</a>
-      <a href="#faq">{t.nav.faq}</a>
+      <a href={P(lang, '/tools/')}>{u.tools}</a>
       <a href={P(lang, '/blog/')}>{u.blog}</a>
+      <a href={P(lang, '/about/')}>{u.about}</a>
       <a href="#contact">{t.nav.contact}</a>
       <a class="btn btn-primary btn-sm menu-cta" href="#contact" data-evt="cta_click" data-loc="menu">{t.nav.cta}</a>
     </nav>
@@ -171,6 +173,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
             <h3>{w.t}</h3>
             <p>{w.d}</p>
             <ul class="stack">{w.stack.map((x) => <li>{x}</li>)}</ul>
+            {cases[i] && <a class="card-more" href={P(lang, `/work/${cases[i].slug}/`)}>{lang === 'ar' ? 'تفاصيل أكتر' : 'More details'}</a>}
           </article>
         ))}
       </div>
@@ -206,6 +209,18 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
     </div>
   </section>
 
+  <section id="tools" class="latest">
+    <div class="wrap">
+      <div class="sec-head rv"><h2>{u.tools}</h2><p>{lang === 'ar' ? 'أدوات مجانية تفاعلية تساعدك تقرر بالأرقام، وقوالب جاهزة للتحميل.' : 'Free interactive tools that help you decide with numbers, plus downloadable templates.'}</p></div>
+      <div class="post-grid rv">
+        {tools.map((x) => (
+          <a class="post-card" href={P(lang, `/tools/${x.slug}/`)}><span class="meta">FREE</span><h3>{x[lang].name}</h3><p>{x[lang].desc}</p><span class="more">{lang === 'ar' ? 'جرّب الأداة' : 'Try the tool'} <i aria-hidden="true">{lang === 'ar' ? '←' : '→'}</i></span></a>
+        ))}
+      </div>
+      <p style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap"><a class="chip-link" href={P(lang, '/tools/')}>{lang === 'ar' ? 'كل الأدوات' : 'All tools'}</a><a class="chip-link" href={P(lang, '/resources/')}>{u.resources}</a></p>
+    </div>
+  </section>
+
   <section id="process">
     <div class="wrap">
       <div class="sec-head rv"><h2>{t.processTitle}</h2><p>{t.processSub}</p></div>
@@ -221,7 +236,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
         <figure class="about-photo">
           <img src="/albaraa.jpg" srcset="/albaraa-320.jpg 320w, /albaraa.jpg 640w" sizes="(max-width: 640px) 160px, 220px" width="640" height="640" alt={t.photoAlt} loading="lazy" decoding="async" />
         </figure>
-        <div class="sec-head"><h2>{t.whyTitle}</h2><p>{t.whySub}</p></div>
+        <div class="sec-head"><h2>{t.whyTitle}</h2><p>{t.whySub}</p><p style="margin-top:.8rem"><a class="chip-link" href={P(lang, '/about/')}>{lang === 'ar' ? 'اعرف أكتر عني' : 'More about me'}</a></p></div>
       </div>
       <div class="why">{t.why.map((w) => <div class="rv"><h3>{w.t}</h3><p>{w.d}</p></div>)}</div>
     </div>
@@ -325,6 +340,10 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
           <li><a href="#process">{t.nav.process}</a></li>
           <li><a href="#faq">{t.nav.faq}</a></li>
           <li><a href={P(lang, '/blog/')}>{u.blog}</a></li>
+          <li><a href={P(lang, '/about/')}>{u.about}</a></li>
+          <li><a href={P(lang, '/tools/')}>{u.tools}</a></li>
+          <li><a href={P(lang, '/resources/')}>{u.resources}</a></li>
+          <li><a href="#process">{t.nav.process}</a></li>
           <li><a href="#contact">{t.nav.contact}</a></li>
           <li><a href={t.switchHref} hreflang={lang === 'ar' ? 'en' : 'ar'}>{t.switchLabel}</a></li>
         </ul>

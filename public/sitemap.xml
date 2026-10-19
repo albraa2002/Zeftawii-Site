@@ -19,9 +19,27 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/"/>
   </url>
   <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/about/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/about/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/about/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/about/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/about/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/about/"/>
+  </url>
+  <url>
     <loc>https://zeftawii-site-bkxt.vercel.app/blog/</loc>
     <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/"/>
@@ -30,11 +48,227 @@
   <url>
     <loc>https://zeftawii-site-bkxt.vercel.app/en/blog/</loc>
     <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/blog/cash-on-delivery-returns/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/cash-on-delivery-returns/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/cash-on-delivery-returns/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/cash-on-delivery-returns/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/blog/cash-on-delivery-returns/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/cash-on-delivery-returns/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/cash-on-delivery-returns/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/cash-on-delivery-returns/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/blog/choose-dashboard-kpis/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/choose-dashboard-kpis/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/choose-dashboard-kpis/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/choose-dashboard-kpis/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/blog/choose-dashboard-kpis/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/choose-dashboard-kpis/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/choose-dashboard-kpis/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/choose-dashboard-kpis/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/blog/data-cleaning-checklist/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/data-cleaning-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/data-cleaning-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/data-cleaning-checklist/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/blog/data-cleaning-checklist/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/data-cleaning-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/data-cleaning-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/data-cleaning-checklist/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/blog/excel-or-python-reports/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/excel-or-python-reports/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/excel-or-python-reports/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/excel-or-python-reports/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/blog/excel-or-python-reports/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/excel-or-python-reports/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/excel-or-python-reports/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/excel-or-python-reports/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/blog/power-bi-vs-web-dashboard-vs-looker/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/power-bi-vs-web-dashboard-vs-looker/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/power-bi-vs-web-dashboard-vs-looker/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/power-bi-vs-web-dashboard-vs-looker/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/blog/power-bi-vs-web-dashboard-vs-looker/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/power-bi-vs-web-dashboard-vs-looker/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/power-bi-vs-web-dashboard-vs-looker/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/power-bi-vs-web-dashboard-vs-looker/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/blog/read-campaign-report-10-minutes/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/read-campaign-report-10-minutes/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/read-campaign-report-10-minutes/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/read-campaign-report-10-minutes/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/blog/read-campaign-report-10-minutes/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/read-campaign-report-10-minutes/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/read-campaign-report-10-minutes/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/read-campaign-report-10-minutes/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/blog/rfm-customer-segments/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/rfm-customer-segments/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/rfm-customer-segments/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/rfm-customer-segments/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/blog/rfm-customer-segments/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/rfm-customer-segments/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/rfm-customer-segments/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/rfm-customer-segments/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/blog/roas-vs-break-even/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/roas-vs-break-even/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/roas-vs-break-even/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/roas-vs-break-even/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/blog/roas-vs-break-even/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/roas-vs-break-even/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/roas-vs-break-even/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/roas-vs-break-even/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/blog/scope-creep-agencies/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/scope-creep-agencies/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/scope-creep-agencies/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/scope-creep-agencies/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/blog/scope-creep-agencies/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/scope-creep-agencies/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/scope-creep-agencies/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/scope-creep-agencies/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/blog/weekly-status-report-one-page/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/weekly-status-report-one-page/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/weekly-status-report-one-page/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/weekly-status-report-one-page/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/blog/weekly-status-report-one-page/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/weekly-status-report-one-page/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/weekly-status-report-one-page/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/weekly-status-report-one-page/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/resources/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/resources/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/resources/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/resources/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/resources/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/resources/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/resources/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/resources/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/services/account-management/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/services/account-management/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/services/account-management/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/services/account-management/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/services/account-management/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/services/account-management/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/services/account-management/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/services/account-management/"/>
   </url>
   <url>
     <loc>https://zeftawii-site-bkxt.vercel.app/services/dashboards-bi/</loc>
@@ -73,6 +307,24 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/services/marketing-analytics/"/>
   </url>
   <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/services/project-management/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/services/project-management/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/services/project-management/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/services/project-management/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/services/project-management/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/services/project-management/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/services/project-management/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/services/project-management/"/>
+  </url>
+  <url>
     <loc>https://zeftawii-site-bkxt.vercel.app/services/report-automation/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
@@ -109,147 +361,165 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/services/smart-tools/"/>
   </url>
   <url>
-    <loc>https://zeftawii-site-bkxt.vercel.app/services/account-management/</loc>
+    <loc>https://zeftawii-site-bkxt.vercel.app/tools/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/services/account-management/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/services/account-management/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/services/account-management/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/tools/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/tools/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/tools/"/>
   </url>
   <url>
-    <loc>https://zeftawii-site-bkxt.vercel.app/en/services/account-management/</loc>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/tools/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/services/account-management/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/services/account-management/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/services/account-management/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/tools/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/tools/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/tools/"/>
   </url>
   <url>
-    <loc>https://zeftawii-site-bkxt.vercel.app/services/project-management/</loc>
+    <loc>https://zeftawii-site-bkxt.vercel.app/tools/automation-savings-calculator/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/services/project-management/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/services/project-management/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/services/project-management/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/tools/automation-savings-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/tools/automation-savings-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/tools/automation-savings-calculator/"/>
   </url>
   <url>
-    <loc>https://zeftawii-site-bkxt.vercel.app/en/services/project-management/</loc>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/tools/automation-savings-calculator/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/services/project-management/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/services/project-management/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/services/project-management/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/tools/automation-savings-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/tools/automation-savings-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/tools/automation-savings-calculator/"/>
   </url>
   <url>
-    <loc>https://zeftawii-site-bkxt.vercel.app/blog/roas-vs-break-even/</loc>
-    <lastmod>2026-10-18</lastmod>
+    <loc>https://zeftawii-site-bkxt.vercel.app/tools/business-quick-check/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/tools/business-quick-check/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/tools/business-quick-check/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/tools/business-quick-check/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/tools/business-quick-check/</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/roas-vs-break-even/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/roas-vs-break-even/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/roas-vs-break-even/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/tools/business-quick-check/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/tools/business-quick-check/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/tools/business-quick-check/"/>
   </url>
   <url>
-    <loc>https://zeftawii-site-bkxt.vercel.app/en/blog/roas-vs-break-even/</loc>
-    <lastmod>2026-10-18</lastmod>
+    <loc>https://zeftawii-site-bkxt.vercel.app/tools/cod-returns-cost-calculator/</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/roas-vs-break-even/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/roas-vs-break-even/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/roas-vs-break-even/"/>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/tools/cod-returns-cost-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/tools/cod-returns-cost-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/tools/cod-returns-cost-calculator/"/>
   </url>
   <url>
-    <loc>https://zeftawii-site-bkxt.vercel.app/blog/cash-on-delivery-returns/</loc>
-    <lastmod>2026-10-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/cash-on-delivery-returns/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/cash-on-delivery-returns/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/cash-on-delivery-returns/"/>
-  </url>
-  <url>
-    <loc>https://zeftawii-site-bkxt.vercel.app/en/blog/cash-on-delivery-returns/</loc>
-    <lastmod>2026-10-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/cash-on-delivery-returns/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/cash-on-delivery-returns/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/cash-on-delivery-returns/"/>
-  </url>
-  <url>
-    <loc>https://zeftawii-site-bkxt.vercel.app/blog/scope-creep-agencies/</loc>
-    <lastmod>2026-10-18</lastmod>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/tools/cod-returns-cost-calculator/</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/scope-creep-agencies/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/scope-creep-agencies/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/scope-creep-agencies/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/tools/cod-returns-cost-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/tools/cod-returns-cost-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/tools/cod-returns-cost-calculator/"/>
   </url>
   <url>
-    <loc>https://zeftawii-site-bkxt.vercel.app/en/blog/scope-creep-agencies/</loc>
-    <lastmod>2026-10-18</lastmod>
+    <loc>https://zeftawii-site-bkxt.vercel.app/work/</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/scope-creep-agencies/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/scope-creep-agencies/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/scope-creep-agencies/"/>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/work/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/work/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/work/"/>
   </url>
   <url>
-    <loc>https://zeftawii-site-bkxt.vercel.app/blog/choose-dashboard-kpis/</loc>
-    <lastmod>2026-10-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/choose-dashboard-kpis/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/choose-dashboard-kpis/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/choose-dashboard-kpis/"/>
-  </url>
-  <url>
-    <loc>https://zeftawii-site-bkxt.vercel.app/en/blog/choose-dashboard-kpis/</loc>
-    <lastmod>2026-10-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/choose-dashboard-kpis/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/choose-dashboard-kpis/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/choose-dashboard-kpis/"/>
-  </url>
-  <url>
-    <loc>https://zeftawii-site-bkxt.vercel.app/blog/excel-or-python-reports/</loc>
-    <lastmod>2026-10-18</lastmod>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/work/</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/excel-or-python-reports/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/excel-or-python-reports/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/excel-or-python-reports/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/work/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/work/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/work/"/>
   </url>
   <url>
-    <loc>https://zeftawii-site-bkxt.vercel.app/en/blog/excel-or-python-reports/</loc>
-    <lastmod>2026-10-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/excel-or-python-reports/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/excel-or-python-reports/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/excel-or-python-reports/"/>
-  </url>
-  <url>
-    <loc>https://zeftawii-site-bkxt.vercel.app/blog/rfm-customer-segments/</loc>
-    <lastmod>2026-10-18</lastmod>
+    <loc>https://zeftawii-site-bkxt.vercel.app/work/amms/</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/rfm-customer-segments/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/rfm-customer-segments/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/rfm-customer-segments/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/work/amms/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/work/amms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/work/amms/"/>
   </url>
   <url>
-    <loc>https://zeftawii-site-bkxt.vercel.app/en/blog/rfm-customer-segments/</loc>
-    <lastmod>2026-10-18</lastmod>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/work/amms/</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/blog/rfm-customer-segments/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/blog/rfm-customer-segments/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/blog/rfm-customer-segments/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/work/amms/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/work/amms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/work/amms/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/work/delivery-2026/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/work/delivery-2026/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/work/delivery-2026/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/work/delivery-2026/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/work/delivery-2026/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/work/delivery-2026/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/work/delivery-2026/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/work/delivery-2026/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/work/python-analyses/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/work/python-analyses/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/work/python-analyses/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/work/python-analyses/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/work/python-analyses/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/work/python-analyses/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/work/python-analyses/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/work/python-analyses/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/work/scope-creep-sentinel/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/work/scope-creep-sentinel/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/work/scope-creep-sentinel/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/work/scope-creep-sentinel/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-bkxt.vercel.app/en/work/scope-creep-sentinel/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-bkxt.vercel.app/work/scope-creep-sentinel/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-bkxt.vercel.app/en/work/scope-creep-sentinel/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-bkxt.vercel.app/work/scope-creep-sentinel/"/>
   </url>
 </urlset>

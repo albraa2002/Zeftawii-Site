@@ -18,8 +18,10 @@ const other = lang === 'ar' ? alt.en : alt.ar;
       <a href={home} class="logo">{CONFIG.brand}<b> |</b><small>{CONFIG.tagline.toUpperCase()}</small></a>
       <nav class="links" id="nav-links" aria-label="main">
         <a href={home + '#services'}>{u.services}</a>
+        <a href={P(lang, '/work/')}>{u.work}</a>
+        <a href={P(lang, '/tools/')}>{u.tools}</a>
         <a href={P(lang, '/blog/')}>{u.blog}</a>
-        <a href={home + '#calc'}>{u.calc}</a>
+        <a href={P(lang, '/about/')}>{u.about}</a>
         <a href={home + '#contact'}>{u.contact}</a>
         <a class="btn btn-primary btn-sm menu-cta" href={home + '#contact'}>{u.cta}</a>
       </nav>
@@ -49,8 +51,11 @@ const other = lang === 'ar' ? alt.en : alt.ar;
           <p class="foot-h">{t.footer.colLinks}</p>
           <ul>
             <li><a href={home}>{u.home}</a></li>
+            <li><a href={P(lang, '/about/')}>{u.about}</a></li>
+            <li><a href={P(lang, '/work/')}>{u.work}</a></li>
             <li><a href={P(lang, '/blog/')}>{u.blog}</a></li>
-            <li><a href={home + '#calc'}>{u.calc}</a></li>
+            <li><a href={P(lang, '/tools/')}>{u.tools}</a></li>
+            <li><a href={P(lang, '/resources/')}>{u.resources}</a></li>
             <li><a href={home + '#contact'}>{u.contact}</a></li>
             <li><a href={wa} target="_blank" rel="noopener" dir="ltr">WhatsApp</a></li>
           </ul>

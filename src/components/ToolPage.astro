@@ -1,0 +1,150 @@
+---
+import Shell from './Shell.astro';
+import type { Lang } from '../i18n';
+import { UI, P } from '../content/ui';
+import { tools } from '../content/tools';
+import { services } from '../content/services';
+import { CONFIG } from '../config';
+const { lang, slug } = Astro.props as { lang: Lang; slug: string };
+const tool = tools.find((x) => x.slug === slug)!; const c = tool[lang]; const u = UI[lang];
+const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, `/tools/${slug}/`);
+const others = tools.filter((x) => x.slug !== slug);
+const ld = [
+  { '@type': 'WebApplication', name: c.name, description: c.desc, url: base + path, inLanguage: lang, applicationCategory: 'BusinessApplication', operatingSystem: 'Web', offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }, author: { '@id': `${base}/#person` } },
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: u.crumbHome, item: base + P(lang, '/') },
+    { '@type': 'ListItem', position: 2, name: u.tools, item: base + P(lang, '/tools/') },
+    { '@type': 'ListItem', position: 3, name: c.name, item: base + path },
+  ] },
+];
+const data = { kind: tool.kind, svc: tool.svc, lang, ...c, wa: CONFIG.whatsapp, svcPath: P(lang, '/'), services: services.map((s) => s[lang].name) };
+---
+<Shell lang={lang} title={`${c.name} | Zeftawii`} desc={c.desc} path={path} alt={{ ar: `/tools/${slug}/`, en: `/en/tools/${slug}/` }} extraLd={ld}>
+  <div class="wrap page-head">
+    <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/tools/')}>{u.tools}</a></nav>
+    <span class="kicker">FREE TOOL</span>
+    <h1>{c.h1}</h1>
+    <p>{c.lead}</p>
+  </div>
+  <div class="wrap">
+    <div class="calc tool" id="tool" data-t={JSON.stringify(data)}>
+      {tool.kind !== 'check' ? (<>
+        <div class="calc-in">
+          {c.f!.map((f) => (<label>{f.l}<input data-k={f.k} inputmode="decimal" dir="ltr" autocomplete="off" placeholder={f.ph || ''} /></label>))}
+        </div>
+        <div class="calc-out" aria-live="polite">
+          <div class="calc-grid" hidden>
+            {Object.entries(c.r!).map(([k, l]) => (<div class="calc-k"><small>{l}</small><b data-o={k}>-</b></div>))}
+          </div>
+          <p class="calc-verdict">{c.empty}</p>
+          <p class="calc-note">{c.note}</p>
+          <div class="calc-cta" hidden>
+            <span>{c.cta}</span>
+            <a class="btn btn-primary btn-sm" id="t-cta" href={P(lang, `/?service=${tool.svc}#contact`)} data-evt="cta_click" data-loc="tool">{u.ctaBtn}</a>
+            <a class="btn btn-wa btn-sm" id="t-wa" target="_blank" rel="noopener" data-evt="whatsapp_click" data-loc="tool">{u.wa}</a>
+          </div>
+        </div>
+      </>) : (<>
+        <div class="quiz">
+          {c.q!.map((g, gi) => (
+            <fieldset class="q-group">
+              <legend>{g.area}</legend>
+              {g.items.map((it, ii) => (
+                <div class="q-item" role="radiogroup" aria-label={it}>
+                  <p>{it}</p>
+                  <div class="q-opts">
+                    {c.opts!.map((o, oi) => (<label class="q-opt"><input type="radio" name={`q${gi}_${ii}`} value={2 - oi} /><span>{o}</span></label>))}
+                  </div>
+                </div>
+              ))}
+            </fieldset>
+          ))}
+          <button class="btn btn-primary" id="q-go" type="button" disabled>{lang === 'ar' ? 'اعرض النتيجة' : 'Show my result'}</button>
+        </div>
+        <div class="calc-out" aria-live="polite">
+          <div id="q-res" hidden></div>
+          <p class="calc-note">{c.note}</p>
+        </div>
+      </>)}
+    </div>
+    <h2 class="sec-h">{u.tools}</h2>
+    <div class="post-grid tight">
+      <a class="post-card" href={P(lang, '/#calc')}><h3>{lang === 'ar' ? 'حاسبة ربحية الإعلانات (ROAS)' : 'Ad profitability calculator (ROAS)'}</h3></a>
+      {others.map((o) => <a class="post-card" href={P(lang, `/tools/${o.slug}/`)}><h3>{o[lang].name}</h3></a>)}
+    </div>
+  </div>
+</Shell>
+
+<script>
+  import { toLatinDigits, getCtx, waLink } from '../lib/lead';
+  const root = document.getElementById('tool');
+  if (root) {
+    const T = JSON.parse(root.dataset.t || '{}'); const kind = T.kind as string; const ar = T.lang === 'ar';
+    const trk = (n: string, p: Record<string, unknown> = {}) => { const g = (window as any).gtag; if (typeof g === 'function') g('event', n, p); };
+    const f = (n: number) => n.toLocaleString('en-US', { maximumFractionDigits: 2 });
+    const src = () => { const cx = getCtx(); return `——\n${ar ? 'المصدر' : 'Source'}: tool/${kind}${cx.utm_source ? ' · ' + cx.utm_source : ''}`; };
+    if (kind === 'check') {
+      const go = document.getElementById('q-go') as HTMLButtonElement; const res = document.getElementById('q-res') as HTMLElement;
+      const groups = T.q.length * 3;
+      const inputs = () => Array.from(root.querySelectorAll<HTMLInputElement>('input[type=radio]:checked'));
+      root.addEventListener('change', () => { go.disabled = inputs().length < groups; });
+      go.addEventListener('click', () => {
+        const sc = [0, 0, 0]; inputs().forEach((i) => { sc[Number(i.name.slice(1, 2))] += Number(i.value); });
+        const lvl = (s: number) => (s >= 5 ? 0 : s >= 3 ? 1 : 2);
+        let weak = 0; sc.forEach((s, i) => { if (s < sc[weak]) weak = i; });
+        const svcByArea = [1, 2, 4];
+        res.textContent = '';
+        const h = document.createElement('h2'); h.className = 'sec-h'; h.textContent = T.resT; res.appendChild(h);
+        sc.forEach((s, i) => {
+          const row = document.createElement('div'); row.className = 'q-res-row lv' + lvl(s);
+          const t = document.createElement('div'); t.className = 'q-res-t'; const a = document.createElement('b'); a.textContent = T.areas[i]; const l = document.createElement('span'); l.textContent = `${T.levels[lvl(s)]} · ${s}/6`; t.append(a, l);
+          const bar = document.createElement('div'); bar.className = 'q-bar'; const fill = document.createElement('i'); fill.style.width = Math.round((s / 6) * 100) + '%'; bar.appendChild(fill);
+          row.append(t, bar); res.appendChild(row);
+        });
+        const tip = document.createElement('div'); tip.className = 'info-box good';
+        const th = document.createElement('h3'); th.textContent = (ar ? 'ابدأ من: ' : 'Start with: ') + T.areas[weak]; const ul = document.createElement('ul');
+        T.tips[String(weak)].forEach((x: string) => { const li = document.createElement('li'); li.textContent = x; ul.appendChild(li); });
+        tip.append(th, ul); res.appendChild(tip);
+        const cta = document.createElement('div'); cta.className = 'calc-cta'; const sp = document.createElement('span'); sp.textContent = T.cta;
+        const b1 = document.createElement('a'); b1.className = 'btn btn-primary btn-sm'; b1.textContent = ar ? 'استشارة مجانية' : 'Free consultation'; b1.href = `${T.svcPath}?service=${svcByArea[weak]}#contact`;
+        const b2 = document.createElement('a'); b2.className = 'btn btn-wa btn-sm'; b2.target = '_blank'; b2.rel = 'noopener'; b2.textContent = ar ? 'ابعت النتيجة على واتساب' : 'Send the result on WhatsApp';
+        const lines = [T.waHead, '', ...sc.map((s, i) => `• ${T.areas[i]}: ${T.levels[lvl(s)]} (${s}/6)`), '', `${ar ? 'أضعف منطقة' : 'Weakest area'}: ${T.areas[weak]}`, src()];
+        b2.href = waLink(T.wa, lines.join('\n')); cta.append(sp, b1, b2); res.appendChild(cta);
+        res.hidden = false; res.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); trk('tool_used', { tool: kind });
+      });
+    } else {
+      const ins = Array.from(root.querySelectorAll<HTMLInputElement>('input[data-k]'));
+      const grid = root.querySelector('.calc-grid') as HTMLElement; const verdict = root.querySelector('.calc-verdict') as HTMLElement; const cta = root.querySelector('.calc-cta') as HTMLElement; const waA = document.getElementById('t-wa') as HTMLAnchorElement;
+      const num = (s: string) => { const v = parseFloat(toLatinDigits(s).replace(/[,،٬\s]/g, '').replace('٫', '.')); return isFinite(v) ? v : NaN; };
+      const out = (k: string, v: string) => { const e = root.querySelector(`[data-o="${k}"]`); if (e) e.textContent = v; };
+      let sent = false;
+      const calc = () => {
+        const v: Record<string, number> = {}; ins.forEach((i) => { v[i.dataset.k!] = num(i.value); });
+        const d = (k: string, def = 0) => (isNaN(v[k]) ? def : v[k]);
+        let ok = false, verdictKey = '';
+        if (kind === 'savings') {
+          ok = v.reports > 0 && v.hours > 0 && v.rate > 0;
+          if (ok) {
+            const save = Math.min(Math.max(d('save', 60), 0), 100) / 100; const hy = v.reports * v.hours * 12, cy = hy * v.rate, sh = hy * save, sc = cy * save;
+            out('hy', f(hy)); out('cy', f(cy)); out('sh', f(sh)); out('sc', f(sc)); verdictKey = sh >= 100 ? 'big' : sh >= 24 ? 'mid' : 'low';
+          }
+        } else {
+          ok = v.orders > 0 && v.aov > 0 && v.rate > 0;
+          if (ok) {
+            const cogs = Math.min(Math.max(d('cogs'), 0), 100) / 100, rate = Math.min(v.rate, 100), ship = d('ship'), rship = d('rship'), red = Math.min(d('red', 5), rate);
+            const ret = v.orders * rate / 100, dc = ret * (ship + rship), lp = ret * v.aov * (1 - cogs), tot = dc + lp;
+            const per = ship + rship + v.aov * (1 - cogs), sv = v.orders * red / 100 * per * 12; const base = v.orders * v.aov * (1 - cogs);
+            out('ret', f(ret)); out('dc', f(dc)); out('lp', f(lp)); out('tot', f(tot)); out('sv', f(sv));
+            const share = base > 0 ? tot / base : 0; verdictKey = share >= 0.15 ? 'high' : share >= 0.05 ? 'mid' : 'low';
+          }
+        }
+        if (!ok) { grid.hidden = true; cta.hidden = true; verdict.className = 'calc-verdict'; verdict.textContent = T.empty; return; }
+        grid.hidden = false; cta.hidden = false; verdict.textContent = T.v[verdictKey]; verdict.className = 'calc-verdict ' + (['big', 'high'].includes(verdictKey) ? 'bad' : verdictKey === 'low' ? '' : 'good');
+        const lines = [T.waHead, '', ...ins.filter((i) => i.value).map((i) => `• ${T.f.find((x: any) => x.k === i.dataset.k).l}: ${toLatinDigits(i.value)}`), '', ...Object.keys(T.r).map((k) => `${T.r[k]}: ${(root.querySelector(`[data-o="${k}"]`) as HTMLElement).textContent}`), src()];
+        waA.href = waLink(T.wa, lines.join('\n'));
+        if (!sent) { sent = true; trk('tool_used', { tool: kind }); }
+      };
+      ins.forEach((i) => i.addEventListener('input', calc));
+    }
+  }
+</script>
