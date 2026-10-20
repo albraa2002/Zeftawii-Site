@@ -1,0 +1,24 @@
+---
+import Shell from './Shell.astro';
+import type { Lang } from '../i18n';
+import { UI, P } from '../content/ui';
+import { posts } from '../content/posts';
+import { CONFIG } from '../config';
+const { lang } = Astro.props as { lang: Lang };
+const u = UI[lang]; const base = CONFIG.site.replace(/\/$/, '');
+const path = P(lang, '/blog/');
+const ld = [{ '@type': 'CollectionPage', name: u.blogSeo, url: base + path, inLanguage: lang, isPartOf: { '@id': `${base}/#website` } }];
+---
+<Shell lang={lang} title={u.blogSeo} desc={u.blogDesc} path={path} alt={{ ar: '/blog/', en: '/en/blog/' }} extraLd={ld}>
+  <div class="wrap page-head"><span class="kicker">BLOG</span><h1>{u.blogTitle}</h1><p>{u.blogSub}</p></div>
+  <div class="wrap post-grid">
+    {posts.map((p) => (
+      <a class="post-card" href={P(lang, `/blog/${p.slug}/`)}>
+        <span class="meta">{p[lang].title && p.date} · {p.mins} {u.min}</span>
+        <h2>{p[lang].title}</h2>
+        <p>{p[lang].desc}</p>
+        <span class="more">{u.read} <i aria-hidden="true">{lang === 'ar' ? '←' : '→'}</i></span>
+      </a>
+    ))}
+  </div>
+</Shell>

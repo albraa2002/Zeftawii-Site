@@ -1,0 +1,32 @@
+---
+import Shell from './Shell.astro';
+import type { Lang } from '../i18n';
+import { UI, P } from '../content/ui';
+import { glossary } from '../content/glossary';
+import { CONFIG } from '../config';
+const { lang } = Astro.props as { lang: Lang };
+const u = UI[lang]; const ar = lang === 'ar'; const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, '/glossary/');
+const title = ar ? 'قاموس مصطلحات التسويق والبيانات | Zeftawii' : 'Marketing and data glossary | Zeftawii';
+const desc = ar ? 'شرح مبسّط بالعربي والإنجليزي لمصطلحات ROAS وCPA وLTV وRFM وKPI وSOW وغيرها، مع المعادلة ومثال وأخطاء شائعة.' : 'Plain-language explanations of ROAS, CPA, LTV, RFM, KPI, SOW and more, with the formula, an example and common mistakes.';
+const sorted = [...glossary].sort((a, b) => a.en.term.localeCompare(b.en.term));
+const ld = [
+  { '@type': 'DefinedTermSet', name: title, url: base + path, inLanguage: lang, hasDefinedTerm: sorted.map((g) => ({ '@type': 'DefinedTerm', name: g[lang].term, description: g[lang].short, url: base + P(lang, `/glossary/${g.slug}/`) })) },
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: u.crumbHome, item: base + P(lang, '/') },
+    { '@type': 'ListItem', position: 2, name: u.glossary, item: base + path },
+  ] },
+];
+---
+<Shell lang={lang} title={title} desc={desc} path={path} alt={{ ar: '/glossary/', en: '/en/glossary/' }} extraLd={ld}>
+  <div class="wrap page-head"><span class="kicker">GLOSSARY</span><h1>{u.glossary}</h1><p>{desc}</p></div>
+  <div class="wrap post-grid">
+    {sorted.map((g) => (
+      <a class="post-card" href={P(lang, `/glossary/${g.slug}/`)}>
+        <span class="meta">{g[lang].term}</span>
+        <h2>{g[lang].full}</h2>
+        <p>{g[lang].short}</p>
+        <span class="more">{u.readTerm} <i aria-hidden="true">{ar ? '←' : '→'}</i></span>
+      </a>
+    ))}
+  </div>
+</Shell>

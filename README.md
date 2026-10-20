@@ -188,3 +188,8 @@ npm run dev
 **بعد النشر:** وثّق الموقع في Google Search Console، ابعت `sitemap.xml`، وغيّر `bookingUrl` و`web3formsKey` من القيم المؤقتة.
 
 **لما تربط دومين خاص:** غيّر الرابط في 4 أماكن: `src/config.ts` و`astro.config.mjs` و`public/robots.txt` و`public/sitemap.xml`.
+
+## أدوات الصيانة (scripts/)
+- `scripts/make-og.mjs`: يولّد صور المشاركة لكل صفحة في `public/og` (محتاج playwright). تشغيل: build ثم الاسكربت ثم build.
+- `scripts/gen-seo.py`: يعيد توليد `sitemap.xml` وقايمة الصفحات في `llms.txt` من `dist`. بعد أي تغيير للدومين عدّله في `src/config.ts` و`astro.config.mjs` و`robots.txt` ثم شغّله.
+- المحتوى: `src/content/glossary.ts` (القاموس)، `solutions.ts` (المتاجر والأسواق)، `tools.ts`، `posts.ts`. الـ RSS على `/rss.xml` و`/en/rss.xml`.

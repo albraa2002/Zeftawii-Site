@@ -1,0 +1,67 @@
+---
+import Shell from './Shell.astro';
+import type { Lang } from '../i18n';
+import { UI, P } from '../content/ui';
+import { solutions } from '../content/solutions';
+import { glossary } from '../content/glossary';
+import { tools } from '../content/tools';
+import { posts } from '../content/posts';
+import { services } from '../content/services';
+import { CONFIG } from '../config';
+const { lang, slug } = Astro.props as { lang: Lang; slug: string };
+const s = solutions.find((x) => x.slug === slug)!; const c = s[lang]; const u = UI[lang]; const ar = lang === 'ar';
+const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, `/solutions/${slug}/`);
+const svc = services.find((x) => x.idx === s.svc)!;
+const tl = s.tools.map((t) => t === 'roas' ? { href: P(lang, '/#calc'), name: ar ? 'حاسبة ربحية الإعلانات (ROAS)' : 'Ad profitability calculator (ROAS)' } : { href: P(lang, `/tools/${t}/`), name: tools.find((x) => x.slug === t)![lang].name });
+const terms = s.terms.map((t) => glossary.find((g) => g.slug === t)).filter(Boolean) as typeof glossary;
+const rel = posts.filter((p) => s.posts.includes(p.slug));
+const others = solutions.filter((x) => x.slug !== slug);
+const wa = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent((ar ? 'أهلاً، حابب أستفسر عن: ' : 'Hi, I would like to ask about: ') + c.name)}`;
+const ld = [
+  { '@type': 'Service', name: c.name, description: c.desc, url: base + path, inLanguage: lang, provider: { '@id': `${base}/#person` }, areaServed: s.slug.startsWith('egypt') ? ['EG'] : s.slug.startsWith('saudi') ? ['SA'] : ['SA', 'EG'] },
+  { '@type': 'FAQPage', mainEntity: c.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: u.crumbHome, item: base + P(lang, '/') },
+    { '@type': 'ListItem', position: 2, name: u.solutions, item: base + P(lang, '/solutions/') },
+    { '@type': 'ListItem', position: 3, name: c.name, item: base + path },
+  ] },
+];
+---
+<Shell lang={lang} title={`${c.h1} | Zeftawii`} desc={c.desc} path={path} alt={{ ar: `/solutions/${slug}/`, en: `/en/solutions/${slug}/` }} extraLd={ld}>
+  <div class="wrap page-head">
+    <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/solutions/')}>{u.solutions}</a></nav>
+    <span class="kicker">{c.name}</span>
+    <h1>{c.h1}</h1>
+    <p>{c.lead}</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href={P(lang, `/?service=${s.svc}#contact`)} data-evt="cta_click" data-loc="solution_page">{u.ctaBtn}</a>
+      <a class="btn btn-wa" href={wa} target="_blank" rel="noopener" data-evt="whatsapp_click" data-loc="solution_page">{u.wa}</a>
+    </div>
+    <p class="free">{u.free}</p>
+  </div>
+  <div class="wrap two-col">
+    <section class="info-box good"><h2>{u.trackT}</h2><ul>{c.track.map((x) => <li>{x}</li>)}</ul></section>
+    <section class="info-box"><h2>{u.kpiT}</h2><ul>{c.kpis.map((x) => <li>{x}</li>)}</ul></section>
+  </div>
+  <div class="wrap">
+    {c.proof && <div class="info-box proof"><h2>{u.proofT}</h2><p>{c.proof}</p></div>}
+    <h2 class="sec-h">{u.probT}</h2>
+    <div class="post-grid tight">{c.problems.map((p) => <div class="post-card"><h3>{p.t}</h3><p>{p.d}</p></div>)}</div>
+    <h2 class="sec-h">{u.how}</h2>
+    <ol class="how">{u.howSteps.split('|').map((x, i) => <li><b>{i + 1}</b><span>{x}</span></li>)}</ol>
+    <h2 class="sec-h">{u.toolsT}</h2>
+    <div class="chips-row">{tl.map((t) => <a class="chip-link" href={t.href}>{t.name}</a>)}</div>
+    <h2 class="sec-h">{u.termsT}</h2>
+    <div class="chips-row">{terms.map((g) => <a class="chip-link" href={P(lang, `/glossary/${g.slug}/`)}>{g[lang].term}</a>)}</div>
+    <h2 class="sec-h">{u.faq}</h2>
+    <div class="faq-list">{c.faq.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}</div>
+    {rel.length > 0 && (<>
+      <h2 class="sec-h">{u.related}</h2>
+      <div class="post-grid tight">{rel.map((p) => <a class="post-card" href={P(lang, `/blog/${p.slug}/`)}><h3>{p[lang].title}</h3><span class="more">{u.read} <i aria-hidden="true">{ar ? '←' : '→'}</i></span></a>)}</div>
+    </>)}
+    <p class="rel-svc">{u.relatedSvc}: <a href={P(lang, `/services/${svc.slug}/`)}>{svc[lang].name}</a></p>
+    <p class="note">{u.note}</p>
+    <h2 class="sec-h">{u.solutions}</h2>
+    <div class="chips-row">{others.map((o) => <a class="chip-link" href={P(lang, `/solutions/${o.slug}/`)}>{o[lang].name}</a>)}</div>
+  </div>
+</Shell>

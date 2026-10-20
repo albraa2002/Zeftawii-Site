@@ -1,0 +1,26 @@
+---
+import Shell from './Shell.astro';
+import type { Lang } from '../i18n';
+import { UI, P } from '../content/ui';
+import { solutions } from '../content/solutions';
+import { CONFIG } from '../config';
+const { lang } = Astro.props as { lang: Lang };
+const u = UI[lang]; const ar = lang === 'ar'; const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, '/solutions/');
+const title = ar ? 'حلول تحليل البيانات للمتاجر والأسواق | Zeftawii' : 'Data analytics solutions for stores and markets | Zeftawii';
+const desc = ar ? 'تحليلات تسويق ومبيعات لمتاجر سلة وشوبيفاي وووكومرس، وللسوقين المصري والسعودي: ربح حقيقي، مرتجعات، ROAS مقابل نقطة التعادل، ولوحات تحكم.' : 'Marketing and sales analytics for Salla, Shopify and WooCommerce stores and for the Egyptian and Saudi markets: real profit, returns, ROAS against break-even and dashboards.';
+const groups = [{ h: u.storesH, k: 'store' }, { h: u.marketsH, k: 'market' }];
+const ld = [{ '@type': 'CollectionPage', name: title, url: base + path, inLanguage: lang }];
+---
+<Shell lang={lang} title={title} desc={desc} path={path} alt={{ ar: '/solutions/', en: '/en/solutions/' }} extraLd={ld}>
+  <div class="wrap page-head"><span class="kicker">SOLUTIONS</span><h1>{u.solutions}</h1><p>{desc}</p></div>
+  {groups.map((g) => (
+    <div class="wrap">
+      <h2 class="sec-h">{g.h}</h2>
+      <div class="post-grid tight">
+        {solutions.filter((x) => x.kind === g.k).map((x) => (
+          <a class="post-card" href={P(lang, `/solutions/${x.slug}/`)}><h3>{x[lang].name}</h3><p>{x[lang].desc}</p><span class="more">{ar ? 'تفاصيل الحل' : 'See details'} <i aria-hidden="true">{ar ? '←' : '→'}</i></span></a>
+        ))}
+      </div>
+    </div>
+  ))}
+</Shell>

@@ -1,0 +1,45 @@
+---
+import Shell from './Shell.astro';
+import type { Lang } from '../i18n';
+import { UI, P } from '../content/ui';
+import { cases } from '../content/site';
+import { services } from '../content/services';
+import { CONFIG } from '../config';
+const { lang, slug } = Astro.props as { lang: Lang; slug: string };
+const cs = cases.find((x) => x.slug === slug)!; const c = cs[lang]; const u = UI[lang];
+const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, `/work/${slug}/`);
+const svc = services.find((s) => s.idx === cs.svc);
+const others = cases.filter((x) => x.slug !== slug);
+const ld = [
+  { '@type': 'CreativeWork', name: c.title, description: c.desc, url: base + path, inLanguage: lang, author: { '@id': `${base}/#person` } },
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: u.crumbHome, item: base + P(lang, '/') },
+    { '@type': 'ListItem', position: 2, name: u.work, item: base + P(lang, '/work/') },
+    { '@type': 'ListItem', position: 3, name: c.title, item: base + path },
+  ] },
+];
+---
+<Shell lang={lang} title={`${c.title} | Zeftawii`} desc={c.desc} path={path} alt={{ ar: `/work/${slug}/`, en: `/en/work/${slug}/` }} extraLd={ld}>
+  <div class="wrap page-head">
+    <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/work/')}>{u.work}</a></nav>
+    <span class="kicker">{c.tag}</span>
+    <h1>{c.title}</h1>
+    <p>{c.desc}</p>
+  </div>
+  <div class="wrap two-col">
+    <section class="info-box"><h2>{u.contextT}</h2><p class="plain">{c.context}</p></section>
+    <section class="info-box good"><h2>{u.didT}</h2><ul>{c.did.map((x) => <li>{x}</li>)}</ul></section>
+  </div>
+  <div class="wrap">
+    <p class="meta-line"><b>{u.status}:</b> {c.status}</p>
+    <ul class="stack">{c.stack.map((x) => <li>{x}</li>)}</ul>
+    <div class="cta-box"><h2>{u.valueT}</h2><p>{c.value}</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={P(lang, `/?service=${cs.svc}#contact`)} data-evt="cta_click" data-loc="case_page">{u.ctaBtn}</a>
+        {svc && <a class="btn btn-ghost" href={P(lang, `/services/${svc.slug}/`)}>{svc[lang].name}</a>}
+      </div>
+    </div>
+    <h2 class="sec-h">{u.moreCases}</h2>
+    <div class="post-grid tight">{others.map((o) => <a class="post-card" href={P(lang, `/work/${o.slug}/`)}><span class="meta">{o[lang].tag}</span><h3>{o[lang].title}</h3></a>)}</div>
+  </div>
+</Shell>

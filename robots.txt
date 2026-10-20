@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zeftawii-site-bkxt.vercel.app/sitemap.xml

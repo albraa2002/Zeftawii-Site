@@ -1,0 +1,62 @@
+---
+import Shell from './Shell.astro';
+import type { Lang } from '../i18n';
+import { UI, P } from '../content/ui';
+import { glossary } from '../content/glossary';
+import { tools } from '../content/tools';
+import { services } from '../content/services';
+import { CONFIG } from '../config';
+const { lang, slug } = Astro.props as { lang: Lang; slug: string };
+const g = glossary.find((x) => x.slug === slug)!; const c = g[lang]; const u = UI[lang]; const ar = lang === 'ar';
+const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, `/glossary/${slug}/`);
+const svc = services.find((s) => s.idx === g.svc);
+const tool = g.tool && g.tool !== 'roas' ? tools.find((t) => t.slug === g.tool) : undefined;
+const toolHref = g.tool === 'roas' ? P(lang, '/#calc') : tool ? P(lang, `/tools/${tool.slug}/`) : '';
+const toolName = g.tool === 'roas' ? (ar ? 'حاسبة ربحية الإعلانات (ROAS)' : 'Ad profitability calculator (ROAS)') : tool ? tool[lang].name : '';
+const rel = g.rel.map((r) => glossary.find((x) => x.slug === r)).filter(Boolean) as typeof glossary;
+const title = ar ? `${c.term} يعني إيه؟ الشرح والمعادلة | Zeftawii` : `What is ${c.term}? Definition and formula | Zeftawii`;
+const h1 = ar ? `${c.term} يعني إيه؟` : `What is ${c.term}?`;
+const q = ar ? `${c.term} يعني إيه؟` : `What is ${c.term}?`;
+const ld = [
+  { '@type': 'DefinedTerm', name: c.term, description: c.def, url: base + path, inLanguage: lang, inDefinedTermSet: base + P(lang, '/glossary/') },
+  { '@type': 'FAQPage', mainEntity: [{ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: c.def + (c.formula ? ' ' + c.formula + '.' : '') } }] },
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: u.crumbHome, item: base + P(lang, '/') },
+    { '@type': 'ListItem', position: 2, name: u.glossary, item: base + P(lang, '/glossary/') },
+    { '@type': 'ListItem', position: 3, name: c.term, item: base + path },
+  ] },
+];
+const wa = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent((ar ? 'أهلاً، قرأت عن ' : 'Hi, I read about ') + c.term + (ar ? ' في الموقع وحابب أستشير.' : ' on your site and would like advice.'))}`;
+---
+<Shell lang={lang} title={title} desc={c.short} path={path} alt={{ ar: `/glossary/${slug}/`, en: `/en/glossary/${slug}/` }} extraLd={ld}>
+  <div class="wrap page-head">
+    <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/glossary/')}>{u.glossary}</a></nav>
+    <span class="kicker">{c.term}</span>
+    <h1>{h1}</h1>
+    <p>{c.full}</p>
+  </div>
+  <article class="wrap prose">
+    <h2>{u.defT}</h2>
+    <p>{c.def}</p>
+    {c.formula && (<div class="formula" dir="auto"><small>{u.formulaT}</small><b dir="auto">{c.formula}</b></div>)}
+    <h2>{u.exampleT}</h2>
+    <p>{c.example}</p>
+    <h2>{u.tipsT}</h2>
+    <ul>{c.tips.map((t) => <li>{t}</li>)}</ul>
+    <div class="info-box"><h2>{u.mistakeT}</h2><p>{c.mistake}</p></div>
+    {toolHref && (<div class="info-box good"><h2>{u.tryT}</h2><p><a href={toolHref}>{toolName}</a></p></div>)}
+    <p class="note">{u.note}</p>
+    <div class="cta-box">
+      <h2>{u.ctaT}</h2><p>{u.ctaP}</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={P(lang, `/?service=${g.svc}#contact`)} data-evt="cta_click" data-loc="glossary">{u.ctaBtn}</a>
+        <a class="btn btn-wa" href={wa} target="_blank" rel="noopener" data-evt="whatsapp_click" data-loc="glossary">{u.wa}</a>
+      </div>
+    </div>
+    {svc && <p class="rel-svc">{u.relatedSvc}: <a href={P(lang, `/services/${svc.slug}/`)}>{svc[lang].name}</a></p>}
+    {rel.length > 0 && (<>
+      <h2 class="rel-h">{u.relTerms}</h2>
+      <div class="chips-row">{rel.map((r) => <a class="chip-link" href={P(lang, `/glossary/${r.slug}/`)}>{r[lang].term}</a>)}</div>
+    </>)}
+  </article>
+</Shell>

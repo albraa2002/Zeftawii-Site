@@ -1,0 +1,6 @@
+---
+import S from '../../components/SolutionPage.astro';
+import { solutions } from '../../content/solutions';
+export const getStaticPaths = () => solutions.map((x) => ({ params: { slug: x.slug } }));
+---
+<S lang="ar" slug={Astro.params.slug!} />

@@ -1,0 +1,93 @@
+# Zeftawii | Decoding Data
+
+> Data analyst and Business Intelligence specialist (Albaraa Ehab Elzeftawy) serving businesses in Saudi Arabia and Egypt. Arabic-first, English supported.
+
+## Services
+- Dashboards and Business Intelligence (Power BI and web dashboards)
+- Marketing analytics (CPA, ROAS, funnel analysis, campaign reporting)
+- Report automation and data cleaning (Python, SQL, advanced Excel)
+- Smart tools and predictive models
+- Account management (outsourced account manager for agencies and companies)
+- Project management for marketing and digital projects
+
+## Track record
+- Managed delivery and close-out of 23 website and store projects in 2026 (WordPress and Salla), median 36 days from kickoff to sign-off
+- Built AMMS, a production account-management monitoring system for a marketing agency
+- Public analysis notebooks: https://github.com/albraa2002
+
+## Who it is for
+- E-commerce stores (ROAS, CPA, COD returns analysis)
+- Marketing agencies and service businesses (automated client reports, scope protection)
+- Companies with scattered data (unified KPI dashboards)
+
+## Free tools and learning
+- ROAS, CPA and LTV, margin and break-even calculators, a project brief generator and a business health check
+- A bilingual marketing and data glossary (ROAS, CPA, LTV, RFM, KPI, SOW and more)
+- Store analytics for Salla, Shopify and WooCommerce, and for the Egyptian and Saudi markets
+- Blog RSS: https://zeftawii-site-bkxt.vercel.app/rss.xml (Arabic), https://zeftawii-site-bkxt.vercel.app/en/rss.xml (English)
+
+## Pages
+- https://zeftawii-site-bkxt.vercel.app/en/
+- https://zeftawii-site-bkxt.vercel.app/en/about/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/cash-on-delivery-returns/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/choose-dashboard-kpis/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/cpa-vs-ltv-before-scaling/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/data-cleaning-checklist/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/ecommerce-weekly-six-numbers/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/excel-or-python-reports/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/power-bi-vs-web-dashboard-vs-looker/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/product-break-even-before-ads/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/read-campaign-report-10-minutes/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/rfm-customer-segments/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/roas-vs-break-even/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/scope-creep-agencies/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/vat-inclusive-margin-ksa/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/weekly-status-report-one-page/
+- https://zeftawii-site-bkxt.vercel.app/en/blog/write-a-project-brief/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/aov/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/attribution/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/break-even-roas/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/cac/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/churn-rate/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/cohort-analysis/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/conversion-rate/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/cpa/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/cpc/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/cpm/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/ctr/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/etl/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/funnel/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/kpi/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/ltv/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/pixel/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/rfm/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/roas/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/sow/
+- https://zeftawii-site-bkxt.vercel.app/en/glossary/utm/
+- https://zeftawii-site-bkxt.vercel.app/en/resources/
+- https://zeftawii-site-bkxt.vercel.app/en/services/account-management/
+- https://zeftawii-site-bkxt.vercel.app/en/services/dashboards-bi/
+- https://zeftawii-site-bkxt.vercel.app/en/services/marketing-analytics/
+- https://zeftawii-site-bkxt.vercel.app/en/services/project-management/
+- https://zeftawii-site-bkxt.vercel.app/en/services/report-automation/
+- https://zeftawii-site-bkxt.vercel.app/en/services/smart-tools/
+- https://zeftawii-site-bkxt.vercel.app/en/solutions/
+- https://zeftawii-site-bkxt.vercel.app/en/solutions/egypt-ecommerce-analytics/
+- https://zeftawii-site-bkxt.vercel.app/en/solutions/salla-store-analytics/
+- https://zeftawii-site-bkxt.vercel.app/en/solutions/saudi-ecommerce-analytics/
+- https://zeftawii-site-bkxt.vercel.app/en/solutions/shopify-store-analytics/
+- https://zeftawii-site-bkxt.vercel.app/en/solutions/woocommerce-store-analytics/
+- https://zeftawii-site-bkxt.vercel.app/en/tools/
+- https://zeftawii-site-bkxt.vercel.app/en/tools/automation-savings-calculator/
+- https://zeftawii-site-bkxt.vercel.app/en/tools/break-even-calculator/
+- https://zeftawii-site-bkxt.vercel.app/en/tools/business-quick-check/
+- https://zeftawii-site-bkxt.vercel.app/en/tools/cod-returns-cost-calculator/
+- https://zeftawii-site-bkxt.vercel.app/en/tools/cpa-ltv-calculator/
+- https://zeftawii-site-bkxt.vercel.app/en/tools/project-brief-generator/
+- https://zeftawii-site-bkxt.vercel.app/en/work/
+- https://zeftawii-site-bkxt.vercel.app/en/work/amms/
+- https://zeftawii-site-bkxt.vercel.app/en/work/delivery-2026/
+- https://zeftawii-site-bkxt.vercel.app/en/work/python-analyses/
+- https://zeftawii-site-bkxt.vercel.app/en/work/scope-creep-sentinel/

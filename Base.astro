@@ -1,0 +1,195 @@
+---
+import '../styles/global.css';
+import { T, type Lang } from '../i18n';
+import { CONFIG } from '../config';
+import fs from 'node:fs';
+interface Props { lang: Lang; noindex?: boolean; title?: string; desc?: string; path?: string; alt?: { ar: string; en: string }; inner?: boolean; extraLd?: object[]; ogType?: string }
+const { lang, noindex = false, inner = false, extraLd = [], ogType = 'website' } = Astro.props;
+const t = T[lang];
+const title = Astro.props.title ?? t.title;
+const desc = Astro.props.desc ?? t.desc;
+
+const base = CONFIG.site.replace(/\/$/, '');
+const pageUrl = Astro.props.path ? `${base}${Astro.props.path}` : (lang === 'ar' ? `${base}/` : `${base}/en/`);
+const altAr = `${base}${Astro.props.alt?.ar ?? '/'}`;
+const altEn = `${base}${Astro.props.alt?.en ?? '/en/'}`;
+const ogKey = (Astro.props.path || '').replace(/^\/|\/$/g, '').replace(/\//g, '-');
+const hasOg = ogKey && ogKey !== 'en' && fs.existsSync(`public/og/${ogKey}.jpg`);
+const ogImage = `${base}/${hasOg ? `og/${ogKey}.jpg` : 'og-image.png'}`;
+const personName = 'Albaraa Ehab Elzeftawy';
+const brand = 'Zeftawii | Decoding Data';
+
+const sameAs = Object.entries(CONFIG.links as Record<string, string>)
+  .filter(([k, url]) => url && k !== 'whatsapp')
+  .map(([, url]) => url);
+
+const graph = [
+  {
+    '@type': 'WebSite',
+    '@id': `${base}/#website`,
+    url: `${base}/`,
+    name: 'Zeftawii',
+    alternateName: [brand, 'Decoding Data', 'زفتاوي'],
+    inLanguage: ['ar', 'en'],
+    publisher: { '@id': `${base}/#person` },
+  },
+  {
+    '@type': 'Person',
+    '@id': `${base}/#person`,
+    name: personName,
+    alternateName: 'Zeftawii',
+    jobTitle: lang === 'ar' ? 'محلل بيانات' : 'Data Analyst',
+    url: `${base}/`,
+    image: `${base}/albaraa.jpg`,
+    sameAs,
+    description: lang === 'ar'
+      ? 'محلل بيانات و Business Intelligence ومدير حسابات ومشاريع تسويق رقمي، يخدم شركات في السعودية ومصر.'
+      : 'Data analyst, Business Intelligence specialist and digital marketing account and project manager serving businesses in Saudi Arabia and Egypt.',
+    knowsLanguage: ['ar', 'en'],
+    knowsAbout: ['Business Intelligence', 'Power BI', 'Data Analytics', 'Marketing Analytics', 'SQL', 'Python', 'Account Management', 'Project Management'],
+  },
+  {
+    '@type': 'ProfessionalService',
+    '@id': `${base}/#service`,
+    name: brand,
+    url: pageUrl,
+    description: t.desc,
+    image: ogImage,
+    founder: { '@id': `${base}/#person` },
+    email: CONFIG.email,
+    telephone: `+${CONFIG.whatsapp}`,
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'sales',
+      telephone: `+${CONFIG.whatsapp}`,
+      email: CONFIG.email,
+      availableLanguage: ['Arabic', 'English'],
+      areaServed: ['SA', 'EG'],
+    },
+    areaServed: [
+      { '@type': 'Country', name: 'Saudi Arabia' },
+      { '@type': 'Country', name: 'Egypt' },
+    ],
+    availableLanguage: ['Arabic', 'English'],
+    sameAs,
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: t.servicesTitle,
+      itemListElement: t.services.map((s) => ({
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: s.t, description: s.d },
+      })),
+    },
+  },
+  {
+    '@type': 'WebPage',
+    '@id': `${pageUrl}#webpage`,
+    url: pageUrl,
+    name: title,
+    description: desc,
+    inLanguage: t.htmlLang,
+    isPartOf: { '@id': `${base}/#website` },
+    about: { '@id': `${base}/#service` },
+    primaryImageOfPage: { '@type': 'ImageObject', url: ogImage, width: 1200, height: 630 },
+  },
+  {
+    '@type': 'FAQPage',
+    '@id': `${pageUrl}#faq`,
+    inLanguage: t.htmlLang,
+    mainEntity: t.faq.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+const innerGraph = [graph[0], graph[1], ...extraLd];
+const ld = { '@context': 'https://schema.org', '@graph': noindex ? [] : (inner ? innerGraph : graph) };
+
+const fontsHref =
+  'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans+Arabic:wght@400;700&family=Orbitron:wght@500;800&display=swap';
+---
+<!doctype html>
+<html lang={t.htmlLang} dir={t.dir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.add('js')</script>
+    <title>{title}</title>
+    <meta name="description" content={desc} />
+    <meta name="author" content={personName} />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
+    <meta name="theme-color" content="#0a0f1c" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="format-detection" content="telephone=no" />
+
+    {!noindex && (
+      <>
+        <link rel="canonical" href={pageUrl} />
+        <link rel="alternate" hreflang="ar" href={altAr} />
+        <link rel="alternate" hreflang="en" href={altEn} />
+        <link rel="alternate" hreflang="x-default" href={altAr} />
+        <link rel="alternate" type="application/rss+xml" title={lang === 'ar' ? 'مدونة زفتاوي' : 'Zeftawii Blog'} href={`${base}${lang === 'ar' ? '' : '/en'}/rss.xml`} />
+      </>
+    )}
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={brand} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:locale" content={lang === 'ar' ? 'ar_AR' : 'en_US'} />
+    <meta property="og:locale:alternate" content={lang === 'ar' ? 'en_US' : 'ar_AR'} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${brand} — ${lang === 'ar' ? 'تحليل بيانات ولوحات تحكم' : 'Data analytics and dashboards'}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@albaraa_ehab" />
+    <meta name="twitter:creator" content="@albaraa_ehab" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={desc} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48" />
+    <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={fontsHref} media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href={fontsHref} /></noscript>
+
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(ld)} />}
+
+    {!noindex && CONFIG.vercelAnalytics && (
+      <script is:inline>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+      <script is:inline defer src="/_vercel/insights/script.js"></script>
+    )}
+    {!noindex && CONFIG.ga4Id && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${CONFIG.ga4Id}`}></script>
+        <script is:inline define:vars={{ id: CONFIG.ga4Id }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', id);
+        </script>
+      </>
+    )}
+    {!noindex && CONFIG.clarityId && (
+      <script is:inline define:vars={{ id: CONFIG.clarityId }}>
+        (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",id);
+      </script>
+    )}
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
