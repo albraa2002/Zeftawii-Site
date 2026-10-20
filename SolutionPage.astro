@@ -1,5 +1,7 @@
 ---
 import Shell from './Shell.astro';
+import PromoBanner from './PromoBanner.astro';
+import Illus from './Illus.astro';
 import type { Lang } from '../i18n';
 import { UI, P } from '../content/ui';
 import { solutions } from '../content/solutions';
@@ -28,7 +30,7 @@ const ld = [
 ];
 ---
 <Shell lang={lang} title={`${c.h1} | Zeftawii`} desc={c.desc} path={path} alt={{ ar: `/solutions/${slug}/`, en: `/en/solutions/${slug}/` }} extraLd={ld}>
-  <div class="wrap page-head">
+  <div class="wrap page-head has-art"><div class="hb-art"><Illus kind={s.kind === 'market' ? 'market' : 'store'} /></div>
     <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/solutions/')}>{u.solutions}</a></nav>
     <span class="kicker">{c.name}</span>
     <h1>{c.h1}</h1>
@@ -60,6 +62,7 @@ const ld = [
       <div class="post-grid tight">{rel.map((p) => <a class="post-card" href={P(lang, `/blog/${p.slug}/`)}><h3>{p[lang].title}</h3><span class="more">{u.read} <i aria-hidden="true">{ar ? '←' : '→'}</i></span></a>)}</div>
     </>)}
     <p class="rel-svc">{u.relatedSvc}: <a href={P(lang, `/services/${svc.slug}/`)}>{svc[lang].name}</a></p>
+    <PromoBanner lang={lang} kind="learn" />
     <p class="note">{u.note}</p>
     <h2 class="sec-h">{u.solutions}</h2>
     <div class="chips-row">{others.map((o) => <a class="chip-link" href={P(lang, `/solutions/${o.slug}/`)}>{o[lang].name}</a>)}</div>

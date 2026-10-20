@@ -1,0 +1,20 @@
+---
+import Illus from './Illus.astro';
+import type { Lang } from '../i18n';
+import { P } from '../content/ui';
+const { lang, kind = 'tools' } = Astro.props as { lang: Lang; kind?: 'tools' | 'learn' | 'solutions' };
+const ar = lang === 'ar';
+const D = {
+  tools: { k: 'tools', h: ar ? 'أدوات مجانية تحسب بيها ربحك بأرقامك' : 'Free tools to compute your profit with your own numbers', p: ar ? 'ROAS وCPA وLTV ونقطة التعادل ومرتجعات الدفع عند الاستلام وملخص طلب مشروع. من غير تسجيل ومن غير ما بياناتك تتبعت لحد.' : 'ROAS, CPA, LTV, break-even, cash-on-delivery returns and a project brief. No sign-up and your data goes nowhere.', b: ar ? 'جرّب الأدوات' : 'Try the tools', h2: '/tools/' },
+  learn: { k: 'glossary', h: ar ? 'مصطلحات التسويق والبيانات بشرح بسيط' : 'Marketing and data terms in plain language', p: ar ? 'قاموس بالعربي والإنجليزي بالمعادلة والمثال والأخطاء الشائعة، لكل مصطلح بتقابله في تقارير الإعلانات.' : 'An Arabic and English glossary with the formula, example and common mistakes for every term you meet in ad reports.', b: ar ? 'افتح القاموس' : 'Open the glossary', h2: '/glossary/' },
+  solutions: { k: 'store', h: ar ? 'متجرك على سلة أو شوبيفاي أو ووكومرس؟' : 'Is your store on Salla, Shopify or WooCommerce?', p: ar ? 'حلول تحليل للمتاجر وللسوقين المصري والسعودي: الربح الحقيقي والمرتجعات والإعلانات في صورة واحدة.' : 'Analytics solutions for stores and for the Egyptian and Saudi markets: real profit, returns and ads in one picture.', b: ar ? 'شوف الحلول' : 'See the solutions', h2: '/solutions/' },
+}[kind];
+---
+<aside class="promo">
+  <div class="promo-t">
+    <h2>{D.h}</h2>
+    <p>{D.p}</p>
+    <a class="btn btn-primary" href={P(lang, D.h2)} data-evt="cta_click" data-loc={`promo_${kind}`}>{D.b} <span aria-hidden="true">{ar ? '←' : '→'}</span></a>
+  </div>
+  <div class="promo-a"><Illus kind={D.k} /></div>
+</aside>

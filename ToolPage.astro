@@ -1,5 +1,6 @@
 ---
 import Shell from './Shell.astro';
+import Illus from './Illus.astro';
 import type { Lang } from '../i18n';
 import { UI, P } from '../content/ui';
 import { tools } from '../content/tools';
@@ -20,7 +21,7 @@ const ld = [
 const data = { kind: tool.kind, svc: tool.svc, lang, ...c, wa: CONFIG.whatsapp, svcPath: P(lang, '/'), services: services.map((s) => s[lang].name) };
 ---
 <Shell lang={lang} title={`${c.name} | Zeftawii`} desc={c.desc} path={path} alt={{ ar: `/tools/${slug}/`, en: `/en/tools/${slug}/` }} extraLd={ld}>
-  <div class="wrap page-head">
+  <div class="wrap page-head has-art"><div class="hb-art"><Illus kind={'tools'} /></div>
     <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/tools/')}>{u.tools}</a></nav>
     <span class="kicker">FREE TOOL</span>
     <h1>{c.h1}</h1>

@@ -1,5 +1,7 @@
 ---
 import Shell from './Shell.astro';
+import Illus from './Illus.astro';
+import PromoBanner from './PromoBanner.astro';
 import type { Lang } from '../i18n';
 import { UI, P } from '../content/ui';
 import { posts } from '../content/posts';
@@ -26,10 +28,12 @@ const ld = [
     <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/blog/')}>{u.blog}</a></nav>
     <h1>{c.title}</h1>
     <p class="meta">{u.by} · {post.date} · {post.mins} {u.min}</p>
+    <div class="art-banner"><Illus kind={['bi', 'marketing', 'automation', 'ai', 'account', 'project'][post.svc] || 'blog'} /></div>
     <div class="tldr"><b>{u.tldr}</b><p>{c.tldr}</p></div>
     <div class="prose">
       {c.body.map((b) => b.h ? <h2>{b.h}</h2> : b.p ? <p>{b.p}</p> : b.ul ? <ul>{b.ul.map((x) => <li>{x}</li>)}</ul> : null)}
     </div>
+    <PromoBanner lang={lang} kind="tools" />
     <p class="art-note">{u.note}</p>
     <div class="cta-box">
       <h2>{u.ctaT}</h2><p>{u.ctaP}</p>

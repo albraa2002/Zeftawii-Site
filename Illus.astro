@@ -1,0 +1,5 @@
+---
+import { illus } from '../lib/illus';
+const { kind = 'bi' } = Astro.props as { kind?: string };
+---
+<div class="illus" aria-hidden="true" set:html={`<svg viewBox="0 0 480 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="presentation">${illus[kind] || illus.bi}</svg>`}></div>

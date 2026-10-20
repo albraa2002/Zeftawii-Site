@@ -1,10 +1,15 @@
 ---
 import Shell from './Shell.astro';
+import PromoBanner from './PromoBanner.astro';
+import Illus from './Illus.astro';
 import type { Lang } from '../i18n';
 import { UI, P } from '../content/ui';
 import { posts } from '../content/posts';
 import { services } from '../content/services';
 import { CONFIG } from '../config';
+import { tools } from '../content/tools';
+import { glossary } from '../content/glossary';
+import { solutions } from '../content/solutions';
 const { lang, slug } = Astro.props as { lang: Lang; slug: string };
 const s = services.find((x) => x.slug === slug)!; const c = s[lang]; const u = UI[lang];
 const base = CONFIG.site.replace(/\/$/, '');
@@ -12,6 +17,18 @@ const path = P(lang, `/services/${slug}/`);
 const rel = posts.filter((p) => s.posts.includes(p.slug));
 const others = services.filter((x) => x.slug !== slug);
 const steps = u.howSteps.split('|');
+const REL: Record<number, { t: string[]; g: string[]; s: string[] }> = {
+  0: { t: ['business-quick-check'], g: ['kpi', 'etl', 'funnel'], s: ['woocommerce-store-analytics'] },
+  1: { t: ['roas', 'break-even-calculator', 'cpa-ltv-calculator'], g: ['roas', 'cpa', 'ltv', 'break-even-roas'], s: ['salla-store-analytics', 'shopify-store-analytics', 'saudi-ecommerce-analytics', 'egypt-ecommerce-analytics'] },
+  2: { t: ['automation-savings-calculator'], g: ['etl', 'kpi'], s: ['woocommerce-store-analytics'] },
+  3: { t: ['cod-returns-cost-calculator', 'cpa-ltv-calculator'], g: ['rfm', 'churn-rate', 'cohort-analysis'], s: ['egypt-ecommerce-analytics'] },
+  4: { t: ['business-quick-check', 'project-brief-generator'], g: ['kpi', 'sow'], s: [] },
+  5: { t: ['project-brief-generator', 'business-quick-check'], g: ['sow', 'kpi'], s: [] },
+};
+const R = REL[s.idx] || { t: [], g: [], s: [] };
+const relTools = R.t.map((x) => x === 'roas' ? { n: lang === 'ar' ? 'حاسبة ربحية الإعلانات (ROAS)' : 'Ad profitability calculator (ROAS)', h: P(lang, '/#calc') } : { n: tools.find((y) => y.slug === x)![lang].name, h: P(lang, `/tools/${x}/`) });
+const relTerms = R.g.map((x) => glossary.find((y) => y.slug === x)!).filter(Boolean);
+const relSol = R.s.map((x) => solutions.find((y) => y.slug === x)!).filter(Boolean);
 const wa = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent((lang === 'ar' ? 'أهلاً، حابب أستفسر عن خدمة: ' : 'Hi, I would like to ask about: ') + c.name)}`;
 const ld = [
   { '@type': 'Service', name: c.name, description: c.desc, url: base + path, inLanguage: lang, provider: { '@id': `${base}/#person` }, areaServed: ['SA', 'EG'] },
@@ -24,7 +41,7 @@ const ld = [
 ];
 ---
 <Shell lang={lang} title={`${c.h1} | Zeftawii`} desc={c.desc} path={path} alt={{ ar: `/services/${slug}/`, en: `/en/services/${slug}/` }} extraLd={ld}>
-  <div class="wrap page-head">
+  <div class="wrap page-head has-art"><div class="hb-art"><Illus kind={['bi','marketing','automation','ai','account','project'][s.idx] || 'bi'} /></div>
     <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/#services')}>{u.services}</a></nav>
     <span class="kicker">{c.name}</span>
     <h1>{c.h1}</h1>
@@ -48,6 +65,10 @@ const ld = [
       <h2 class="sec-h">{u.related}</h2>
       <div class="post-grid tight">{rel.map((p) => <a class="post-card" href={P(lang, `/blog/${p.slug}/`)}><h3>{p[lang].title}</h3><span class="more">{u.read} <i aria-hidden="true">{lang === 'ar' ? '←' : '→'}</i></span></a>)}</div>
     </>)}
+    {relTools.length > 0 && (<><h2 class="sec-h">{u.toolsT}</h2><div class="chips-row">{relTools.map((t) => <a class="chip-link" href={t.h}>{t.n}</a>)}</div></>)}
+    {relSol.length > 0 && (<><h2 class="sec-h">{u.solutions}</h2><div class="chips-row">{relSol.map((t) => <a class="chip-link" href={P(lang, `/solutions/${t.slug}/`)}>{t[lang].name}</a>)}</div></>)}
+    {relTerms.length > 0 && (<><h2 class="sec-h">{u.termsT}</h2><div class="chips-row">{relTerms.map((g) => <a class="chip-link" href={P(lang, `/glossary/${g.slug}/`)}>{g[lang].term}</a>)}</div></>)}
+    <PromoBanner lang={lang} kind="tools" />
     <h2 class="sec-h">{u.moreSvc}</h2>
     <div class="chips-row">{others.map((o) => <a class="chip-link" href={P(lang, `/services/${o.slug}/`)}>{o[lang].name}</a>)}</div>
   </div>

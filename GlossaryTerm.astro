@@ -1,5 +1,6 @@
 ---
 import Shell from './Shell.astro';
+import Illus from './Illus.astro';
 import type { Lang } from '../i18n';
 import { UI, P } from '../content/ui';
 import { glossary } from '../content/glossary';
@@ -29,7 +30,7 @@ const ld = [
 const wa = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent((ar ? 'أهلاً، قرأت عن ' : 'Hi, I read about ') + c.term + (ar ? ' في الموقع وحابب أستشير.' : ' on your site and would like advice.'))}`;
 ---
 <Shell lang={lang} title={title} desc={c.short} path={path} alt={{ ar: `/glossary/${slug}/`, en: `/en/glossary/${slug}/` }} extraLd={ld}>
-  <div class="wrap page-head">
+  <div class="wrap page-head has-art"><div class="hb-art"><Illus kind={'glossary'} /></div>
     <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/glossary/')}>{u.glossary}</a></nav>
     <span class="kicker">{c.term}</span>
     <h1>{h1}</h1>

@@ -1,5 +1,6 @@
 ---
 import Shell from './Shell.astro';
+import Illus from './Illus.astro';
 import type { Lang } from '../i18n';
 import { UI, P } from '../content/ui';
 import { posts } from '../content/posts';
@@ -10,7 +11,7 @@ const path = P(lang, '/blog/');
 const ld = [{ '@type': 'CollectionPage', name: u.blogSeo, url: base + path, inLanguage: lang, isPartOf: { '@id': `${base}/#website` } }];
 ---
 <Shell lang={lang} title={u.blogSeo} desc={u.blogDesc} path={path} alt={{ ar: '/blog/', en: '/en/blog/' }} extraLd={ld}>
-  <div class="wrap page-head"><span class="kicker">BLOG</span><h1>{u.blogTitle}</h1><p>{u.blogSub}</p></div>
+  <div class="wrap page-head has-art"><span class="kicker">BLOG</span><h1>{u.blogTitle}</h1><p>{u.blogSub}</p><div class="hb-art"><Illus kind={'blog'} /></div></div>
   <div class="wrap post-grid">
     {posts.map((p) => (
       <a class="post-card" href={P(lang, `/blog/${p.slug}/`)}>

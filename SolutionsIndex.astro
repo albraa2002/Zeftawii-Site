@@ -1,5 +1,6 @@
 ---
 import Shell from './Shell.astro';
+import Illus from './Illus.astro';
 import type { Lang } from '../i18n';
 import { UI, P } from '../content/ui';
 import { solutions } from '../content/solutions';
@@ -12,7 +13,7 @@ const groups = [{ h: u.storesH, k: 'store' }, { h: u.marketsH, k: 'market' }];
 const ld = [{ '@type': 'CollectionPage', name: title, url: base + path, inLanguage: lang }];
 ---
 <Shell lang={lang} title={title} desc={desc} path={path} alt={{ ar: '/solutions/', en: '/en/solutions/' }} extraLd={ld}>
-  <div class="wrap page-head"><span class="kicker">SOLUTIONS</span><h1>{u.solutions}</h1><p>{desc}</p></div>
+  <div class="wrap page-head has-art"><span class="kicker">SOLUTIONS</span><h1>{u.solutions}</h1><p>{desc}</p><div class="hb-art"><Illus kind={'store'} /></div></div>
   {groups.map((g) => (
     <div class="wrap">
       <h2 class="sec-h">{g.h}</h2>

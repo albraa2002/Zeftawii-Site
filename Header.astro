@@ -1,0 +1,142 @@
+---
+import { T, type Lang } from '../i18n';
+import { CONFIG } from '../config';
+import { UI, P } from '../content/ui';
+import { services } from '../content/services';
+import { solutions } from '../content/solutions';
+import { tools } from '../content/tools';
+import { posts } from '../content/posts';
+import { icon, svcIcons } from '../lib/icons';
+interface Props { lang: Lang; alt: string }
+const { lang, alt } = Astro.props; const t = T[lang]; const u = UI[lang]; const ar = lang === 'ar';
+const home = P(lang, '/');
+const L = ar
+  ? { services: 'الخدمات', solutions: 'الحلول', tools: 'الأدوات', learn: 'تعلّم', work: 'شغل فعلي', about: 'عنّي', contact: 'تواصل', search: 'بحث', theme: 'تبديل الثيم', all: 'كل الخدمات', allTools: 'كل الأدوات', allSol: 'كل الحلول', stores: 'المتاجر', markets: 'الأسواق', latest: 'أحدث المقالات', ph: 'ابحث عن خدمة أو أداة أو مقال أو مصطلح…', none: 'مفيش نتائج. جرّب كلمة تانية.', hint: 'اضغط / للبحث', close: 'إغلاق', roas: 'حاسبة ربحية الإعلانات (ROAS)', blog: 'المدونة', glossary: 'قاموس المصطلحات', res: 'قوالب مجانية', blogD: 'شروحات عملية من الشغل', glD: '20 مصطلح بالمعادلة والمثال', resD: 'SOW وتقرير حالة وKPIs' }
+  : { services: 'Services', solutions: 'Solutions', tools: 'Tools', learn: 'Learn', work: 'Work', about: 'About', contact: 'Contact', search: 'Search', theme: 'Toggle theme', all: 'All services', allTools: 'All tools', allSol: 'All solutions', stores: 'Stores', markets: 'Markets', latest: 'Latest articles', ph: 'Search a service, tool, article or term…', none: 'No results. Try another word.', hint: 'Press / to search', close: 'Close', roas: 'Ad profitability calculator (ROAS)', blog: 'Blog', glossary: 'Glossary', res: 'Free templates', blogD: 'Practical write-ups from real work', glD: '20 terms with formula and example', resD: 'SOW, status report and KPIs' };
+const tag = ar
+  ? ['لوحات تفاعلية بمؤشراتك', 'ROAS وCPA وتحليل الحملات', 'تقارير بتتحدث لوحدها', 'أدوات ونماذج تنبؤية', 'مدير حسابات بدوام جزئي', 'نطاق وجدول وتقارير حالة']
+  : ['Interactive KPI dashboards', 'ROAS, CPA and campaign analysis', 'Reports that refresh themselves', 'Smart tools and predictive models', 'A part-time account manager', 'Scope, schedule and status reports'];
+const latest = [...posts].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
+const toolList = [{ n: L.roas, h: P(lang, '/#calc') }, ...tools.map((x) => ({ n: x[lang].name, h: P(lang, `/tools/${x.slug}/`) }))];
+const arrow = ar ? '←' : '→';
+---
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a href={home} class="logo">{CONFIG.brand}<b> |</b><small>{CONFIG.tagline.toUpperCase()}</small></a>
+    <nav class="mnav" id="nav-links" aria-label="main">
+      <div class="mi wide">
+        <button type="button" class="mi-btn" aria-expanded="false" aria-controls="mega-svc">{L.services}<Fragment set:html={icon('chevron', 16)} /></button>
+        <div class="mega" id="mega-svc" hidden>
+          <div class="mega-grid">
+            {services.map((s) => (
+              <a class="mega-card" href={P(lang, `/services/${s.slug}/`)}>
+                <span class="mi-ico" set:html={icon(svcIcons[s.idx], 22)}></span>
+                <span><b>{s[lang].name}</b><small>{tag[s.idx]}</small></span>
+              </a>
+            ))}
+          </div>
+          <a class="mega-foot" href={home + '#services'}>{L.all} <i>{arrow}</i></a>
+        </div>
+      </div>
+      <div class="mi">
+        <button type="button" class="mi-btn" aria-expanded="false" aria-controls="mega-sol">{L.solutions}<Fragment set:html={icon('chevron', 16)} /></button>
+        <div class="mega narrow" id="mega-sol" hidden>
+          <div class="mega-cols">
+            <div><p class="mega-h">{L.stores}</p>{solutions.filter((x) => x.kind === 'store').map((x) => <a class="mega-link" href={P(lang, `/solutions/${x.slug}/`)}><span set:html={icon('store', 18)}></span>{x[lang].name}</a>)}</div>
+            <div><p class="mega-h">{L.markets}</p>{solutions.filter((x) => x.kind === 'market').map((x) => <a class="mega-link" href={P(lang, `/solutions/${x.slug}/`)}><span set:html={icon('globe', 18)}></span>{x[lang].name}</a>)}</div>
+          </div>
+          <a class="mega-foot" href={P(lang, '/solutions/')}>{L.allSol} <i>{arrow}</i></a>
+        </div>
+      </div>
+      <div class="mi">
+        <button type="button" class="mi-btn" aria-expanded="false" aria-controls="mega-tools">{L.tools}<Fragment set:html={icon('chevron', 16)} /></button>
+        <div class="mega narrow" id="mega-tools" hidden>
+          <div class="mega-list">{toolList.map((x) => <a class="mega-link" href={x.h}><span set:html={icon('tool', 18)}></span>{x.n}</a>)}</div>
+          <a class="mega-foot" href={P(lang, '/tools/')}>{L.allTools} <i>{arrow}</i></a>
+        </div>
+      </div>
+      <div class="mi">
+        <button type="button" class="mi-btn" aria-expanded="false" aria-controls="mega-learn">{L.learn}<Fragment set:html={icon('chevron', 16)} /></button>
+        <div class="mega narrow" id="mega-learn" hidden>
+          <div class="mega-cols">
+            <div>
+              <a class="mega-link two" href={P(lang, '/blog/')}><span set:html={icon('blog', 18)}></span><span><b>{L.blog}</b><small>{L.blogD}</small></span></a>
+              <a class="mega-link two" href={P(lang, '/glossary/')}><span set:html={icon('book', 18)}></span><span><b>{L.glossary}</b><small>{L.glD}</small></span></a>
+              <a class="mega-link two" href={P(lang, '/resources/')}><span set:html={icon('download', 18)}></span><span><b>{L.res}</b><small>{L.resD}</small></span></a>
+            </div>
+            <div><p class="mega-h">{L.latest}</p>{latest.map((p) => <a class="mega-link" href={P(lang, `/blog/${p.slug}/`)}>{p[lang].title}</a>)}</div>
+          </div>
+        </div>
+      </div>
+      <a class="mi-a" href={P(lang, '/work/')}>{L.work}</a>
+      <a class="mi-a" href={P(lang, '/about/')}>{L.about}</a>
+      <a class="mi-a" href={home + '#contact'}>{L.contact}</a>
+      <a class="btn btn-primary btn-sm menu-cta" href={home + '#contact'} data-evt="cta_click" data-loc="menu">{t.nav.cta}</a>
+    </nav>
+    <div class="nav-actions">
+      <button type="button" class="icon-btn" id="search-open" aria-label={L.search} title={L.hint}><Fragment set:html={icon('search', 18)} /></button>
+      <button type="button" class="icon-btn" id="theme-toggle" aria-label={L.theme} title={L.theme}><span class="t-sun"><Fragment set:html={icon('sun', 18)} /></span><span class="t-moon"><Fragment set:html={icon('moon', 18)} /></span></button>
+      <a class="lang" href={alt} hreflang={ar ? 'en' : 'ar'}>{t.switchLabel}</a>
+      <a class="btn btn-primary btn-sm nav-cta" href={home + '#contact'} data-evt="cta_click" data-loc="nav">{t.nav.cta}</a>
+      <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="nav-links" aria-label={t.nav.menu}><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label={L.search} data-src={P(lang, '/search-index.json')} data-none={L.none}>
+  <div class="search-box">
+    <div class="search-top"><Fragment set:html={icon('search', 20)} /><input id="search-in" type="search" placeholder={L.ph} autocomplete="off" aria-label={L.search} /><button type="button" class="icon-btn" id="search-close" aria-label={L.close}>✕</button></div>
+    <ul class="search-res" id="search-res"></ul>
+  </div>
+</div>
+
+<script>
+  const nav = document.getElementById('nav')!; const burger = document.getElementById('burger') as HTMLButtonElement; const links = document.getElementById('nav-links')!;
+  const setOpen = (o: boolean) => { nav.classList.toggle('open', o); burger.setAttribute('aria-expanded', String(o)); };
+  const btns = Array.from(links.querySelectorAll<HTMLButtonElement>('.mi-btn'));
+  const closeAll = () => btns.forEach((b) => { b.setAttribute('aria-expanded', 'false'); document.getElementById(b.getAttribute('aria-controls')!)!.hidden = true; });
+  const openOne = (b: HTMLButtonElement) => { closeAll(); b.setAttribute('aria-expanded', 'true'); document.getElementById(b.getAttribute('aria-controls')!)!.hidden = false; };
+  const fine = matchMedia('(hover: hover) and (min-width: 961px)');
+  btns.forEach((b) => {
+    b.addEventListener('click', () => { b.getAttribute('aria-expanded') === 'true' ? closeAll() : openOne(b); });
+    const mi = b.parentElement!; let tm: number;
+    mi.addEventListener('mouseenter', () => { if (fine.matches) { clearTimeout(tm); openOne(b); } });
+    mi.addEventListener('mouseleave', () => { if (fine.matches) tm = window.setTimeout(closeAll, 140); });
+  });
+  burger.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
+  links.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => { setOpen(false); closeAll(); }));
+  document.addEventListener('click', (e) => { if (!nav.contains(e.target as Node)) { closeAll(); setOpen(false); } });
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+
+  // theme
+  const root = document.documentElement;
+  document.getElementById('theme-toggle')!.addEventListener('click', () => {
+    const n = root.dataset.theme === 'light' ? 'dark' : 'light'; root.dataset.theme = n;
+    try { localStorage.setItem('theme', n); } catch {}
+    document.querySelector('meta[name=theme-color]')?.setAttribute('content', n === 'light' ? '#f4f7fc' : '#0a0f1c');
+  });
+
+  // search
+  const box = document.getElementById('search')!; const inp = document.getElementById('search-in') as HTMLInputElement; const res = document.getElementById('search-res')!;
+  type It = { t: string; d: string; u: string; g: string }; let data: (It & { k: string })[] | null = null;
+  const norm = (s: string) => s.toLowerCase().replace(/[ً-ٰٟـ]/g, '').replace(/[إأآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه');
+  const load = async () => { if (data) return; try { const r = await fetch(box.dataset.src!); data = ((await r.json()) as It[]).map((x) => ({ ...x, k: norm(x.t), kd: norm(x.d) } as any)); } catch { data = []; } };
+  const render = () => {
+    if (!data) return; const q = norm(inp.value.trim()).split(/\s+/).filter(Boolean); res.textContent = '';
+    let list = data;
+    if (q.length) list = data.map((x: any) => { let s = 0; for (const w of q) { if (x.k.includes(w)) s += x.k.startsWith(w) ? 6 : 4; else if (x.kd.includes(w)) s += 1; else { s = -1; break; } } return { x, s }; }).filter((r) => r.s > 0).sort((a, b) => b.s - a.s).map((r) => r.x);
+    list = list.slice(0, 8);
+    if (!list.length) { const li = document.createElement('li'); li.className = 'none'; li.textContent = box.dataset.none!; res.appendChild(li); return; }
+    list.forEach((x) => { const li = document.createElement('li'); const a = document.createElement('a'); a.href = x.u; const g = document.createElement('em'); g.textContent = x.g; const b = document.createElement('b'); b.textContent = x.t; const s = document.createElement('small'); s.textContent = x.d; a.append(g, b, s); li.appendChild(a); res.appendChild(li); });
+  };
+  const openS = async () => { box.hidden = false; document.body.style.overflow = 'hidden'; inp.focus(); await load(); render(); };
+  const closeS = () => { box.hidden = true; document.body.style.overflow = ''; };
+  document.getElementById('search-open')!.addEventListener('click', openS);
+  document.getElementById('search-close')!.addEventListener('click', closeS);
+  box.addEventListener('click', (e) => { if (e.target === box) closeS(); });
+  inp.addEventListener('input', render);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { closeS(); closeAll(); setOpen(false); }
+    const tg = (e.target as HTMLElement).tagName; if ((e.key === '/' || (e.key === 'k' && (e.ctrlKey || e.metaKey))) && !/INPUT|TEXTAREA|SELECT/.test(tg)) { e.preventDefault(); openS(); }
+  });
+</script>

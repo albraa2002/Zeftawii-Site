@@ -1,5 +1,6 @@
 ---
 import Shell from './Shell.astro';
+import Illus from './Illus.astro';
 import type { Lang } from '../i18n';
 import { UI, P } from '../content/ui';
 import { cases } from '../content/site';
@@ -20,7 +21,7 @@ const ld = [
 ];
 ---
 <Shell lang={lang} title={`${c.title} | Zeftawii`} desc={c.desc} path={path} alt={{ ar: `/work/${slug}/`, en: `/en/work/${slug}/` }} extraLd={ld}>
-  <div class="wrap page-head">
+  <div class="wrap page-head has-art"><div class="hb-art"><Illus kind={['bi','marketing','automation','ai','account','project'][(typeof cs !== 'undefined' ? cs.svc : 0)] || 'bi'} /></div>
     <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/work/')}>{u.work}</a></nav>
     <span class="kicker">{c.tag}</span>
     <h1>{c.title}</h1>

@@ -120,7 +120,8 @@ const fontsHref =
     <meta name="author" content={personName} />
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
     <meta name="theme-color" content="#0a0f1c" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="color-scheme" content="dark light" />
+    <script is:inline>try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.dataset.theme=t;}catch(e){document.documentElement.dataset.theme='dark';}</script>
     <meta name="format-detection" content="telephone=no" />
 
     {!noindex && (

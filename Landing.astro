@@ -1,4 +1,6 @@
 ---
+import Header from './Header.astro';
+import PromoBanner from './PromoBanner.astro';
 import { T, type Lang } from '../i18n';
 import { chatKB } from '../chatKB';
 import { SF } from '../serviceFields';
@@ -56,25 +58,7 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
 ---
 <a class="skip" href="#main">{t.skip}</a>
 
-<header class="nav" id="nav">
-  <div class="wrap nav-in">
-    <a href="#top" class="logo">{CONFIG.brand}<b> |</b><small>{CONFIG.tagline.toUpperCase()}</small></a>
-    <nav class="links" id="nav-links" aria-label="main">
-      <a href="#services">{t.nav.services}</a>
-      <a href="#work">{t.nav.work}</a>
-      <a href={P(lang, '/tools/')}>{u.tools}</a>
-      <a href={P(lang, '/blog/')}>{u.blog}</a>
-      <a href={P(lang, '/about/')}>{u.about}</a>
-      <a href="#contact">{t.nav.contact}</a>
-      <a class="btn btn-primary btn-sm menu-cta" href="#contact" data-evt="cta_click" data-loc="menu">{t.nav.cta}</a>
-    </nav>
-    <div class="nav-actions">
-      <a class="lang" href={t.switchHref} hreflang={lang === 'ar' ? 'en' : 'ar'}>{t.switchLabel}</a>
-      <a class="btn btn-primary btn-sm nav-cta" href="#contact" data-evt="cta_click" data-loc="nav">{t.nav.cta}</a>
-      <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="nav-links" aria-label={t.nav.menu}><span></span><span></span><span></span></button>
-    </div>
-  </div>
-</header>
+<Header lang={lang} alt={t.switchHref} />
 
 <main id="main">
   <div class="hero" id="top">
@@ -101,13 +85,13 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
           </div>
           <div class="chart">
             <svg viewBox="0 0 320 150" width="100%" aria-hidden="true">
-              <g fill="rgba(0,229,255,.55)">
+              <g style="fill:var(--cyan);fill-opacity:.55">
                 {[40, 62, 50, 78, 66, 92, 84, 110].map((h, i) => (
                   <rect class="bar" style={`animation-delay:${0.1 * i}s`} x={14 + i * 38} y={140 - h} width="22" height={h} rx="4" />
                 ))}
               </g>
-              <path class="draw" d="M14 110 L52 96 L90 104 L128 76 L166 84 L204 52 L242 60 L280 28" fill="none" stroke="#00ff9d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-              <circle cx="280" cy="28" r="4.5" fill="#00ff9d" />
+              <path class="draw" d="M14 110 L52 96 L90 104 L128 76 L166 84 L204 52 L242 60 L280 28" fill="none" style="stroke:var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+              <circle cx="280" cy="28" r="4.5" style="fill:var(--green)" />
             </svg>
           </div>
           <p class="mock-note">{t.hero.mockNote}</p>
@@ -147,6 +131,8 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
       </div>
     </div>
   </section>
+
+  <div class="wrap"><PromoBanner lang={lang} kind="solutions" /></div>
 
   <section id="fit">
     <div class="wrap">
@@ -220,6 +206,8 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
       <p style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap"><a class="chip-link" href={P(lang, '/tools/')}>{lang === 'ar' ? 'كل الأدوات' : 'All tools'}</a><a class="chip-link" href={P(lang, '/resources/')}>{u.resources}</a><a class="chip-link" href={P(lang, '/glossary/')}>{u.glossary}</a><a class="chip-link" href={P(lang, '/solutions/')}>{u.solutions}</a></p>
     </div>
   </section>
+
+  <div class="wrap"><PromoBanner lang={lang} kind="learn" /></div>
 
   <section id="process">
     <div class="wrap">
@@ -695,25 +683,6 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
       if (!sent) { sent = true; trk('calc_used'); }
     };
     ins.forEach((i) => i.addEventListener('input', calc));
-  })();
-
-  // ===== الهيدر: قائمة الموبايل + السكشن النشط + ظل عند السكرول =====
-  (() => {
-    const nav = document.getElementById('nav'); const burger = document.getElementById('burger') as HTMLButtonElement | null;
-    const links = document.getElementById('nav-links'); if (!nav || !burger || !links) return;
-    const setOpen = (o: boolean) => { nav.classList.toggle('open', o); burger.setAttribute('aria-expanded', String(o)); };
-    burger.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
-    links.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
-    document.addEventListener('click', (e) => { if (!nav.contains(e.target as Node)) setOpen(false); });
-    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
-    onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
-    const map = new Map<string, HTMLElement>();
-    links.querySelectorAll<HTMLAnchorElement>('a[href^="#"]:not(.btn)').forEach((a) => map.set(a.getAttribute('href')!.slice(1), a));
-    const so = new IntersectionObserver((es) => es.forEach((e) => {
-      if (e.isIntersecting) { map.forEach((a) => a.classList.remove('active')); map.get(e.target.id)?.classList.add('active'); }
-    }), { rootMargin: '-45% 0px -50% 0px' });
-    map.forEach((_, id) => { const s = document.getElementById(id); if (s) so.observe(s); });
   })();
 
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12 });
