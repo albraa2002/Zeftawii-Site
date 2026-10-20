@@ -1,6 +1,6 @@
 ---
-import BlogPost from '../../components/BlogPost.astro';
-import { posts } from '../../content/posts';
+import BlogPost from '../../../components/BlogPost.astro';
+import { posts } from '../../../content/posts';
 export const getStaticPaths = () => posts.map((p) => ({ params: { slug: p.slug } }));
 ---
-<BlogPost lang="ar" slug={Astro.params.slug!} />
+<BlogPost lang="en" slug={Astro.params.slug!} />

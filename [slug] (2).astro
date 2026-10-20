@@ -1,6 +1,6 @@
 ---
-import S from '../../../components/SolutionPage.astro';
-import { solutions } from '../../../content/solutions';
-export const getStaticPaths = () => solutions.map((x) => ({ params: { slug: x.slug } }));
+import G from '../../../components/GlossaryTerm.astro';
+import { glossary } from '../../../content/glossary';
+export const getStaticPaths = () => glossary.map((g) => ({ params: { slug: g.slug } }));
 ---
-<S lang="en" slug={Astro.params.slug!} />
+<G lang="en" slug={Astro.params.slug!} />

@@ -1,7 +1,6 @@
 ---
-import CasePage from '../../../components/CasePage.astro';
-import { cases } from '../../../content/site';
-export const getStaticPaths = () => cases.map((c) => ({ params: { slug: c.slug } }));
-const { slug } = Astro.params;
+import S from '../../../components/SolutionPage.astro';
+import { solutions } from '../../../content/solutions';
+export const getStaticPaths = () => solutions.map((x) => ({ params: { slug: x.slug } }));
 ---
-<CasePage lang="en" slug={slug!} />
+<S lang="en" slug={Astro.params.slug!} />

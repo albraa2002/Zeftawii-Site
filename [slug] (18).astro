@@ -1,6 +1,6 @@
 ---
-import G from '../../components/GlossaryTerm.astro';
-import { glossary } from '../../content/glossary';
-export const getStaticPaths = () => glossary.map((g) => ({ params: { slug: g.slug } }));
+import ServicePage from '../../components/ServicePage.astro';
+import { services } from '../../content/services';
+export const getStaticPaths = () => services.map((s) => ({ params: { slug: s.slug } }));
 ---
-<G lang="ar" slug={Astro.params.slug!} />
+<ServicePage lang="ar" slug={Astro.params.slug!} />
