@@ -1,5 +1,6 @@
 ---
 import Shell from './Shell.astro';
+import Illus from './Illus.astro';
 import type { Lang } from '../i18n';
 import { UI, P } from '../content/ui';
 import { tools } from '../content/tools';
@@ -20,7 +21,7 @@ const ld = [
 const data = { kind: tool.kind, svc: tool.svc, lang, ...c, wa: CONFIG.whatsapp, svcPath: P(lang, '/'), services: services.map((s) => s[lang].name) };
 ---
 <Shell lang={lang} title={`${c.name} | Zeftawii`} desc={c.desc} path={path} alt={{ ar: `/tools/${slug}/`, en: `/en/tools/${slug}/` }} extraLd={ld}>
-  <div class="wrap page-head">
+  <div class="wrap page-head has-art"><div class="hb-art"><Illus kind={'tools'} /></div>
     <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/tools/')}>{u.tools}</a></nav>
     <span class="kicker">FREE TOOL</span>
     <h1>{c.h1}</h1>
@@ -30,8 +31,30 @@ const data = { kind: tool.kind, svc: tool.svc, lang, ...c, wa: CONFIG.whatsapp, 
     <div class="calc tool" id="tool" data-t={JSON.stringify(data)}>
       {tool.kind !== 'check' ? (<>
         <div class="calc-in">
-          {c.f!.map((f) => (<label>{f.l}<input data-k={f.k} inputmode="decimal" dir="ltr" autocomplete="off" placeholder={f.ph || ''} /></label>))}
+          {c.f!.map((f) => f.t === 'svc' ? (
+            <label class={f.wide ? 'wide' : ''}>{f.l}<select data-k={f.k}><option value="">{lang === 'ar' ? 'اختر الخدمة' : 'Choose a service'}</option>{services.map((sv) => <option value={String(sv.idx)}>{sv[lang].name}</option>)}<option value="6">{lang === 'ar' ? 'مش متأكد' : 'Not sure'}</option></select></label>
+          ) : f.t === 'area' ? (
+            <label class={f.wide ? 'wide' : ''}>{f.l}<textarea data-k={f.k} placeholder={f.ph || ''} maxlength="400"></textarea></label>
+          ) : tool.kind === 'brief' ? (
+            <label>{f.l}<input data-k={f.k} autocomplete="off" placeholder={f.ph || ''} maxlength="120" /></label>
+          ) : (<label>{f.l}<input data-k={f.k} inputmode="decimal" dir="ltr" autocomplete="off" placeholder={f.ph || ''} /></label>))}
         </div>
+        {tool.kind === 'brief' ? (
+        <div class="calc-out" aria-live="polite">
+          <p class="calc-verdict" id="b-empty">{c.empty}</p>
+          <div id="b-box" hidden>
+            <h2 class="sec-h">{c.resT}</h2>
+            <pre class="brief-out" id="b-out" dir="auto"></pre>
+            <p class="calc-note" id="b-miss"></p>
+            <div class="calc-cta">
+              <span>{c.cta}</span>
+              <button type="button" class="btn btn-primary btn-sm" id="b-copy" data-evt="brief_copy" data-loc="tool">{c.v!.copy}</button>
+              <a class="btn btn-wa btn-sm" id="b-wa" target="_blank" rel="noopener" data-evt="whatsapp_click" data-loc="tool">{c.v!.wa}</a>
+            </div>
+          </div>
+          <p class="calc-note">{c.note}</p>
+        </div>
+        ) : (
         <div class="calc-out" aria-live="polite">
           <div class="calc-grid" hidden>
             {Object.entries(c.r!).map(([k, l]) => (<div class="calc-k"><small>{l}</small><b data-o={k}>-</b></div>))}
@@ -44,6 +67,7 @@ const data = { kind: tool.kind, svc: tool.svc, lang, ...c, wa: CONFIG.whatsapp, 
             <a class="btn btn-wa btn-sm" id="t-wa" target="_blank" rel="noopener" data-evt="whatsapp_click" data-loc="tool">{u.wa}</a>
           </div>
         </div>
+        )}
       </>) : (<>
         <div class="quiz">
           {c.q!.map((g, gi) => (
@@ -112,8 +136,29 @@ const data = { kind: tool.kind, svc: tool.svc, lang, ...c, wa: CONFIG.whatsapp, 
         b2.href = waLink(T.wa, lines.join('\n')); cta.append(sp, b1, b2); res.appendChild(cta);
         res.hidden = false; res.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); trk('tool_used', { tool: kind });
       });
+
+    } else if (kind === 'brief') {
+      const els = Array.from(root.querySelectorAll<HTMLInputElement>('[data-k]'));
+      const box = document.getElementById('b-box') as HTMLElement; const empty = document.getElementById('b-empty') as HTMLElement;
+      const out = document.getElementById('b-out') as HTMLElement; const miss = document.getElementById('b-miss') as HTMLElement;
+      const waB = document.getElementById('b-wa') as HTMLAnchorElement; const cp = document.getElementById('b-copy') as HTMLButtonElement;
+      const val = (k: string) => (els.find((e) => e.dataset.k === k)?.value || '').trim();
+      let sent = false; let text = '';
+      const build = () => {
+        if (!val('goal') && !val('biz')) { box.hidden = true; empty.hidden = false; return; }
+        const lines = [`*${T.resT}*`];
+        T.f.forEach((f: any) => { let v = val(f.k); if (!v) return; if (f.k === 'svc') v = T.services[Number(v)] || v; lines.push(`• ${f.l}: ${toLatinDigits(v).replace(/\s*\n+\s*/g, ' / ')}`); });
+        text = lines.join('\n');
+        const need = ['goal', 'deliv', 'src', 'dl'].filter((k) => !val(k)).map((k) => T.f.find((f: any) => f.k === k).l);
+        miss.textContent = need.length ? `${T.v.miss} ${need.join(ar ? '، ' : ', ')}` : ''; miss.hidden = !need.length;
+        out.textContent = text.replace(/\*/g, ''); box.hidden = false; empty.hidden = true;
+        waB.href = waLink(T.wa, [T.waHead, '', text, '', src()].join('\n'));
+        if (!sent) { sent = true; trk('tool_used', { tool: kind }); }
+      };
+      els.forEach((e) => { e.addEventListener('input', build); e.addEventListener('change', build); });
+      cp.addEventListener('click', async () => { try { await navigator.clipboard.writeText(text); cp.textContent = T.v.copied; setTimeout(() => { cp.textContent = T.v.copy; }, 1800); } catch { const r = document.createRange(); r.selectNodeContents(out); const sel = window.getSelection(); sel?.removeAllRanges(); sel?.addRange(r); } });
     } else {
-      const ins = Array.from(root.querySelectorAll<HTMLInputElement>('input[data-k]'));
+      const ins = Array.from(root.querySelectorAll<HTMLInputElement>('[data-k]'));
       const grid = root.querySelector('.calc-grid') as HTMLElement; const verdict = root.querySelector('.calc-verdict') as HTMLElement; const cta = root.querySelector('.calc-cta') as HTMLElement; const waA = document.getElementById('t-wa') as HTMLAnchorElement;
       const num = (s: string) => { const v = parseFloat(toLatinDigits(s).replace(/[,،٬\s]/g, '').replace('٫', '.')); return isFinite(v) ? v : NaN; };
       const out = (k: string, v: string) => { const e = root.querySelector(`[data-o="${k}"]`); if (e) e.textContent = v; };
@@ -128,6 +173,20 @@ const data = { kind: tool.kind, svc: tool.svc, lang, ...c, wa: CONFIG.whatsapp, 
             const save = Math.min(Math.max(d('save', 60), 0), 100) / 100; const hy = v.reports * v.hours * 12, cy = hy * v.rate, sh = hy * save, sc = cy * save;
             out('hy', f(hy)); out('cy', f(cy)); out('sh', f(sh)); out('sc', f(sc)); verdictKey = sh >= 100 ? 'big' : sh >= 24 ? 'mid' : 'low';
           }
+        } else if (kind === 'cpaltv') {
+          ok = v.spend > 0 && v.cust > 0 && v.aov > 0 && v.margin > 0;
+          if (ok) {
+            const cac = v.spend / v.cust, gp = v.aov * Math.min(v.margin, 100) / 100, n = Math.max(d('orders', 1), 1) || 1, ltv = gp * n, ratio = ltv / cac, pay = cac / gp;
+            out('cac', f(cac)); out('gp', f(gp)); out('ltv', f(ltv)); out('ratio', f(ratio) + 'x'); out('pay', f(Math.ceil(pay * 10) / 10)); verdictKey = ratio >= 3 ? 'good' : ratio >= 1 ? 'tight' : 'bad';
+          }
+        } else if (kind === 'be') {
+          ok = v.price > 0 && v.cost >= 0 && !isNaN(v.cost);
+          if (ok) {
+            const r = Math.min(Math.max(d('ret'), 0), 100) / 100, fee = Math.min(Math.max(d('fee'), 0), 100) / 100;
+            const m = (1 - r) * (v.price - v.cost - v.price * fee) - d('ship') - r * d('rship'); const mp = m / v.price * 100;
+            out('m', f(m)); out('mp', f(mp) + '%'); out('ber', m > 0 ? f(v.price / m) : '—'); out('mcpa', m > 0 ? f(m) : '—'); out('beu', m > 0 && d('fixed') > 0 ? f(Math.ceil(d('fixed') / m)) : '—');
+            verdictKey = m <= 0 ? 'neg' : mp < 20 ? 'thin' : 'ok';
+          }
         } else {
           ok = v.orders > 0 && v.aov > 0 && v.rate > 0;
           if (ok) {
@@ -139,7 +198,7 @@ const data = { kind: tool.kind, svc: tool.svc, lang, ...c, wa: CONFIG.whatsapp, 
           }
         }
         if (!ok) { grid.hidden = true; cta.hidden = true; verdict.className = 'calc-verdict'; verdict.textContent = T.empty; return; }
-        grid.hidden = false; cta.hidden = false; verdict.textContent = T.v[verdictKey]; verdict.className = 'calc-verdict ' + (['big', 'high'].includes(verdictKey) ? 'bad' : verdictKey === 'low' ? '' : 'good');
+        grid.hidden = false; cta.hidden = false; verdict.textContent = T.v[verdictKey]; verdict.className = 'calc-verdict ' + (['big', 'high', 'bad', 'neg'].includes(verdictKey) ? 'bad' : ['low', 'tight', 'thin'].includes(verdictKey) ? '' : 'good');
         const lines = [T.waHead, '', ...ins.filter((i) => i.value).map((i) => `• ${T.f.find((x: any) => x.k === i.dataset.k).l}: ${toLatinDigits(i.value)}`), '', ...Object.keys(T.r).map((k) => `${T.r[k]}: ${(root.querySelector(`[data-o="${k}"]`) as HTMLElement).textContent}`), src()];
         waA.href = waLink(T.wa, lines.join('\n'));
         if (!sent) { sent = true; trk('tool_used', { tool: kind }); }

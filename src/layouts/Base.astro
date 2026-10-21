@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { T, type Lang } from '../i18n';
 import { CONFIG } from '../config';
+import fs from 'node:fs';
 interface Props { lang: Lang; noindex?: boolean; title?: string; desc?: string; path?: string; alt?: { ar: string; en: string }; inner?: boolean; extraLd?: object[]; ogType?: string }
 const { lang, noindex = false, inner = false, extraLd = [], ogType = 'website' } = Astro.props;
 const t = T[lang];
@@ -12,7 +13,9 @@ const base = CONFIG.site.replace(/\/$/, '');
 const pageUrl = Astro.props.path ? `${base}${Astro.props.path}` : (lang === 'ar' ? `${base}/` : `${base}/en/`);
 const altAr = `${base}${Astro.props.alt?.ar ?? '/'}`;
 const altEn = `${base}${Astro.props.alt?.en ?? '/en/'}`;
-const ogImage = `${base}/og-image.png`;
+const ogKey = (Astro.props.path || '').replace(/^\/|\/$/g, '').replace(/\//g, '-');
+const hasOg = ogKey && ogKey !== 'en' && fs.existsSync(`public/og/${ogKey}.jpg`);
+const ogImage = `${base}/${hasOg ? `og/${ogKey}.jpg` : 'og-image.png'}`;
 const personName = 'Albaraa Ehab Elzeftawy';
 const brand = 'Zeftawii | Decoding Data';
 
@@ -117,7 +120,8 @@ const fontsHref =
     <meta name="author" content={personName} />
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
     <meta name="theme-color" content="#0a0f1c" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="color-scheme" content="dark light" />
+    <script is:inline>try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.dataset.theme=t;}catch(e){document.documentElement.dataset.theme='dark';}</script>
     <meta name="format-detection" content="telephone=no" />
 
     {!noindex && (
@@ -126,6 +130,7 @@ const fontsHref =
         <link rel="alternate" hreflang="ar" href={altAr} />
         <link rel="alternate" hreflang="en" href={altEn} />
         <link rel="alternate" hreflang="x-default" href={altAr} />
+        <link rel="alternate" type="application/rss+xml" title={lang === 'ar' ? 'مدونة زفتاوي' : 'Zeftawii Blog'} href={`${base}${lang === 'ar' ? '' : '/en'}/rss.xml`} />
       </>
     )}
 

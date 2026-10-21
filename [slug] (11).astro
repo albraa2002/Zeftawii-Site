@@ -1,7 +1,0 @@
----
-import CasePage from '../../../components/CasePage.astro';
-import { cases } from '../../../content/site';
-export const getStaticPaths = () => cases.map((c) => ({ params: { slug: c.slug } }));
-const { slug } = Astro.params;
----
-<CasePage lang="en" slug={slug!} />

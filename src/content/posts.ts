@@ -355,4 +355,79 @@ export const posts: Post[] = [
       ],
     },
   },
+  {
+    slug: "cpa-vs-ltv-before-scaling", date: "2026-10-19", mins: 4, svc: 1,
+    ar: {
+      title: "CPA وحده بيضلل: قارنه بقيمة العميل قبل ما تزوّد الصرف",
+      desc: "إزاي تحسب CAC و LTV وتقارنهم، ومتى يكون CPA عالي مقبول ومتى يكون خطر.",
+      tldr: "CPA لازم يتقارن بالربح اللي العميل بيجيبه على مدار علاقته (LTV)، مش بإيراد الطلب الأول بس.",
+      body: [{"p": "كتير بيشوفوا CPA = 150 وهو أعلى من ربح الطلب الأول، فيوقفوا الحملة. بس لو العميل بيرجع يشتري، الصورة بتتغير. ولو مش بيرجع، CPA منخفض ممكن برضه يكون خسارة."}, {"h": "CAC و LTV"}, {"p": "CAC (تكلفة اكتساب العميل) = الصرف ÷ عدد العملاء الجدد. LTV هنا = ربح الطلب الواحد × عدد مرات الشراء المتوقعة. الربح هو الإيراد بعد التكلفة والشحن والمرتجعات، مش الإيراد نفسه."}, {"h": "النسبة"}, {"p": "قاعدة تقريبية شائعة إن LTV يكون حوالي 3 أضعاف CAC. دي مش قانون: بتتغير حسب النشاط وسيولتك ومدة استرجاع التكلفة اللي تقدر تتحملها."}, {"h": "إزاي تستخدمها"}, {"ul": ["احسب CAC لكل قناة وحملة مش للحساب كله.", "اعتمد على معدل رجوع فعلي من بيانات متجرك قبل ما تفترض إن العميل هيشتري تاني.", "شوف كام طلب محتاج عشان تسترجع CAC، وده بيحدد سيولتك.", "لو LTV أقل من CAC، المشكلة في الهامش أو الاستهداف مش في الميزانية."]}, {"p": "جرّب حاسبة CPA و LTV المجانية في قسم الأدوات، وحط أرقامك بدل الأمثلة."}],
+    },
+    en: {
+      title: "CPA alone misleads: compare it with customer value before scaling spend",
+      desc: "How to compute CAC and LTV and compare them, and when a high CPA is acceptable and when it is dangerous.",
+      tldr: "CPA must be compared with the profit a customer brings over their lifetime (LTV), not only the first order revenue.",
+      body: [{"p": "Many people see a CPA of 150 above first-order profit and stop the campaign. But if the customer comes back, the picture changes. And if they never do, even a low CPA can still lose money."}, {"h": "CAC and LTV"}, {"p": "CAC (customer acquisition cost) = spend ÷ new customers. LTV here = profit per order × expected number of purchases. Profit is revenue after cost, shipping and returns, not revenue itself."}, {"h": "The ratio"}, {"p": "A common rule of thumb is an LTV of about 3 times CAC. It is not a law: it varies by business, your cash position and how long a payback you can afford."}, {"h": "How to use it"}, {"ul": ["Compute CAC per channel and campaign, not for the whole account.", "Use a real repeat rate from your store data before assuming customers will buy again.", "See how many orders it takes to recover CAC, which sets your cash needs.", "If LTV is below CAC, the problem is margin or targeting, not budget."]}, {"p": "Try the free CPA and LTV calculator in the tools section and use your own numbers."}],
+    },
+  },
+  {
+    slug: "product-break-even-before-ads", date: "2026-10-19", mins: 4, svc: 1,
+    ar: {
+      title: "احسب نقطة التعادل لكل منتج قبل أي إعلان",
+      desc: "طريقة بسيطة تحسب بيها ربح المنتج الفعلي بعد الشحن والرسوم والمرتجعات، ومنها نقطة التعادل لـ ROAS وأقصى CPA.",
+      tldr: "ربح الطلب الفعلي = بعد التكلفة والشحن والرسوم والمرتجعات. منه تطلع نقطة التعادل وأقصى CPA تدفعه.",
+      body: [{"p": "متوسط الهامش بيخبّي منتجات بتخسر ومنتجات بتكسب كتير. الحل إنك تحسب لكل منتج على حدة قبل ما تحط عليه ميزانية."}, {"h": "الخطوات"}, {"ul": ["سعر البيع، وتكلفة المنتج، وتكلفة الشحن على الطلب.", "رسوم الدفع أو التحصيل كنسبة من السعر.", "نسبة المرتجعات وتكلفة شحن المرتجع.", "ربح الطلب = (1 − نسبة المرتجع) × (السعر − التكلفة − الرسوم) − الشحن − نسبة المرتجع × شحن الرجوع."]}, {"h": "اللي يطلع منها"}, {"p": "أقصى CPA تقدر تدفعه = ربح الطلب. نقطة التعادل لـ ROAS = سعر البيع ÷ ربح الطلب. لو ربح الطلب 100 والسعر 400 تبقى نقطة التعادل 4، وأي ROAS تحتها خسارة."}, {"h": "تنبيه"}, {"p": "الحساب ده بيفترض إن المرتجع بيرجع سليم وقابل للبيع. لو في تالف أو مرتجعات بتضيع، الربح الفعلي أقل. وراجع الحساب كل ما تتغير التكلفة أو السعر."}, {"p": "الحاسبة المجانية في قسم الأدوات بتعمل الحسبة دي بأرقامك في ثواني."}],
+    },
+    en: {
+      title: "Compute break-even for each product before any ad",
+      desc: "A simple way to compute real product profit after shipping, fees and returns, and from it the break-even ROAS and maximum CPA.",
+      tldr: "Real profit per order is after cost, shipping, fees and returns. From it come break-even and the most CPA you can pay.",
+      body: [{"p": "An average margin hides products that lose money and products that earn a lot. The fix is to compute each product on its own before putting budget on it."}, {"h": "The steps"}, {"ul": ["Selling price, product cost and shipping cost per order.", "Payment or collection fees as a percentage of price.", "Return rate and return shipping cost.", "Profit per order = (1 − return rate) × (price − cost − fees) − shipping − return rate × return shipping."]}, {"h": "What comes out"}, {"p": "The most CPA you can pay = profit per order. Break-even ROAS = selling price ÷ profit per order. If profit per order is 100 and price is 400, break-even is 4, and any ROAS below it loses money."}, {"h": "Heads up"}, {"p": "This assumes returned items come back sellable. With damaged goods or returns that are lost, real profit is lower. And redo the calculation whenever cost or price changes."}, {"p": "The free calculator in the tools section does this with your numbers in seconds."}],
+    },
+  },
+  {
+    slug: "write-a-project-brief", date: "2026-10-19", mins: 3, svc: 5,
+    ar: {
+      title: "إزاي تكتب Brief مشروع واضح من أول مرة",
+      desc: "الأسئلة اللي لازم يجاوب عليها أي ملخص طلب مشروع علشان تقلل الرجوع والتعديل وسوء الفهم.",
+      tldr: "Brief كويس بيجاوب على: الهدف، المطلوب تسليمه، البيانات المتاحة، الموعد، والميزانية التقريبية.",
+      body: [{"p": "أغلب سوء الفهم في المشاريع بيبدأ من طلب غامض زي \"عاوز داشبورد\". الداشبورد لمين؟ بيجاوب على إيه؟ من أنهي بيانات؟ الأسئلة دي لو اتجاوبت من الأول، المشروع بيمشي أسلس."}, {"h": "الحد الأدنى للـ Brief"}, {"ul": ["النشاط: بتبيع إيه ولمين.", "الهدف: القرار اللي محتاج تاخده بالأرقام.", "المطلوب تسليمه: شكل المخرج (لوحة، تقرير، ملف).", "البيانات والأدوات المتاحة: ملفات، منصات، صلاحيات.", "الموعد المستهدف والسبب.", "ميزانية تقريبية لو متاحة."]}, {"h": "غلطات شائعة"}, {"ul": ["وصف الحل بدل المشكلة (\"عاوز Power BI\" بدل \"عاوز أعرف أنهي حملة بتخسر\").", "عدم ذكر مين بياخد القرار ومين بيراجع.", "إغفال مصادر البيانات الفعلية وجودتها."]}, {"p": "بعد الـ Brief بيجي نطاق العمل المكتوب اللي بيحدد اللي جوه المشروع واللي برّاه. وعلشان تبدأ بسهولة عملنا مولّد ملخص طلب مشروع مجاني في قسم الأدوات."}],
+    },
+    en: {
+      title: "How to write a clear project brief the first time",
+      desc: "The questions every project brief should answer to cut rework, edits and misunderstanding.",
+      tldr: "A good brief answers: the goal, what must be delivered, available data, the date and a rough budget.",
+      body: [{"p": "Most project misunderstanding starts from a vague request like \"I want a dashboard\". For whom? Answering what? From which data? When these are answered upfront the project runs smoother."}, {"h": "The minimum brief"}, {"ul": ["Business: what you sell and to whom.", "Goal: the decision you need to make with numbers.", "Deliverable: the form of the output (dashboard, report, file).", "Data and tools available: files, platforms, access.", "Target date and the reason for it.", "A rough budget if available."]}, {"h": "Common mistakes"}, {"ul": ["Describing the solution instead of the problem (\"I want Power BI\" instead of \"I want to know which campaign loses money\").", "Not naming who decides and who reviews.", "Skipping the actual data sources and their quality."]}, {"p": "After the brief comes a written scope of work that sets what is in and out of the project. To make starting easy, we built a free project brief generator in the tools section."}],
+    },
+  },
+  {
+    slug: "ecommerce-weekly-six-numbers", date: "2026-10-19", mins: 3, svc: 0,
+    ar: {
+      title: "اجتماع المتجر الأسبوعي: 6 أرقام بس",
+      desc: "ست مؤشرات تكفي تراجع بيها متجرك كل أسبوع وتاخد قرار الصرف والمخزون بدل ما تغرق في التفاصيل.",
+      tldr: "الإيراد، الطلبات، متوسط الطلب، ROAS مقابل التعادل، المرتجعات، والعملاء العائدين.",
+      body: [{"p": "لوحة فيها 40 رقم مش بتتقري. الأفضل 6 أرقام ثابتة كل أسبوع، ولكل رقم قرار مربوط بيه."}, {"h": "الأرقام الستة"}, {"ul": ["الإيراد والطلبات: الحجم العام ومقارنته بالأسبوع اللي قبله.", "متوسط الطلب (AOV): لو نزل، راجع العروض والخصومات.", "ROAS مقابل نقطة التعادل: القرار بتاع زيادة أو تقليل الصرف.", "تكلفة الطلب (CPA): مقارنة بأقصى CPA تقدر تدفعه.", "المرتجعات: الرفض والإلغاء حسب المنتج والمدينة.", "العملاء العائدين: مؤشر صحة العلاقة مش بس الإعلان."]}, {"h": "إزاي تستخدمها"}, {"p": "اكتب جنب كل رقم: المستهدف، والرقم الحالي، والقرار لو انحرف. وده نفس اللي قالب متابع KPIs المجاني في قسم القوالب بيعمله. ولو الأرقام دي بتتجمّع يدوي كل أسبوع، ده أول مرشح للأتمتة."}, {"p": "ابدأ بالستة وزوّد بس لو في قرار جديد محتاجه."}],
+    },
+    en: {
+      title: "The weekly store meeting: six numbers only",
+      desc: "Six KPIs are enough to review your store each week and decide on spend and stock instead of drowning in detail.",
+      tldr: "Revenue, orders, average order value, ROAS against break-even, returns and repeat customers.",
+      body: [{"p": "A dashboard of 40 numbers does not get read. Better six fixed numbers every week, each tied to a decision."}, {"h": "The six numbers"}, {"ul": ["Revenue and orders: overall volume against last week.", "Average order value (AOV): if it drops, review offers and discounts.", "ROAS against break-even: the decision to raise or cut spend.", "Cost per order (CPA): against the most CPA you can pay.", "Returns: rejection and cancellations by product and city.", "Repeat customers: a health signal beyond ads."]}, {"h": "How to use them"}, {"p": "Next to each number write the target, the current value and the decision if it drifts. That is what the free KPI tracker in the templates section does. And if these numbers are assembled by hand every week, that is the first candidate for automation."}, {"p": "Start with the six and add one only when a new decision needs it."}],
+    },
+  },
+  {
+    slug: "vat-inclusive-margin-ksa", date: "2026-10-19", mins: 3, svc: 1,
+    ar: {
+      title: "سعرك شامل الضريبة؟ احسب الهامش صح",
+      desc: "ليه حساب الهامش على سعر شامل الضريبة بيطلّع نقطة تعادل غلط، وإزاي تصححه، خصوصاً في السعودية.",
+      tldr: "احسب الربح على السعر قبل الضريبة. الضريبة بتتحصّل لصالح الجهة الضريبية مش إيراد ليك.",
+      body: [{"p": "في السعودية ضريبة القيمة المضافة 15%. لو سعر منتجك على المتجر 230 شامل الضريبة، فاللي ليك فعلياً 200. لو حسبت الهامش على 230 هتفتكر إن عندك 30 زيادة، وده وهم."}, {"h": "إزاي تصححها"}, {"ul": ["افصل سعر البيع قبل الضريبة عن الضريبة.", "احسب التكلفة والشحن والرسوم مقابل السعر قبل الضريبة.", "احسب نقطة التعادل على أساس السعر قبل الضريبة وربح الطلب الفعلي.", "وانتبه لـ ROAS اللي بتعرضه المنصة: هل الإيراد فيه شامل ضريبة؟"]}, {"h": "مثال"}, {"p": "سعر 230 شامل 15% = 200 قبل الضريبة. تكلفة المنتج 100 والشحن 30 يبقى ربح الطلب 70 مش 100. نقطة التعادل لـ ROAS هي 200 ÷ 70 لو ROAS بيتقاس على السعر قبل الضريبة، ولو بيتقاس على الشامل فهي 230 ÷ 70. المهم تحدد الأساس وتلتزم بيه."}, {"p": "الكلام ده تحليلي مش استشارة ضريبية، وراجع محاسبك في التفاصيل الرسمية. وحاسبة هامش الربح ونقطة التعادل المجانية تساعدك تجرّب بأرقامك."}],
+    },
+    en: {
+      title: "Is your price VAT-inclusive? Compute margin correctly",
+      desc: "Why computing margin on a VAT-inclusive price gives a wrong break-even, and how to fix it, especially in Saudi Arabia.",
+      tldr: "Compute profit on the price before tax. VAT is collected for the tax authority, it is not your revenue.",
+      body: [{"p": "VAT in Saudi Arabia is 15%. If your product is priced at 230 on the store including VAT, what is actually yours is 200. If you compute margin on 230 you will think you have 30 extra, and that is an illusion."}, {"h": "How to fix it"}, {"ul": ["Separate the selling price before tax from the tax.", "Compute cost, shipping and fees against the price before tax.", "Compute break-even on the basis of the pre-tax price and real profit per order.", "And watch the ROAS the platform shows: does its revenue include tax?"]}, {"h": "Example"}, {"p": "A price of 230 including 15% is 200 before tax. Product cost 100 and shipping 30 leave profit per order of 70, not 100. Break-even ROAS is 200 ÷ 70 if ROAS is measured on the pre-tax price, or 230 ÷ 70 if it is measured on the inclusive price. What matters is to fix the basis and stick to it."}, {"p": "This is analytical, not tax advice, so check official details with your accountant. The free margin and break-even calculator lets you try it with your numbers."}],
+    },
+  },
 ];

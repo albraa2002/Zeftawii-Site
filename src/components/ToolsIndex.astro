@@ -1,5 +1,7 @@
 ---
 import Shell from './Shell.astro';
+import PromoBanner from './PromoBanner.astro';
+import Illus from './Illus.astro';
 import type { Lang } from '../i18n';
 import { UI, P } from '../content/ui';
 import { tools } from '../content/tools';
@@ -7,15 +9,16 @@ import { CONFIG } from '../config';
 const { lang } = Astro.props as { lang: Lang };
 const u = UI[lang]; const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, '/tools/');
 const title = lang === 'ar' ? 'أدوات مجانية للتسويق والبيانات | Zeftawii' : 'Free marketing and data tools | Zeftawii';
-const desc = lang === 'ar' ? 'حاسبات وأدوات مجانية: ربحية الإعلانات (ROAS)، توفير وقت الأتمتة، تكلفة مرتجعات الدفع عند الاستلام، وفحص سريع لصحة شغلك.' : 'Free calculators and tools: ad profitability (ROAS), automation savings, cash-on-delivery returns cost and a quick business health check.';
+const desc = lang === 'ar' ? 'حاسبات وأدوات مجانية: ربحية الإعلانات (ROAS)، CPA و LTV، هامش الربح ونقطة التعادل، توفير وقت الأتمتة، مرتجعات الدفع عند الاستلام، ملخص طلب مشروع، وفحص سريع لصحة شغلك.' : 'Free calculators and tools: ad profitability (ROAS), CPA and LTV, margin and break-even, automation savings, cash-on-delivery returns cost, a project brief generator and a quick business health check.';
 const ld = [{ '@type': 'CollectionPage', name: title, url: base + path, inLanguage: lang }];
 ---
 <Shell lang={lang} title={title} desc={desc} path={path} alt={{ ar: '/tools/', en: '/en/tools/' }} extraLd={ld}>
-  <div class="wrap page-head"><span class="kicker">FREE TOOLS</span><h1>{u.tools}</h1><p>{desc}</p></div>
+  <div class="wrap page-head has-art"><span class="kicker">FREE TOOLS</span><h1>{u.tools}</h1><p>{desc}</p><div class="hb-art"><Illus kind={'tools'} /></div></div>
   <div class="wrap post-grid">
     <a class="post-card" href={P(lang, '/#calc')}><span class="meta">ROAS</span><h2>{lang === 'ar' ? 'حاسبة ربحية الإعلانات' : 'Ad profitability calculator'}</h2><p>{lang === 'ar' ? 'اعرف حملتك بتكسب ولا بتخسر بعد التكلفة والشحن والمرتجعات.' : 'Find out whether your campaign earns or loses after cost, shipping and returns.'}</p><span class="more">{lang === 'ar' ? 'جرّب الأداة' : 'Try the tool'} <i aria-hidden="true">{lang === 'ar' ? '←' : '→'}</i></span></a>
     {tools.map((t) => (
       <a class="post-card" href={P(lang, `/tools/${t.slug}/`)}><span class="meta">FREE</span><h2>{t[lang].name}</h2><p>{t[lang].desc}</p><span class="more">{lang === 'ar' ? 'جرّب الأداة' : 'Try the tool'} <i aria-hidden="true">{lang === 'ar' ? '←' : '→'}</i></span></a>
     ))}
   </div>
+  <div class="wrap"><PromoBanner lang={lang} kind="learn" /></div>
 </Shell>

@@ -1,5 +1,6 @@
 ---
 import Shell from './Shell.astro';
+import Illus from './Illus.astro';
 import type { Lang } from '../i18n';
 import { UI, P } from '../content/ui';
 import { CONFIG } from '../config';
@@ -20,7 +21,7 @@ const items = ar ? [
 const ld = [{ '@type': 'CollectionPage', name: title, url: base + path, inLanguage: lang }];
 ---
 <Shell lang={lang} title={title} desc={desc} path={path} alt={{ ar: '/resources/', en: '/en/resources/' }} extraLd={ld}>
-  <div class="wrap page-head"><span class="kicker">TEMPLATES</span><h1>{u.resources}</h1><p>{desc}</p></div>
+  <div class="wrap page-head has-art"><span class="kicker">TEMPLATES</span><h1>{u.resources}</h1><p>{desc}</p><div class="hb-art"><Illus kind={'blog'} /></div></div>
   <div class="wrap post-grid">
     {items.map((i) => (
       <div class="post-card">
