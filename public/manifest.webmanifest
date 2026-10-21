@@ -4,8 +4,8 @@
   "description": "Data analytics, BI dashboards and marketing analytics.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0a0f1c",
-  "theme_color": "#0a0f1c",
+  "background_color": "#f6f1e7",
+  "theme_color": "#f6f1e7",
   "lang": "ar",
   "dir": "rtl",
   "icons": [

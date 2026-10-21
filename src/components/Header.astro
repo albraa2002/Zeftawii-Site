@@ -113,7 +113,7 @@ const arrow = ar ? '←' : '→';
   document.getElementById('theme-toggle')!.addEventListener('click', () => {
     const n = root.dataset.theme === 'light' ? 'dark' : 'light'; root.dataset.theme = n;
     try { localStorage.setItem('theme', n); } catch {}
-    document.querySelector('meta[name=theme-color]')?.setAttribute('content', n === 'light' ? '#f4f7fc' : '#0a0f1c');
+    document.querySelector('meta[name=theme-color]')?.setAttribute('content', n === 'light' ? '#f6f1e7' : '#1b1815');
   });
 
   // search
