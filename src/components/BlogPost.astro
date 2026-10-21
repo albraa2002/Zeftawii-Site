@@ -8,11 +8,18 @@ import { posts } from '../content/posts';
 import { services } from '../content/services';
 import { CONFIG } from '../config';
 const { lang, slug } = Astro.props as { lang: Lang; slug: string };
+const ar = lang === 'ar';
 const post = posts.find((p) => p.slug === slug)!; const c = post[lang]; const u = UI[lang];
 const base = CONFIG.site.replace(/\/$/, '');
 const path = P(lang, `/blog/${slug}/`);
 const svc = services.find((s) => s.idx === post.svc);
 const more = posts.filter((p) => p.slug !== slug).slice(0, 3);
+const idx = posts.findIndex((p) => p.slug === slug); const prev = posts[idx - 1]; const next = posts[idx + 1];
+const heads = c.body.filter((b: any) => b.h).map((b: any, i: number) => ({ id: 'h' + (i + 1), t: b.h as string }));
+let hi = 0;
+const pageUrl = base + path; const shareT = encodeURIComponent(c.title); const shareU = encodeURIComponent(pageUrl);
+const sh = ar0(lang);
+function ar0(l: string) { return l === 'ar' ? { s: 'شارك المقال', toc: 'محتويات المقال', cp: 'نسخ الرابط', ok: 'تم النسخ', p: 'السابق', n: 'التالي' } : { s: 'Share', toc: 'In this article', cp: 'Copy link', ok: 'Copied', p: 'Previous', n: 'Next' }; }
 const wa = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent((lang === 'ar' ? 'أهلاً، قرأت مقال "' : 'Hi, I read the article "') + c.title + (lang === 'ar' ? '" وحابب أستشير.' : '" and would like advice.'))}`;
 const ld = [
   { '@type': 'BlogPosting', headline: c.title, description: c.desc, inLanguage: lang, datePublished: post.date, dateModified: post.date, url: base + path, mainEntityOfPage: base + path, image: `${base}/og-image.png`, author: { '@id': `${base}/#person` }, publisher: { '@id': `${base}/#person` } },
@@ -30,8 +37,18 @@ const ld = [
     <p class="meta">{u.by} · {post.date} · {post.mins} {u.min}</p>
     <div class="art-banner"><Illus kind={['bi', 'marketing', 'automation', 'ai', 'account', 'project'][post.svc] || 'blog'} /></div>
     <div class="tldr"><b>{u.tldr}</b><p>{c.tldr}</p></div>
+    {heads.length > 2 && (
+      <nav class="toc" aria-label={sh.toc}><b>{sh.toc}</b><ol>{heads.map((h) => <li><a href={'#' + h.id}>{h.t}</a></li>)}</ol></nav>
+    )}
     <div class="prose">
-      {c.body.map((b) => b.h ? <h2>{b.h}</h2> : b.p ? <p>{b.p}</p> : b.ul ? <ul>{b.ul.map((x) => <li>{x}</li>)}</ul> : null)}
+      {c.body.map((b) => b.h ? <h2 id={'h' + (++hi)}>{b.h}</h2> : b.p ? <p>{b.p}</p> : b.ul ? <ul>{b.ul.map((x) => <li>{x}</li>)}</ul> : null)}
+    </div>
+    <div class="share" data-ok={sh.ok}>
+      <b>{sh.s}</b>
+      <a href={`https://wa.me/?text=${shareT}%20${shareU}`} target="_blank" rel="noopener" data-evt="share" data-loc="wa">WhatsApp</a>
+      <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareU}`} target="_blank" rel="noopener" data-evt="share" data-loc="li">LinkedIn</a>
+      <a href={`https://twitter.com/intent/tweet?text=${shareT}&url=${shareU}`} target="_blank" rel="noopener" data-evt="share" data-loc="x">X</a>
+      <button type="button" class="share-cp">{sh.cp}</button>
     </div>
     <PromoBanner lang={lang} kind="tools" />
     <p class="art-note">{u.note}</p>
@@ -43,6 +60,10 @@ const ld = [
       </div>
     </div>
     {svc && <p class="rel-svc">{u.relatedSvc}: <a href={P(lang, `/services/${svc.slug}/`)}>{svc[lang].name}</a></p>}
+    <nav class="pn" aria-label="prev next">
+      {prev ? <a href={P(lang, `/blog/${prev.slug}/`)}><small>{sh.p}</small><span>{prev[lang].title}</span></a> : <span />}
+      {next ? <a href={P(lang, `/blog/${next.slug}/`)}><small>{sh.n}</small><span>{next[lang].title}</span></a> : <span />}
+    </nav>
     <h2 class="rel-h">{u.related}</h2>
     <div class="post-grid tight">
       {more.map((p) => (
@@ -50,4 +71,11 @@ const ld = [
       ))}
     </div>
   </article>
+  <div class="read-bar" aria-hidden="true"><i></i></div>
+  <script>
+    const bar = document.querySelector<HTMLElement>('.read-bar i'); const art = document.querySelector<HTMLElement>('.prose');
+    const upd = () => { if (!bar || !art) return; const r = art.getBoundingClientRect(); const t = Math.min(1, Math.max(0, (innerHeight - r.top) / (r.height + innerHeight * .5))); bar.style.transform = `scaleX(${t})`; };
+    addEventListener('scroll', upd, { passive: true }); upd();
+    document.querySelector<HTMLButtonElement>('.share-cp')?.addEventListener('click', (e) => { const b = e.currentTarget as HTMLButtonElement; const box = b.closest<HTMLElement>('.share')!; const old = b.textContent; navigator.clipboard?.writeText(location.href.split('#')[0]).then(() => { b.textContent = box.dataset.ok!; setTimeout(() => (b.textContent = old), 1800); }).catch(() => {}); });
+  </script>
 </Shell>

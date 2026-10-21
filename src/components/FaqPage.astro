@@ -1,0 +1,34 @@
+---
+import Shell from './Shell.astro';
+import type { Lang } from '../i18n';
+import { P } from '../content/ui';
+import { services } from '../content/services';
+import { solutions } from '../content/solutions';
+import { CONFIG } from '../config';
+const { lang } = Astro.props as { lang: Lang };
+const ar = lang === 'ar'; const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, '/faq/');
+const title = ar ? 'الأسئلة الشائعة عن الخدمات والتحليلات | Zeftawii' : 'Frequently asked questions | Zeftawii';
+const desc = ar ? 'إجابات عن أكتر الأسئلة: التسعير، المدة، الاحتياجات، البيانات، والفرق بين الخدمات.' : 'Answers to the most common questions: pricing, timelines, requirements, data and how the services differ.';
+const groups = [
+  ...services.map((s) => ({ h: s[lang].name, href: P(lang, `/services/${s.slug}/`), items: s[lang].faq })),
+  ...solutions.map((s) => ({ h: s[lang].name, href: P(lang, `/solutions/${s.slug}/`), items: s[lang].faq })),
+].filter((g) => g.items?.length);
+const seen = new Set<string>(); const all: { q: string; a: string }[] = [];
+groups.forEach((g) => { g.items = g.items.filter((f) => { if (seen.has(f.q)) return false; seen.add(f.q); all.push(f); return true; }); });
+const ld = [{ '@type': 'FAQPage', mainEntity: all.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }];
+---
+<Shell lang={lang} title={title} desc={desc} path={path} alt={{ ar: '/faq/', en: '/en/faq/' }} extraLd={ld}>
+  <div class="wrap page-head"><span class="kicker">FAQ</span><h1>{ar ? 'الأسئلة الشائعة' : 'Frequently asked questions'}</h1><p>{desc}</p></div>
+  <div class="wrap">
+    {groups.filter((g) => g.items.length).map((g) => (
+      <section>
+        <h2 class="sec-h"><a href={g.href}>{g.h}</a></h2>
+        <div class="faq-list">{g.items.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}</div>
+      </section>
+    ))}
+    <div class="cta-box">
+      <h2>{ar ? 'سؤالك مش هنا؟' : 'Question not here?'}</h2><p>{ar ? 'ابعته وهرد عليك خلال يوم عمل.' : 'Send it and I will reply within one business day.'}</p>
+      <div class="cta-row"><a class="btn btn-primary" href={P(lang, '/#contact')}>{ar ? 'اسأل دلوقتي' : 'Ask now'}</a></div>
+    </div>
+  </div>
+</Shell>

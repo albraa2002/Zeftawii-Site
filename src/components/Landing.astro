@@ -1,6 +1,8 @@
 ---
 import Header from './Header.astro';
 import Footer from './Footer.astro';
+import { icon } from '../lib/icons';
+import { UI as UIX, P as PX } from '../content/ui';
 import PromoBanner from './PromoBanner.astro';
 import { T, type Lang } from '../i18n';
 import { chatKB } from '../chatKB';
@@ -45,6 +47,19 @@ const phoneFmt = `+${w.slice(0, 2)} ${w.slice(2, 5)} ${w.slice(5, 8)} ${w.slice(
 const socials = Object.entries(CONFIG.links as Record<string, string>)
   .filter(([k, url]) => url && socialDefs[k])
   .map(([k, url]) => ({ ...socialDefs[k], url }));
+const ar0 = lang === 'ar';
+const uq = UIX[lang];
+const quick = ar0 ? [
+  { i: 'tool', t: uq.tools, d: '6 حاسبات مجانية', h: PX(lang, '/tools/') },
+  { i: 'book', t: uq.glossary, d: '20 مصطلح بالشرح', h: PX(lang, '/glossary/') },
+  { i: 'store', t: uq.solutions, d: 'سلة · شوبيفاي · ووكومرس', h: PX(lang, '/solutions/') },
+  { i: 'blog', t: uq.blog, d: 'شروحات من شغل فعلي', h: PX(lang, '/blog/') },
+] : [
+  { i: 'tool', t: uq.tools, d: '6 free calculators', h: PX(lang, '/tools/') },
+  { i: 'book', t: uq.glossary, d: '20 terms explained', h: PX(lang, '/glossary/') },
+  { i: 'store', t: uq.solutions, d: 'Salla · Shopify · WooCommerce', h: PX(lang, '/solutions/') },
+  { i: 'blog', t: uq.blog, d: 'Write-ups from real work', h: PX(lang, '/blog/') },
+];
 ---
 <a class="skip" href="#main">{t.skip}</a>
 
@@ -90,6 +105,13 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
     </div>
     <div class="wrap">
       <div class="stats rv">{t.stats.map((s) => <div class="stat"><b>{s.v}</b><span>{s.l}</span></div>)}</div>
+    </div>
+    <div class="wrap">
+      <nav class="quick rv" aria-label={ar0 ? 'وصول سريع' : 'Quick access'}>
+        {quick.map((q) => (
+          <a class="q-tile" href={q.h}><span class="q-ic" set:html={icon(q.i, 22)} /><b>{q.t}</b><small>{q.d}</small></a>
+        ))}
+      </nav>
     </div>
   </div>
 

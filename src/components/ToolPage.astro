@@ -65,6 +65,8 @@ const data = { kind: tool.kind, svc: tool.svc, lang, ...c, wa: CONFIG.whatsapp, 
             <span>{c.cta}</span>
             <a class="btn btn-primary btn-sm" id="t-cta" href={P(lang, `/?service=${tool.svc}#contact`)} data-evt="cta_click" data-loc="tool">{u.ctaBtn}</a>
             <a class="btn btn-wa btn-sm" id="t-wa" target="_blank" rel="noopener" data-evt="whatsapp_click" data-loc="tool">{u.wa}</a>
+            <button type="button" class="btn btn-ghost btn-sm" id="t-share" data-l={lang === 'ar' ? 'تم نسخ لينك النتيجة' : 'Result link copied'}>{lang === 'ar' ? 'انسخ لينك النتيجة' : 'Copy result link'}</button>
+            <button type="button" class="btn btn-ghost btn-sm" id="t-print">{lang === 'ar' ? 'طباعة / PDF' : 'Print / PDF'}</button>
           </div>
         </div>
         )}
@@ -204,6 +206,12 @@ const data = { kind: tool.kind, svc: tool.svc, lang, ...c, wa: CONFIG.whatsapp, 
         if (!sent) { sent = true; trk('tool_used', { tool: kind }); }
       };
       ins.forEach((i) => i.addEventListener('input', calc));
+      const qp = new URLSearchParams(location.search); let pre = false;
+      ins.forEach((i) => { const v = qp.get(i.dataset.k!); if (v !== null && v !== '') { i.value = v; pre = true; } });
+      if (pre) calc();
+      const sb = document.getElementById('t-share'); const old = sb?.textContent;
+      sb?.addEventListener('click', async () => { const q = new URLSearchParams(); ins.forEach((i) => { if (i.value !== '') q.set(i.dataset.k!, i.value); }); const url = location.origin + location.pathname + '?' + q.toString(); try { await navigator.clipboard.writeText(url); sb.textContent = sb.dataset.l!; setTimeout(() => { sb.textContent = old!; }, 1800); } catch { prompt('', url); } });
+      document.getElementById('t-print')?.addEventListener('click', () => window.print());
     }
   }
 </script>

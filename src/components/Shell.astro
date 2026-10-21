@@ -6,14 +6,14 @@ import { T, type Lang } from '../i18n';
 import { CONFIG } from '../config';
 import { UI, P } from '../content/ui';
 import { services } from '../content/services';
-interface Props { lang: Lang; title: string; desc: string; path: string; alt: { ar: string; en: string }; extraLd?: object[]; ogType?: string }
-const { lang, title, desc, path, alt, extraLd = [], ogType } = Astro.props;
+interface Props { lang: Lang; title: string; desc: string; path: string; alt: { ar: string; en: string }; extraLd?: object[]; ogType?: string; noindex?: boolean }
+const { lang, title, desc, path, alt, extraLd = [], ogType, noindex = false } = Astro.props;
 const u = UI[lang]; const t = T[lang];
 const wa = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(t.contact.waMsg)}`;
 const home = P(lang, '/');
 const other = lang === 'ar' ? alt.en : alt.ar;
 ---
-<Base lang={lang} title={title} desc={desc} path={path} alt={alt} inner extraLd={extraLd} ogType={ogType}>
+<Base lang={lang} title={title} desc={desc} path={path} alt={alt} inner extraLd={extraLd} ogType={ogType} noindex={noindex}>
   <a class="skip" href="#main">{u.skip}</a>
   <Header lang={lang} alt={other} />
   <main id="main" class="inner">

@@ -1,15 +1,19 @@
 ---
-import Base from '../layouts/Base.astro';
+import Shell from '../components/Shell.astro';
+import { services } from '../content/services';
+const links = [
+  ...services.slice(0, 3).map((s) => [s.ar.name, `/services/${s.slug}/`]),
+  ['الأدوات المجانية', '/tools/'], ['المدونة', '/blog/'], ['قاموس المصطلحات', '/glossary/'], ['الأسئلة الشائعة', '/faq/'], ['تواصل معي', '/#contact'],
+];
 ---
-<Base lang="ar" noindex title="الصفحة مش موجودة | 404" desc="الصفحة المطلوبة غير موجودة.">
-  <main class="wrap" style="min-height:100vh;display:grid;place-content:center;text-align:center;gap:1rem;padding:2rem 0">
+<Shell lang="ar" noindex title="الصفحة مش موجودة | 404" desc="الصفحة المطلوبة غير موجودة." path="/404/" alt={{ ar: '/', en: '/en/' }}>
+  <div class="wrap nf">
     <span class="kicker" style="justify-content:center">ERROR 404</span>
-    <h1 style="font-size:clamp(1.8rem,5vw,3rem)">الصفحة مش موجودة</h1>
-    <p style="color:var(--muted)">اللينك ده غلط أو اتنقل. ارجع للرئيسية وكمّل من هناك.</p>
-    <p style="color:var(--muted);direction:ltr">This page does not exist.</p>
-    <div class="cta-row" style="justify-content:center">
-      <a class="btn btn-primary" href="/">الرئيسية</a>
-      <a class="btn btn-ghost" href="/en/">English</a>
-    </div>
-  </main>
-</Base>
+    <h1>الصفحة مش موجودة</h1>
+    <p>اللينك ده غلط أو اتنقل. دوّر على اللي محتاجه أو اختار من الأماكن دي:</p>
+    <button type="button" class="nf-search" data-open-search>🔍 ابحث في الموقع <kbd>/</kbd></button>
+    <div class="chips-row">{links.map(([n, h]) => <a class="chip chip-link" href={h}>{n}</a>)}</div>
+    <p class="nf-en" dir="ltr">This page does not exist. <a href="/en/">Go to the English site</a></p>
+  </div>
+  <script>document.querySelector('[data-open-search]')?.addEventListener('click', () => document.getElementById('search-open')?.click());</script>
+</Shell>
