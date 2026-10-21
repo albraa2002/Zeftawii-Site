@@ -657,3 +657,50 @@ footer { background: var(--bg-2); }
 a:not(.btn):not(.chip):not(.post-card):not(.q-tile):not(.soc):not(.logo):hover { text-decoration-thickness: 1px; }
 .prose a, .article a:not(.btn) { color: var(--cyan); text-decoration: underline; text-underline-offset: 3px; }
 ::selection { background: var(--cyan); color: var(--on-accent); }
+
+/* ===== PROFESSIONAL LAYER v4: numbered sections, ink banners, framed art ===== */
+:root { --radius: 8px; }
+body { counter-reset: sec; }
+.sec-head { counter-increment: sec; max-width: none; display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); column-gap: 1.5rem; align-items: start; border-top: 2px solid var(--text); padding-top: 1.1rem; margin-bottom: 2.6rem; }
+.sec-head::before { content: counter(sec, decimal-leading-zero); grid-row: 1 / span 3; font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--cyan); line-height: 1.3; direction: ltr; text-align: start; }
+.sec-head > * { grid-column: 2; }
+.sec-head h2 { font-size: clamp(1.7rem, 3.6vw, 2.6rem); margin-bottom: .5rem; }
+.sec-head p { max-width: 62ch; font-size: 1.05rem; }
+@media (max-width: 640px) { .sec-head { grid-template-columns: 1fr; } .sec-head::before { grid-row: auto; margin-bottom: .2rem; } .sec-head > * { grid-column: 1; } }
+
+.card, .post-card, .tool-card { border-radius: var(--radius); border-top: 3px solid var(--text); }
+.card:hover, .post-card:hover, .tool-card:hover { border-top-color: var(--cyan); }
+.chip, .chip-link { border-radius: 6px; }
+
+/* banners: solid ink band, art in a paper tile */
+.promo { background: var(--text) !important; color: var(--bg); border: 0 !important; border-radius: 12px; padding: clamp(1.5rem, 3.2vw, 2.6rem); gap: 2rem; position: relative; overflow: hidden; }
+.promo::after { content: ''; position: absolute; inset-block: 0; inset-inline-end: 0; width: 8px; background: var(--cyan); }
+.promo h2 { color: inherit; font-size: clamp(1.4rem, 3vw, 2.1rem); }
+.promo p { color: inherit; opacity: .78; max-width: 52ch; }
+.promo .btn-primary { background: var(--bg); color: var(--text); }
+.promo .btn-primary:hover { background: var(--cyan); color: var(--on-accent); }
+.promo-learn { background: var(--cyan) !important; color: var(--on-accent); }
+.promo-learn::after { background: var(--text); }
+.promo-solutions { background: var(--green) !important; color: var(--on-accent); }
+.promo-solutions::after { background: var(--cyan); }
+.promo-a { background: var(--bg); border-radius: 10px; padding: 1.1rem; }
+.promo-a .illus { max-width: 300px; }
+
+/* page heads: ruled top, framed art */
+.page-head { border-top: 2px solid var(--text); margin-top: 1.4rem; padding-top: clamp(1.6rem, 3vw, 2.4rem); }
+.page-head h1 { font-size: clamp(2rem, 4.8vw, 3.2rem); }
+.hb-art { background: var(--bg-2); border: 1px solid var(--panel-b); border-radius: 12px; padding: 1.4rem; }
+.art-banner { background: var(--bg-2) !important; border-radius: 12px; padding: 1.4rem; }
+.illus .i-card { stroke-width: 1.2; }
+
+/* final CTA band: ink, clear of the floating buttons */
+.cta-band { background: var(--text) !important; color: var(--bg); border: 0 !important; }
+.cta-band p { color: inherit; opacity: .78; }
+.cta-band .btn-primary { background: var(--cyan); color: var(--on-accent); }
+.cta-band .btn-primary:hover { background: var(--bg); color: var(--text); }
+@media (min-width: 641px) { .cta-band-in { padding-inline-end: 5rem; } }
+.cta-band .btn-wa { background: transparent; color: var(--bg); border: 1px solid var(--bg); }
+.hero-sub, .hero h1 { text-wrap: balance; }
+.sec-head::before { direction: inherit; text-align: start; }
+.sec-h, .rel-h { border-top: 2px solid var(--text); padding-top: .9rem; margin-top: 2.6rem; font-size: clamp(1.35rem, 2.6vw, 1.8rem); }
+.how b { border-radius: 6px; background: var(--text); color: var(--bg); }

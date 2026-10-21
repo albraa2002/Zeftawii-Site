@@ -10,7 +10,7 @@ const D = {
   solutions: { k: 'store', h: ar ? 'متجرك على سلة أو شوبيفاي أو ووكومرس؟' : 'Is your store on Salla, Shopify or WooCommerce?', p: ar ? 'حلول تحليل للمتاجر وللسوقين المصري والسعودي: الربح الحقيقي والمرتجعات والإعلانات في صورة واحدة.' : 'Analytics solutions for stores and for the Egyptian and Saudi markets: real profit, returns and ads in one picture.', b: ar ? 'شوف الحلول' : 'See the solutions', h2: '/solutions/' },
 }[kind];
 ---
-<aside class="promo">
+<aside class={`promo promo-${kind}`}>
   <div class="promo-t">
     <h2>{D.h}</h2>
     <p>{D.p}</p>
