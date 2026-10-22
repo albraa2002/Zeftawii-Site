@@ -1,0 +1,45 @@
+---
+import type { DashKind } from '../content/dashboards';
+// رسم لوحة نموذجية ببيانات تجريبية (بتتعلّم "نموذج توضيحي" في الصفحة). الأرقام هنا للشكل بس، مش بيانات عميل.
+const { kind, labels = [], lang = 'ar' } = Astro.props as { kind: DashKind; labels?: string[]; lang?: 'ar' | 'en' };
+const ar = lang === 'ar';
+const R = (x: number, y: number, w: number, h: number, c: string, r = 3) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" class="${c}"/>`;
+const T = (x: number, y: number, s: string, c = 'dx-tx', a = 'start') => `<text x="${x}" y="${y}" class="${c}" text-anchor="${a}">${s}</text>`;
+const vals: Record<DashKind, string[]> = { profit: ['38,400', '6.1%', '2.4x'], ads: ['$8.4', '4.2x', '1.8%'], accounts: ['14', '3', '5'], funnel: ['3.0%', '68%', '1,450'], report: ['38h', '0', '2 min'], delivery: ['92%', '4', '1.5d'] };
+const tiles = [0, 1, 2].map((i) => R(20 + i * 148, 46, 136, 50, 'dx-tile', 6) + T(32 + i * 148, 64, (labels[i] || '').slice(0, 22), 'dx-lb') + T(32 + i * 148, 86, vals[kind][i], 'dx-v')).join('');
+const ttl: Record<DashKind, [string, string]> = { profit: ['ربحية المتجر', 'Store profitability'], ads: ['أداء الحملات', 'Ad performance'], accounts: ['حسابات العملاء', 'Client accounts'], funnel: ['قمع المبيعات', 'Sales funnel'], report: ['التقرير الشهري', 'Monthly report'], delivery: ['تسليم المشاريع', 'Project delivery'] };
+let g = '';
+if (kind === 'profit') {
+  const L = ar ? ['الإيراد', 'المنتج', 'الشحن', 'المرتجعات', 'الإعلانات', 'الصافي'] : ['Revenue', 'Product', 'Shipping', 'Returns', 'Ads', 'Net'];
+  const v = [100, -38, -9, -7, -22, 24]; const base = 248, k = 1.15; let run = 0;
+  g = v.map((n, i) => {
+    const x = 28 + i * 74; const abs = Math.abs(n) * k;
+    let top: number, cls: string;
+    if (i === 0) { run = 100; top = base - 100 * k; cls = 'dx-a'; }
+    else if (i === 5) { top = base - 24 * k; cls = 'dx-g'; }
+    else { top = base - run * k; run += n; cls = 'dx-x'; }
+    return R(x, top, 50, abs, cls, 3) + T(x + 25, top - 4, (n > 0 && i < 5 ? '' : n < 0 ? '' : '') + n + '%', 'dx-tn', 'middle') + T(x + 25, 262, L[i], 'dx-tx', 'middle');
+  }).join('') + `<path d="M20 248 H460" class="dx-ax"/>`;
+} else if (kind === 'ads') {
+  const hs = [34, 52, 44, 70, 58, 84, 76, 96, 88, 108];
+  g = hs.map((h, i) => R(28 + i * 33, 248 - h, 20, h, 'dx-a', 3) + (i % 3 === 0 ? T(38 + i * 33, 262, 'W' + (i + 1), 'dx-tx', 'middle') : '')).join('') + `<path d="M38 214 L71 196 L104 202 L137 176 L170 184 L203 156 L236 164 L269 138 L302 146 L335 120" class="dx-l"/><circle cx="335" cy="120" r="4.5" class="dx-g"/><path d="M20 248 H365" class="dx-ax"/>`
+    + T(385, 124, ar ? 'أفضل الحملات' : 'Top campaigns', 'dx-tn') + [['Search A', '6.1x'], ['Reels B', '4.8x'], ['Retarget', '3.9x'], ['Prospect C', '1.7x']].map(([n, r], i) => T(385, 148 + i * 26, n, 'dx-tx') + T(458, 148 + i * 26, r, i === 3 ? 'dx-neg' : 'dx-tn', 'end') + `<path d="M385 ${154 + i * 26} H458" class="dx-ax"/>`).join('')
+    + T(28, 116, ar ? 'الصرف' : 'Spend', 'dx-tx') + T(80, 116, ar ? '— ROAS' : '— ROAS', 'dx-pos');
+} else if (kind === 'accounts') {
+  const rows = ar ? [['عميل أ', 'تصميم', 'في الموعد', 'dx-g'], ['عميل ب', 'تطوير', 'متأخر', 'dx-x'], ['عميل ج', 'مراجعة', 'مستني موافقة', 'dx-a'], ['عميل د', 'تسليم', 'في الموعد', 'dx-g'], ['عميل هـ', 'تصميم', 'مستني موافقة', 'dx-a']] : [['Client A', 'Design', 'On track', 'dx-g'], ['Client B', 'Build', 'Late', 'dx-x'], ['Client C', 'Review', 'Awaiting', 'dx-a'], ['Client D', 'Handover', 'On track', 'dx-g'], ['Client E', 'Design', 'Awaiting', 'dx-a']];
+  g = rows.map(([n, s, st, c], i) => R(20, 108 + i * 29, 440, 24, 'dx-tile', 5) + T(32, 124 + i * 29, n, 'dx-tn') + T(150, 124 + i * 29, s, 'dx-tx') + R(230, 117 + i * 29, 90 - i * 8, 5, 'dx-m', 2) + R(354, 112 + i * 29, 94, 16, c, 8) + T(401, 123.5 + i * 29, st, 'dx-on', 'middle')).join('');
+} else if (kind === 'funnel') {
+  const st = ar ? [['زيارات', '48,200'], ['مشاهدة منتج', '21,500'], ['إضافة للسلة', '6,400'], ['بدء الدفع', '3,100'], ['شراء', '1,450']] : [['Visits', '48,200'], ['Product view', '21,500'], ['Add to cart', '6,400'], ['Checkout', '3,100'], ['Purchase', '1,450']];
+  const ws = [400, 320, 230, 150, 90];
+  g = st.map(([n, v], i) => R(240 - ws[i] / 2, 108 + i * 30, ws[i], 25, i === 4 ? 'dx-g' : 'dx-a', 4) + T(240, 124 + i * 30, `${n} · ${v}`, 'dx-on', 'middle')).join('');
+} else if (kind === 'report') {
+  const p = 'M30 220 L90 200 L150 208 L210 172 L270 180 L330 142 L390 150 L440 124';
+  const mo = ar ? ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'] : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+  g = `<path d="${p} V248 H30 Z" class="dx-fill"/><path d="${p}" class="dx-l"/><path d="M20 248 H460" class="dx-ax"/><circle cx="440" cy="124" r="4.5" class="dx-g"/>` + mo.map((m, i) => T(30 + i * 82, 262, m, 'dx-tx', 'middle')).join('') + T(436, 112, ar ? 'تقرير يوصل لوحده' : 'Sent automatically', 'dx-tn', 'end');
+} else {
+  const rows = ar ? [['موقع أ', 10, 150, 'dx-g'], ['متجر ب', 60, 130, 'dx-a'], ['موقع ج', 30, 190, 'dx-x'], ['حملة د', 120, 100, 'dx-a'], ['موقع هـ', 70, 150, 'dx-g']] : [['Site A', 10, 150, 'dx-g'], ['Store B', 60, 130, 'dx-a'], ['Site C', 30, 190, 'dx-x'], ['Ads D', 120, 100, 'dx-a'], ['Site E', 70, 150, 'dx-g']];
+  g = (rows as any[]).map(([n, x, w, c], i) => T(20, 128 + i * 28, n, 'dx-tx') + R(90 + x, 116 + i * 28, w, 16, c, 5)).join('') + `<path d="M300 106 V262" class="dx-ax" stroke-dasharray="3 4"/>` + T(300, 274, ar ? 'النهارده' : 'Today', 'dx-tn', 'middle');
+}
+const svg = `<rect x="1" y="1" width="478" height="298" rx="12" class="dx-frame"/><path d="M1 13 a12 12 0 0 1 12 -12 H467 a12 12 0 0 1 12 12 V34 H1 Z" class="dx-bar"/><circle cx="18" cy="18" r="3.6" class="dx-x"/><circle cx="31" cy="18" r="3.6" class="dx-a"/><circle cx="44" cy="18" r="3.6" class="dx-g"/>${T(460, 21, ttl[kind][ar ? 0 : 1] + ' · ' + (ar ? 'بيانات تجريبية' : 'sample data'), 'dx-tx', 'end')}${tiles}${g}`;
+---
+<svg class="dm" viewBox="0 0 480 300" direction="ltr" role="img" aria-label={ar ? 'نموذج لوحة تحكم ببيانات تجريبية' : 'Dashboard example with sample data'} set:html={svg} />

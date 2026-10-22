@@ -45,6 +45,7 @@
 - https://zeftawii-site-bkxt.vercel.app/en/blog/vat-inclusive-margin-ksa/
 - https://zeftawii-site-bkxt.vercel.app/en/blog/weekly-status-report-one-page/
 - https://zeftawii-site-bkxt.vercel.app/en/blog/write-a-project-brief/
+- https://zeftawii-site-bkxt.vercel.app/en/dashboards/
 - https://zeftawii-site-bkxt.vercel.app/en/faq/
 - https://zeftawii-site-bkxt.vercel.app/en/glossary/
 - https://zeftawii-site-bkxt.vercel.app/en/glossary/aov/

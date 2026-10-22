@@ -1,0 +1,49 @@
+---
+import Shell from './Shell.astro';
+import DashMock from './DashMock.astro';
+import type { Lang } from '../i18n';
+import { UI, P } from '../content/ui';
+import { dashboards } from '../content/dashboards';
+import { tools } from '../content/tools';
+import { CONFIG } from '../config';
+const { lang } = Astro.props as { lang: Lang };
+const ar = lang === 'ar'; const u = UI[lang]; const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, '/dashboards/');
+const T = ar ? {
+  title: 'نماذج لوحات تحكم لكل دور | Zeftawii', h1: 'لوحات تحكم لكل دور، كل واحدة بتجاوب على أسئلتها',
+  desc: 'ست نماذج لوحات تحكم: ربحية المتجر، أداء الحملات، متابعة العملاء، قمع المبيعات، التقرير الشهري، وتسليم المشاريع. تتبني على بياناتك وبهوية شغلك.',
+  lead: 'مش قوالب جاهزة. دي نماذج توضيحية ببيانات تجريبية لتوريك الفكرة، واللوحة الفعلية بتتبني على مصادرك وأسئلتك أنت.',
+  who: 'مصمّمة لـ', asks: 'بتجاوب على', has: 'اللي جواها', kpis: 'مؤشرات رئيسية', cta: 'اطلب لوحة زي دي', tool: 'جرّب الأداة المرتبطة', note: 'نموذج توضيحي ببيانات تجريبية وليس عميلاً حقيقياً.', endH: 'عايز لوحة على مقاس شغلك؟', endP: 'احكيلي مصادر بياناتك والأسئلة اللي عاوز تجاوب عليها، وأرد عليك بخطة ونطاق مكتوب خلال يوم عمل.'
+} : {
+  title: 'Dashboard examples for every role | Zeftawii', h1: 'A dashboard for every role, each answering its own questions',
+  desc: 'Six dashboard examples: store profitability, ad performance, client tracking, sales funnel, monthly report and project delivery. Built on your data and your branding.',
+  lead: 'Not off-the-shelf templates. These are illustrative examples with sample data to show the idea; the real dashboard is built on your sources and your questions.',
+  who: 'Built for', asks: 'Answers', has: 'What is inside', kpis: 'Key metrics', cta: 'Request one like this', tool: 'Try the related tool', note: 'Illustrative example with sample data, not a real client.', endH: 'Want a dashboard sized to your work?', endP: 'Tell me your data sources and the questions you want answered, and I will reply with a plan and written scope within one business day.'
+};
+const ld = [{ '@type': 'CollectionPage', name: T.title, url: base + path, inLanguage: lang }];
+---
+<Shell lang={lang} title={T.title} desc={T.desc} path={path} alt={{ ar: '/dashboards/', en: '/en/dashboards/' }} extraLd={ld}>
+  <div class="wrap page-head"><span class="kicker">DASHBOARDS</span><h1>{T.h1}</h1><p>{T.lead}</p></div>
+  <div class="wrap">
+    <nav class="dash-nav" aria-label="dashboards">{dashboards.map((d) => <a class="chip chip-link" href={`#${d.slug}`}>{d[lang].name}</a>)}</nav>
+    {dashboards.map((d, i) => {
+      const c = d[lang]; const tl = d.tool ? tools.find((t) => t.slug === d.tool) : null;
+      return (
+        <section class={`dash ${i % 2 ? 'flip' : ''}`} id={d.slug}>
+          <div class="dash-art"><DashMock kind={d.kind} labels={c.kpis} lang={lang} /><div class="dash-k">{c.kpis.map((k) => <span>{k}</span>)}</div><p class="dash-note">{T.note}</p></div>
+          <div class="dash-t">
+            <p class="dash-who">{T.who}: <b>{c.who}</b></p>
+            <h2>{c.name}</h2>
+            <p class="dash-lead">{c.lead}</p>
+            <h3>{T.asks}</h3><ul class="dash-q">{c.asks.map((a) => <li>{a}</li>)}</ul>
+            <h3>{T.has}</h3><ul class="dash-has">{c.has.map((a) => <li>{a}</li>)}</ul>
+            <div class="cta-row">
+              <a class="btn btn-primary" href={P(lang, `/?service=${d.svc}#contact`)} data-evt="cta_click" data-loc={`dash_${d.slug}`}>{T.cta} <span aria-hidden="true">{ar ? '←' : '→'}</span></a>
+              {tl && <a class="btn btn-ghost" href={P(lang, `/tools/${tl.slug}/`)}>{T.tool}</a>}
+            </div>
+          </div>
+        </section>
+      );
+    })}
+    <div class="cta-box"><h2>{T.endH}</h2><p>{T.endP}</p><div class="cta-row"><a class="btn btn-primary" href={P(lang, '/#contact')} data-evt="cta_click" data-loc="dash_end">{u.ctaBtn}</a></div></div>
+  </div>
+</Shell>
