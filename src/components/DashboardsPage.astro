@@ -1,6 +1,6 @@
 ---
 import Shell from './Shell.astro';
-import DashMock from './DashMock.astro';
+import DashShot from './DashShot.astro';
 import type { Lang } from '../i18n';
 import { UI, P } from '../content/ui';
 import { dashboards } from '../content/dashboards';
@@ -29,7 +29,7 @@ const ld = [{ '@type': 'CollectionPage', name: T.title, url: base + path, inLang
       const c = d[lang]; const tl = d.tool ? tools.find((t) => t.slug === d.tool) : null;
       return (
         <section class={`dash ${i % 2 ? 'flip' : ''}`} id={d.slug}>
-          <div class="dash-art"><DashMock kind={d.kind} labels={c.kpis} lang={lang} /><div class="dash-k">{c.kpis.map((k) => <span>{k}</span>)}</div><p class="dash-note">{T.note}</p></div>
+          <div class="dash-art"><DashShot stage kind={d.kind} lang={lang} /><p class="dash-note">{T.note}</p></div>
           <div class="dash-t">
             <p class="dash-who">{T.who}: <b>{c.who}</b></p>
             <h2>{c.name}</h2>

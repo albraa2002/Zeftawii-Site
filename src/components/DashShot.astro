@@ -1,0 +1,41 @@
+---
+import type { DashKind } from '../content/dashboards';
+import { shots, shotColors } from '../content/shots';
+// لوحة تجريبية واقعية جوّه إطار متصفح. الأرقام كلها تجريبية ومتعلّم عليها كده في الواجهة.
+const { kind = 'profit', lang = 'ar', stage = false } = Astro.props as { kind?: DashKind; lang?: 'ar' | 'en'; stage?: boolean };
+const ar = lang === 'ar'; const d = shots[lang][kind];
+const ic = ['<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>', '<path d="M4 9l1.5-5h13L20 9M4 9h16v11H4V9Z"/>', '<path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/>', '<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>'];
+const mx = Math.max(...d.pts), mn = Math.min(...d.pts); const W = 520, H = 170;
+const xs = d.pts.map((_, i) => 20 + i * (W - 40) / (d.pts.length - 1));
+const ys = d.pts.map((p) => H - 22 - ((p - mn * 0.9) / (mx - mn * 0.9)) * (H - 66));
+const path = xs.map((x, i) => `${i ? 'L' : 'M'}${x.toFixed(0)} ${ys[i].toFixed(0)}`).join(' ');
+const fmt = (p: number) => (Number.isInteger(p) ? String(p) : p.toFixed(1));
+const chip = ar ? 'بيانات تجريبية' : 'Sample data';
+---
+<div class={stage ? 'shot-stage stage' : 'shot-stage'}>
+  <div class="shot" dir={ar ? 'rtl' : 'ltr'} role="img" aria-label={`${d.title} (${chip})`}>
+    <div class="s-chrome" dir="ltr"><i></i><i></i><i></i><span class="s-url">/dashboard</span></div>
+    <div class="s-app">
+      <div class="s-main">
+        <div class="s-hd"><div><h4>{d.title}</h4><small>{d.sub}</small></div><span class="s-chip">{chip}</span></div>
+        <div class="s-kg">
+          {d.kpis.map((k, i) => (
+            <div class="s-kc"><div class="s-ki" style={`background:${shotColors[i]}`}><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" set:html={ic[i % 4]} /></div><div class="s-kt"><small>{k[0]}</small><b>{k[1]}</b><em>{k[2]}</em></div></div>
+          ))}
+        </div>
+        <div class="s-row">
+          <div class="s-card s-feed"><h5>{ar ? 'نشاط مباشر' : 'Live activity'}</h5>{d.feed.map((f, i) => <div class="s-fi"><i style={`background:${shotColors[[0, 2, 1, 4][i]]}`}></i><div><b>{f[0]}</b><small>{f[1]}</small></div></div>)}</div>
+          <div class="s-card s-ch"><h5>{d.chart}</h5>
+            <svg viewBox={`0 0 ${W} ${H + 16}`} dir="ltr">
+              <defs><linearGradient id={`g-${kind}-${lang}`} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d6fe0" stop-opacity=".25" /><stop offset="1" stop-color="#1d6fe0" stop-opacity="0" /></linearGradient></defs>
+              <path d={`${path} L${xs[xs.length - 1].toFixed(0)} ${H - 18} L${xs[0].toFixed(0)} ${H - 18} Z`} fill={`url(#g-${kind}-${lang})`} />
+              <path d={path} fill="none" stroke="#1d6fe0" stroke-width="2.5" />
+              {xs.map((x, i) => (<g><circle cx={x} cy={ys[i]} r="5" fill="#fff" stroke="#1d6fe0" stroke-width="2.5" /><text x={x} y={ys[i] - 11} text-anchor="middle" font-size="12" font-weight="700" fill="#111827">{fmt(d.pts[i])}</text><text x={x} y={H + 8} text-anchor="middle" font-size="11" fill="#6b7280">{d.labels[i]}</text></g>))}
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="s-side"><div class="s-logo">Zeftawii</div>{d.nav.map((n, i) => <div class={`s-ni${i === 0 ? ' on' : ''}`}><i></i>{n}</div>)}</div>
+    </div>
+  </div>
+</div>

@@ -798,3 +798,37 @@ svg.dm { width: 100%; height: auto; font-family: var(--font-body); }
 @media (max-width: 1340px) { .nav .logo small { display: none; } }
 @media (min-width: 1081px) { .mi-btn, .mi-a { padding-inline: .5rem; } .nav-in { gap: .5rem; } }
 .promo-dashboards { background: var(--text) !important; }
+
+/* ===== DashShot: لوحة واقعية جوّه إطار متصفح (الأبعاد بتتحوّل لـ em عشان تتصغّر مع الحاوية). المصدر px، شغّل: python3 scripts/shot-css.py ===== */
+.shot-stage { container-type: inline-size; width: 100%; }
+.shot-stage.stage { background: radial-gradient(60% 50% at 50% 115%, rgba(29,111,224,.28), transparent 70%), #07090e; border: 1px solid #1c2230; border-radius: 20px; padding: 4cqw 3.5cqw 3cqw; }
+.shot { font-size: calc(100cqw / 80); height: 45.7em; background: #f3f5f9; color: #111827; border-radius: 16px; border: 1px solid #2a3040; box-shadow: 0 30px 80px rgba(0,0,0,.45); overflow: hidden; display: flex; flex-direction: column; font-family: var(--font-body); line-height: 1.5; text-align: start; }
+.shot * { margin: 0; box-sizing: border-box; }
+.s-chrome { height: 2.429em; background: #e8ebf1; display: flex; align-items: center; gap: 0.5714em; padding: 0 1em; border-bottom: 1px solid #d5d9e2; flex: none; }
+.s-chrome i { width: 0.7143em; height: 0.7143em; border-radius: 50%; background: #ff5f57; } .s-chrome i:nth-child(2) { background: #febc2e; } .s-chrome i:nth-child(3) { background: #28c840; }
+.s-url { flex: 1; margin-inline: 1em; background: #fff; border-radius: 0.4286em; height: 1.571em; font-size: 0.7857em; color: #6b7280; padding: 0.2143em 0.7143em; }
+.s-app { flex: 1; display: grid; grid-template-columns: 1fr 12.14em; min-height: 0; }
+.s-side { background: #fff; border-inline-start: 1px solid #e5e7eb; padding: 1em 0.7143em; }
+.s-logo { font-weight: 800; font-size: 1.071em; margin-bottom: 0.8571em; color: #1d6fe0; }
+.s-ni { display: flex; gap: 0.5714em; align-items: center; font-size: 0.8571em; padding: 0.5714em 0.7143em; border-radius: 0.5714em; color: #4b5563; margin-bottom: 0.1429em; }
+.s-ni i { width: 0.8571em; height: 0.8571em; border-radius: 0.2143em; background: #cbd5e1; }
+.s-ni.on { background: #e8f1fd; color: #1d6fe0; font-weight: 700; } .s-ni.on i { background: #1d6fe0; }
+.s-main { padding: 1em 1.286em; overflow: hidden; }
+.s-hd { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.7143em; gap: 0.5714em; }
+.s-hd h4 { font-size: 1.214em; font-weight: 800; letter-spacing: 0; } .s-hd small { color: #6b7280; font-size: 0.7857em; }
+.s-chip { background: #fff3d6; color: #8a6422; font-size: 0.7857em; font-weight: 700; padding: 0.2143em 0.7143em; border-radius: 7.071em; white-space: nowrap; }
+.s-kg { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7143em; }
+.s-kc { background: #fff; border-radius: 0.7143em; padding: 0.7857em; display: flex; gap: 0.7143em; align-items: center; box-shadow: 0 0.07143em 0.1429em rgba(0,0,0,.08); min-width: 0; }
+.s-ki { width: 2.571em; height: 2.571em; border-radius: 0.6429em; display: grid; place-items: center; flex: none; } .s-ki svg { width: 1.286em; height: 1.286em; }
+.s-kt { min-width: 0; } .s-kt small { display: block; font-size: 0.75em; color: #6b7280; } .s-kt b { display: block; font-size: 1.429em; line-height: 1.2; font-weight: 800; font-family: var(--font-body); } .s-kt em { display: block; font-style: normal; font-size: 0.7143em; color: #0f9d6e; }
+.s-row { display: grid; grid-template-columns: 1fr 1.5fr; gap: 0.7143em; margin-top: 0.7143em; }
+.s-card { background: #fff; border-radius: 0.7143em; padding: 0.8571em; box-shadow: 0 0.07143em 0.1429em rgba(0,0,0,.08); border-top: 3px solid #1d6fe0; }
+.s-feed { border-top-color: #f59e0b; } .s-card h5 { font-size: 0.8571em; margin-bottom: 0.5714em; font-weight: 800; }
+.s-fi { display: flex; gap: 0.6429em; align-items: center; padding: 0.4286em 0; border-bottom: 1px solid #f1f2f5; } .s-fi i { width: 1.857em; height: 1.857em; border-radius: 0.5em; flex: none; }
+.s-fi b { display: block; font-size: 0.7857em; font-weight: 600; } .s-fi small { color: #9ca3af; font-size: 0.7143em; }
+.s-ch svg { width: 100%; display: block; }
+@container (max-width: 560px) {
+  .shot { font-size: calc(100cqw / 44); height: auto; }
+  .s-side, .s-feed { display: none; } .s-app { grid-template-columns: 1fr; }
+  .s-kg { grid-template-columns: repeat(2, 1fr); } .s-kc:nth-child(n+5) { display: none; } .s-row { grid-template-columns: 1fr; }
+}

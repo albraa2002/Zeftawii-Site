@@ -1,5 +1,5 @@
 ---
-import Illus from './Illus.astro';
+import DashShot from './DashShot.astro';
 import type { Lang } from '../i18n';
 import { P } from '../content/ui';
 const { lang, kind = 'tools' } = Astro.props as { lang: Lang; kind?: 'tools' | 'learn' | 'solutions' | 'dashboards' };
@@ -17,5 +17,5 @@ const D = {
     <p>{D.p}</p>
     <a class="btn btn-primary" href={P(lang, D.h2)} data-evt="cta_click" data-loc={`promo_${kind}`}>{D.b} <span aria-hidden="true">{ar ? '←' : '→'}</span></a>
   </div>
-  <div class="promo-a"><Illus kind={D.k} /></div>
+  <div class="promo-a"><DashShot kind={({ tools: 'profit', learn: 'funnel', solutions: 'profit', dashboards: 'ads' } as any)[kind]} lang={lang} /></div>
 </aside>

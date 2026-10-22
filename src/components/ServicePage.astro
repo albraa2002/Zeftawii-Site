@@ -2,6 +2,7 @@
 import Shell from './Shell.astro';
 import PromoBanner from './PromoBanner.astro';
 import Illus from './Illus.astro';
+import DashShot from './DashShot.astro';
 import type { Lang } from '../i18n';
 import { UI, P } from '../content/ui';
 import { posts } from '../content/posts';
@@ -41,7 +42,7 @@ const ld = [
 ];
 ---
 <Shell lang={lang} title={`${c.h1} | Zeftawii`} desc={c.desc} path={path} alt={{ ar: `/services/${slug}/`, en: `/en/services/${slug}/` }} extraLd={ld}>
-  <div class="wrap page-head has-art"><div class="hb-art"><Illus kind={['bi','marketing','automation','ai','account','project'][s.idx] || 'bi'} /></div>
+  <div class="wrap page-head has-art"><div class="hb-art"><DashShot stage kind={['profit','ads','report','funnel','accounts','delivery'][s.idx] || 'profit'} lang={lang} /></div>
     <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/#services')}>{u.services}</a></nav>
     <span class="kicker">{c.name}</span>
     <h1>{c.h1}</h1>

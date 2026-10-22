@@ -24,10 +24,11 @@ for (const f of pages) {
   const key = rel.replace(/\//g, '-');
   const rtl = lang === 'ar';
   const size = h1.length > 70 ? 54 : h1.length > 45 ? 62 : 72;
-  await pg.setContent(`<html lang="${lang}" dir="${rtl ? 'rtl' : 'ltr'}"><body style="margin:0;width:1200px;height:630px;box-sizing:border-box;padding:70px 80px;background:#f6f1e7;color:#1d1a16;font-family:'IBM Plex Sans Arabic','Noto Naskh Arabic',Georgia,serif;display:flex;flex-direction:column;justify-content:space-between;position:relative;border-top:14px solid #a9411d">
-  <div style="font-size:26px;font-weight:700;color:#a9411d;direction:ltr;text-align:${rtl ? 'right' : 'left'}">— ${esc(kick.slice(0, 40) || 'Zeftawii')}</div>
-  <div style="font-size:${size}px;line-height:1.35;font-weight:700">${esc(h1)}</div>
-  <div style="display:flex;justify-content:space-between;align-items:center;direction:ltr;border-top:2px solid #1d1a16;padding-top:22px"><div style="font-size:40px;font-weight:700;font-family:Georgia,serif">Zeftawii <span style="color:#a9411d">|</span> <span style="font-size:24px;font-weight:400">Decoding Data</span></div></div>
+  await pg.setContent(`<html lang="${lang}" dir="${rtl ? 'rtl' : 'ltr'}"><body style="margin:0;width:1200px;height:630px;box-sizing:border-box;padding:70px 80px;background:radial-gradient(700px 360px at 85% 115%,rgba(29,111,224,.35),transparent 70%),#07090e;color:#eef2f9;font-family:'IBM Plex Sans Arabic','Inter',system-ui,sans-serif;display:flex;flex-direction:column;justify-content:space-between;position:relative">
+  <div style="position:absolute;top:0;left:0;right:0;height:10px;background:linear-gradient(90deg,#1d6fe0,#34d399,#f59e0b,#a78bfa,#f87171)"></div>
+  <div style="font-size:26px;font-weight:700;color:#4c9bff;direction:ltr;text-align:${rtl ? 'right' : 'left'}">${esc(kick.slice(0, 40) || 'Zeftawii')}</div>
+  <div style="font-size:${size}px;line-height:1.35;font-weight:800">${esc(h1)}</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;direction:ltr;border-top:1px solid #ffffff22;padding-top:22px"><div style="font-size:38px;font-weight:800">Zeftawii <span style="color:#4c9bff">|</span> <span style="font-size:24px;font-weight:500;color:#b6c0d1">Decoding Data</span></div></div>
   </body></html>`);
   await pg.screenshot({ path: path.join(out, key + '.jpg'), type: 'jpeg', quality: 78 });
   n++;
