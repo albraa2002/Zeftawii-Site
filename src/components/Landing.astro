@@ -127,22 +127,6 @@ const quick = ar0 ? [
   </section>
 
   <div class="wrap"><PromoBanner lang={lang} kind="dashboards" /></div>
-  <div class="wrap"><PromoBanner lang={lang} kind="solutions" /></div>
-
-  <section id="fit">
-    <div class="wrap">
-      <div class="sec-head rv"><h2>{t.fitTitle}</h2><p>{t.fitSub}</p></div>
-      <div class="fit">
-        {t.fit.map((f) => (
-          <article class="fit-card rv">
-            <h3>{f.t}</h3>
-            <p class="fit-row"><b class="fit-l bad">{t.fitPain}</b>{f.pain}</p>
-            <p class="fit-row"><b class="fit-l good">{t.fitFix}</b>{f.fix}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
 
   <section id="work">
     <div class="wrap">
@@ -202,7 +186,6 @@ const quick = ar0 ? [
     </div>
   </section>
 
-  <div class="wrap"><PromoBanner lang={lang} kind="learn" /></div>
 
   <section id="process">
     <div class="wrap">
