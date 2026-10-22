@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://zeftawii-site-bkxt.vercel.app/sitemap.xml
+Sitemap: https://zeftawii-site-46vp.vercel.app/sitemap.xml

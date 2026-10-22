@@ -6,12 +6,12 @@
 
 **Bilingual (Arabic RTL + English) lead-generation website for a data analyst and account manager.**
 
-[![Live](https://img.shields.io/badge/live-zeftawii--site--bkxt.vercel.app-00e5ff?style=flat-square)](https://zeftawii-site-bkxt.vercel.app/)
+[![Live](https://img.shields.io/badge/live-zeftawii--site--bkxt.vercel.app-00e5ff?style=flat-square)](https://zeftawii-site-46vp.vercel.app/)
 [![Astro](https://img.shields.io/badge/Astro-static-ff5d01?style=flat-square&logo=astro&logoColor=white)](https://astro.build)
 ![Languages](https://img.shields.io/badge/AR%20%7C%20EN-RTL%20%2F%20LTR-00ff9d?style=flat-square)
 ![JS](https://img.shields.io/badge/client%20JS-vanilla-0a0f1c?style=flat-square)
 
-[العربية](#-ملخص-بالعربي) · [Live site](https://zeftawii-site-bkxt.vercel.app/) · [English version](https://zeftawii-site-bkxt.vercel.app/en/)
+[العربية](#-ملخص-بالعربي) · [Live site](https://zeftawii-site-46vp.vercel.app/) · [English version](https://zeftawii-site-46vp.vercel.app/en/)
 
 </div>
 

@@ -1,0 +1,43 @@
+---
+import Shell from './Shell.astro';
+import type { Lang } from '../i18n';
+import { P } from '../content/ui';
+import { CONFIG, hasLog } from '../config';
+const { lang } = Astro.props as { lang: Lang };
+const ar = lang === 'ar'; const path = P(lang, '/privacy/');
+const date = '2026-10-22';
+const T = ar ? {
+  title: 'سياسة الخصوصية | Zeftawii', h1: 'سياسة الخصوصية', upd: `آخر تحديث: ${date}`,
+  desc: 'إيه البيانات اللي الموقع بيجمعها، وبنستخدمها ليه، وإزاي تطلب حذفها.',
+  intro: 'الموقع ده تابع لـ Zeftawii | Decoding Data (البراء إيهاب). الصفحة دي بتوضح بالظبط اللي بيحصل في الموقع، من غير كلام قانوني معقّد.',
+  s: [
+    ['البيانات اللي بتبعتها بنفسك', ['فورم التواصل: الاسم، رقم واتساب أو التواصل، الإيميل، الخدمة المطلوبة، الميزانية التقريبية، وتفاصيل طلبك. بتتبعت على إيميلي عن طريق خدمة Web3Forms، وبستخدمها للرد عليك وتجهيز عرض مناسب.', 'الواتساب والإيميل المباشر: لو تواصلت بيهم، بتتعامل مع الرسائل جوّه التطبيق أو الإيميل نفسه.', 'الأدوات والحاسبات: الأرقام اللي بتكتبها بتتحسب في متصفحك ومبتتبعتش لأي سيرفر. زر "نسخ رابط النتيجة" بيحط الأرقام في الرابط اللي إنت بتشاركه بنفسك.']],
+    ['الشات بوت', [hasLog() ? 'الشات إجاباته مكتوبة مسبقاً ومفيهوش ذكاء اصطناعي. بنسجّل الأسئلة اللي ملقيناش لها إجابة (بعد إخفاء الإيميلات والأرقام) عشان نحسّن الإجابات.' : 'الشات إجاباته مكتوبة مسبقاً ومفيهوش ذكاء اصطناعي، ومحادثاته مبتتسجلش على أي سيرفر.']],
+    ['التتبع والإحصائيات', ['Vercel Web Analytics: إحصائيات زيارات مجمّعة بدون كوكيز وبدون تعريف شخصي.', CONFIG.ga4Id ? 'Google Analytics 4: مفعّل، وبيستخدم كوكيز لقياس الزيارات.' : 'Google Analytics: غير مفعّل حالياً.', CONFIG.clarityId ? 'Microsoft Clarity: مفعّل لتسجيل خرائط الحرارة وسلوك التصفح.' : 'Microsoft Clarity: غير مفعّل حالياً.']],
+    ['التخزين في متصفحك', ['الوضع الفاتح أو الداكن بيتحفظ في متصفحك (localStorage) عشان يفتكر اختيارك. مفيش كوكيز إعلانية.']],
+    ['خدمات خارجية', ['الخطوط بتتحمّل من Google Fonts، فبيوصلهم عنوان الـIP بتاعك زي أي موقع بيستخدمها.', 'الموقع مستضاف على Vercel، وفورم التواصل بيمر على Web3Forms.']],
+    ['مشاركة البيانات وحذفها', ['مبنبيعش بياناتك ومبنشاركهاش مع حد لأغراض تسويقية.', `لو عايز تعرف أو تحذف أي حاجة بعتّها، ابعت إيميل على ${CONFIG.email} وهرد عليك.`]],
+  ],
+  note: 'الصفحة دي توضيح عملي لطريقة عمل الموقع وليست استشارة قانونية.',
+} : {
+  title: 'Privacy policy | Zeftawii', h1: 'Privacy policy', upd: `Last updated: ${date}`,
+  desc: 'What data this website collects, why, and how to ask for it to be deleted.',
+  intro: 'This website belongs to Zeftawii | Decoding Data (Albaraa Ehab). This page explains exactly what happens on the site, without legal jargon.',
+  s: [
+    ['Data you send yourself', ['Contact form: name, WhatsApp or phone, email, requested service, approximate budget and your request details. It is sent to my email through Web3Forms, and I use it to reply to you and prepare a suitable proposal.', 'WhatsApp and direct email: if you contact me there, messages are handled inside that app or mailbox.', 'Tools and calculators: the numbers you type are calculated in your browser and are not sent to any server. The "copy result link" button puts the numbers in a link that you share yourself.']],
+    ['Chatbot', [hasLog() ? 'The chat answers are pre-written with no AI. Questions without an answer are logged (after removing emails and numbers) to improve the answers.' : 'The chat answers are pre-written with no AI, and conversations are not logged on any server.']],
+    ['Tracking and analytics', ['Vercel Web Analytics: aggregated visit statistics with no cookies and no personal identification.', CONFIG.ga4Id ? 'Google Analytics 4: enabled, and it uses cookies to measure visits.' : 'Google Analytics: not enabled at the moment.', CONFIG.clarityId ? 'Microsoft Clarity: enabled for heatmaps and browsing behaviour.' : 'Microsoft Clarity: not enabled at the moment.']],
+    ['Storage in your browser', ['Your light or dark theme choice is saved in your browser (localStorage) so the site remembers it. There are no advertising cookies.']],
+    ['Third parties', ['Fonts load from Google Fonts, so your IP address reaches them as on any site that uses them.', 'The site is hosted on Vercel and the contact form passes through Web3Forms.']],
+    ['Sharing and deletion', ['I do not sell your data or share it with anyone for marketing.', `To find out about or delete anything you sent, email ${CONFIG.email} and I will reply.`]],
+  ],
+  note: 'This page is a practical description of how the site works, not legal advice.',
+};
+---
+<Shell lang={lang} title={T.title} desc={T.desc} path={path} alt={{ ar: '/privacy/', en: '/en/privacy/' }}>
+  <div class="wrap page-head"><span class="kicker">PRIVACY</span><h1>{T.h1}</h1><p>{T.intro}</p><small>{T.upd}</small></div>
+  <article class="wrap prose" style="max-width:820px">
+    {T.s.map(([h, items]) => (<section><h2>{h}</h2><ul>{(items as string[]).map((i) => <li>{i}</li>)}</ul></section>))}
+    <p class="art-note">{T.note}</p>
+  </article>
+</Shell>
