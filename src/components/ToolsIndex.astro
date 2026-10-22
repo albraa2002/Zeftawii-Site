@@ -10,7 +10,7 @@ import { CONFIG } from '../config';
 const { lang } = Astro.props as { lang: Lang };
 const u = UI[lang]; const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, '/tools/');
 const title = lang === 'ar' ? 'أدوات مجانية للتسويق والبيانات | Zeftawii' : 'Free marketing and data tools | Zeftawii';
-const desc = lang === 'ar' ? 'حاسبات وأدوات مجانية: ربحية الإعلانات (ROAS)، CPA و LTV، هامش الربح ونقطة التعادل، توفير وقت الأتمتة، مرتجعات الدفع عند الاستلام، ملخص طلب مشروع، وفحص سريع لصحة شغلك.' : 'Free calculators and tools: ad profitability (ROAS), CPA and LTV, margin and break-even, automation savings, cash-on-delivery returns cost, a project brief generator and a quick business health check.';
+const desc = lang === 'ar' ? 'حاسبات وأدوات مجانية: ربحية الإعلانات (ROAS)، CPA و LTV، هامش الربح ونقطة التعادل، توفير وقت الأتمتة، مرتجعات الدفع عند الاستلام، ملخص طلب مشروع، وفحص سريع لصحة شغلك.' : 'Free calculators: ad profitability (ROAS), CPA and LTV, break-even, automation savings, cash-on-delivery returns cost and a project brief generator.';
 const ld = [{ '@type': 'CollectionPage', name: title, url: base + path, inLanguage: lang }];
 ---
 <Shell lang={lang} title={title} desc={desc} path={path} alt={{ ar: '/tools/', en: '/en/tools/' }} extraLd={ld}>

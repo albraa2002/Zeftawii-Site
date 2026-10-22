@@ -574,7 +574,7 @@ input[type='search']::-webkit-search-cancel-button { display: none; }
   .mbar .btn { flex: 1; justify-content: center; }
   .wa-float { display: none; }
   .chat-launcher { bottom: 78px; }
-  body { padding-bottom: 66px; }
+  footer { padding-bottom: 66px; }
 }
 .cta-band + footer { margin-top: 0; }
 

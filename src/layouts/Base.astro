@@ -7,7 +7,15 @@ import fs from 'node:fs';
 interface Props { lang: Lang; noindex?: boolean; title?: string; desc?: string; path?: string; alt?: { ar: string; en: string }; inner?: boolean; extraLd?: object[]; ogType?: string }
 const { lang, noindex = false, inner = false, extraLd = [], ogType = 'website' } = Astro.props;
 const t = T[lang];
-const title = Astro.props.title ?? t.title;
+const rawTitle = Astro.props.title ?? t.title;
+const fitTitle = (x: string) => {
+  if (x.length <= 70) return x;
+  let y = x.replace(/ \| Zeftawii$/, '');
+  if (y.length <= 70) return y;
+  y = y.slice(0, 67);
+  return y.slice(0, y.lastIndexOf(' ')).replace(/[\s:,\-–|]+$/, '') + '…';
+};
+const title = fitTitle(rawTitle);
 const desc = Astro.props.desc ?? t.desc;
 
 const base = CONFIG.site.replace(/\/$/, '');

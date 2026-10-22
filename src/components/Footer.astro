@@ -13,7 +13,7 @@ const wa = `https://wa.me/${w}?text=${encodeURIComponent(t.contact.waMsg)}`;
 const socials = Object.entries(CONFIG.links as Record<string, string>).filter(([k, url]) => url && socialDefs[k]).map(([k, url]) => ({ ...socialDefs[k], url }));
 const L = ar ? { bandH: 'جاهز تحوّل أرقامك لقرارات؟', bandP: 'ابعت لي حالتك وهرد عليك خلال يوم عمل. الاستشارة الأولى مجانية وبدون التزام.', explore: 'استكشف', book: 'احجز استشارة مجانية', chat: 'واتساب' }
   : { bandH: 'Ready to turn your numbers into decisions?', bandP: 'Send me your case and I will reply within one business day. The first consultation is free and no-commitment.', explore: 'Explore', book: 'Book a free consultation', chat: 'WhatsApp' };
-const explore = [['tools', u.tools, '/tools/'], ['dashboards', ar ? 'نماذج لوحات التحكم' : 'Dashboard examples', '/dashboards/'], ['solutions', u.solutions, '/solutions/'], ['glossary', u.glossary, '/glossary/'], ['blog', u.blog, '/blog/'], ['resources', u.resources, '/resources/'], ['faq', ar ? 'الأسئلة الشائعة' : 'FAQ', '/faq/'], ['dash', ar ? 'أمثلة لوحات تحكم' : 'Dashboard examples', '/dashboards/'], ['work', u.work, '/work/'], ['about', u.about, '/about/']] as const;
+const explore = [['tools', u.tools, '/tools/'], ['dashboards', ar ? 'نماذج لوحات التحكم' : 'Dashboard examples', '/dashboards/'], ['solutions', u.solutions, '/solutions/'], ['glossary', u.glossary, '/glossary/'], ['blog', u.blog, '/blog/'], ['resources', u.resources, '/resources/'], ['faq', ar ? 'الأسئلة الشائعة' : 'FAQ', '/faq/'], ['work', u.work, '/work/'], ['about', u.about, '/about/']] as const;
 ---
 {band && (
   <section class="cta-band" aria-labelledby="cb-h">

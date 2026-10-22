@@ -60,4 +60,7 @@ footer { background: var(--bg-2); }
 @media (max-width: 860px) { .promo { grid-template-columns: 1fr; } }
 ::selection { background: var(--cyan); color: var(--on-accent); }
 .page-head.has-art { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); column-gap: 2.4rem; }
+@media (max-width: 900px) { .page-head.has-art { grid-template-columns: 1fr; } .page-head.has-art > .hb-art { grid-column: 1; grid-row: auto; order: 99; } }
 .hero-grid { grid-template-columns: 1fr 1fr; gap: 2.4rem; } @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+
+.form-note{font-size:.82rem;color:var(--muted);margin-top:.6rem}.form-note a{text-decoration:underline}

@@ -155,7 +155,7 @@ const quick = ar0 ? [
       <div class="calc rv" id="calc-box" data-c={JSON.stringify(t.calc)} data-lang={lang} data-wa={CONFIG.whatsapp}>
         <div class="calc-in">
           {(['spend', 'orders', 'aov', 'cogs', 'ship', 'ret'] as const).map((k) => (
-            <label>{t.calc.f[k]}<input data-k={k} inputmode="decimal" dir="ltr" autocomplete="off" /></label>
+            <label>{t.calc.f[k]}<input data-k={k} inputmode="decimal" dir="ltr" autocomplete="off" placeholder={({ spend: '20000', orders: '100', aov: '500', cogs: '40', ship: '60', ret: '20' } as Record<string, string>)[k]} /></label>
           ))}
         </div>
         <div class="calc-out" aria-live="polite">
@@ -275,6 +275,7 @@ const quick = ar0 ? [
         <div class="row2 svc-fields" id="svc-fields"></div>
         <label><span id="msg-l">{t.contact.msg}</span><textarea name="message" placeholder={t.contact.msgPh} required aria-required="true"></textarea></label>
         <button class="btn btn-primary" type="submit">{t.contact.send}</button>
+        <p class="form-note">{lang === 'ar' ? 'بستخدم بياناتك للرد عليك بس. ' : 'Your details are used only to reply to you. '}<a href={P(lang, '/privacy/')}>{lang === 'ar' ? 'سياسة الخصوصية' : 'Privacy policy'}</a></p>
         <p class="status" role="status" aria-live="polite"></p>
       </form>
     </div>

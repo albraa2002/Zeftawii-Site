@@ -430,7 +430,7 @@ export const T = {
     },
     footer: {
       rights: 'All rights reserved',
-      built: 'Built with a love for data',
+      built: 'Built with love for data',
       about: 'Data analyst, Business Intelligence specialist, and marketing account and project manager. I turn your data into decisions, and your projects into organized delivery.',
       cta: 'Start your project',
       colLinks: 'Quick links',
