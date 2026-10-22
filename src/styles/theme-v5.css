@@ -13,10 +13,10 @@
   color-scheme: light;
   --bg: #f3f5f9; --bg-2: #e9edf4; --panel: #ffffff; --panel-b: rgba(var(--w), .11);
   --text: #111827; --text-2: #374151; --muted: #5f6b7e;
-  --cyan: #1d6fe0; --green: #0f9d6e; --red: #dc2626; --orange: #d97706; --purple: #7c3aed;
-  --c: 29, 111, 224; --g: 15, 157, 110; --w: 17, 24, 39; --k: 17, 24, 39;
+  --cyan: #1a5fcb; --green: #0b7a56; --red: #c81e1e; --orange: #b45309; --purple: #6d28d9;
+  --c: 26, 95, 203; --g: 11, 122, 86; --w: 17, 24, 39; --k: 17, 24, 39;
   --inset: rgba(17, 24, 39, .05); --nav-bg: #f3f5f9; --nav-bg-s: #f3f5f9; --pop-bg: #ffffff;
-  --ok: #0f9d6e; --bad: #dc2626; --on-accent: #ffffff; --shadow: 0 12px 30px rgba(17, 24, 39, .1);
+  --ok: #0b7a56; --bad: #c81e1e; --on-accent: #ffffff; --shadow: 0 12px 30px rgba(17, 24, 39, .1);
 }
 h1, h2, h3, h4, .logo, .stat b, .kpi b { font-family: var(--font-body); font-weight: 800; letter-spacing: -.01em; }
 h1 .grad { color: var(--cyan); }
@@ -60,3 +60,4 @@ footer { background: var(--bg-2); }
 @media (max-width: 860px) { .promo { grid-template-columns: 1fr; } }
 ::selection { background: var(--cyan); color: var(--on-accent); }
 .page-head.has-art { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); column-gap: 2.4rem; }
+.hero-grid { grid-template-columns: 1fr 1fr; gap: 2.4rem; } @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }

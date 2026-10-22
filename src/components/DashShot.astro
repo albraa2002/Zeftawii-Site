@@ -17,20 +17,20 @@ const chip = ar ? 'بيانات تجريبية' : 'Sample data';
     <div class="s-chrome" dir="ltr"><i></i><i></i><i></i><span class="s-url">/dashboard</span></div>
     <div class="s-app">
       <div class="s-main">
-        <div class="s-hd"><div><h4>{d.title}</h4><small>{d.sub}</small></div><span class="s-chip">{chip}</span></div>
+        <div class="s-hd"><div><div class="s-t">{d.title}</div><small>{d.sub}</small></div><span class="s-chip">{chip}</span></div>
         <div class="s-kg">
           {d.kpis.map((k, i) => (
             <div class="s-kc"><div class="s-ki" style={`background:${shotColors[i]}`}><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" set:html={ic[i % 4]} /></div><div class="s-kt"><small>{k[0]}</small><b>{k[1]}</b><em>{k[2]}</em></div></div>
           ))}
         </div>
         <div class="s-row">
-          <div class="s-card s-feed"><h5>{ar ? 'نشاط مباشر' : 'Live activity'}</h5>{d.feed.map((f, i) => <div class="s-fi"><i style={`background:${shotColors[[0, 2, 1, 4][i]]}`}></i><div><b>{f[0]}</b><small>{f[1]}</small></div></div>)}</div>
-          <div class="s-card s-ch"><h5>{d.chart}</h5>
+          <div class="s-card s-feed"><div class="s-h">{ar ? 'نشاط مباشر' : 'Live activity'}</div>{d.feed.map((f, i) => <div class="s-fi"><i style={`background:${shotColors[[0, 2, 1, 4][i]]}`}></i><div><b>{f[0]}</b><small>{f[1]}</small></div></div>)}</div>
+          <div class="s-card s-ch"><div class="s-h">{d.chart}</div>
             <svg viewBox={`0 0 ${W} ${H + 16}`} dir="ltr">
               <defs><linearGradient id={`g-${kind}-${lang}`} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d6fe0" stop-opacity=".25" /><stop offset="1" stop-color="#1d6fe0" stop-opacity="0" /></linearGradient></defs>
               <path d={`${path} L${xs[xs.length - 1].toFixed(0)} ${H - 18} L${xs[0].toFixed(0)} ${H - 18} Z`} fill={`url(#g-${kind}-${lang})`} />
               <path d={path} fill="none" stroke="#1d6fe0" stroke-width="2.5" />
-              {xs.map((x, i) => (<g><circle cx={x} cy={ys[i]} r="5" fill="#fff" stroke="#1d6fe0" stroke-width="2.5" /><text x={x} y={ys[i] - 11} text-anchor="middle" font-size="12" font-weight="700" fill="#111827">{fmt(d.pts[i])}</text><text x={x} y={H + 8} text-anchor="middle" font-size="11" fill="#6b7280">{d.labels[i]}</text></g>))}
+              {xs.map((x, i) => (<g><circle cx={x} cy={ys[i]} r="5" fill="#fff" stroke="#1d6fe0" stroke-width="2.5" /><text x={x} y={ys[i] - 11} text-anchor="middle" font-size="12" font-weight="700" fill="#111827">{fmt(d.pts[i])}</text><text x={x} y={H + 8} text-anchor="middle" font-size="11" fill="#4b5563">{d.labels[i]}</text></g>))}
             </svg>
           </div>
         </div>
