@@ -1,0 +1,122 @@
+---
+import Shell from './Shell.astro';
+import type { Lang } from '../i18n';
+import { P } from '../content/ui';
+const { lang } = Astro.props as { lang: Lang };
+const ar = lang === 'ar'; const path = P(lang, '/demo/client-tracker/');
+const T = ar ? {
+  title: 'نموذج تجريبي: نظام متابعة حسابات العملاء | Zeftawii', h1: 'نظام متابعة حسابات العملاء', kicker: 'DEMO',
+  desc: 'نموذج تفاعلي ببيانات وهمية لنظام متابعة حسابات عملاء الوكالة: فلترة بالحالة، مؤشرات للمتأخر، عرض حسب الدور وسجل نشاط.',
+  note: 'كل الأسماء والأرقام هنا وهمية لتوضيح الفكرة فقط. مفيش عميل حقيقي في النموذج.',
+  role: 'اعرض كـ', mgr: 'مدير الحسابات', mem: 'عضو فريق (سارة)', all: 'الكل', ok: 'على المسار', risk: 'في خطر', late: 'متأخر',
+  search: 'ابحث باسم العميل...', cols: ['العميل', 'الخدمة', 'المسؤول', 'الحالة', 'الموعد القادم', 'مهام مفتوحة'],
+  k: ['إجمالي الحسابات', 'على المسار', 'في خطر', 'متأخر'], log: 'سجل النشاط', empty: 'مفيش حسابات بالفلتر ده.',
+  today: 'النهارده', inD: (n: number) => `بعد ${n} يوم`, agoD: (n: number) => `متأخر ${n} يوم`,
+  cta: 'عايز نظام زي ده لشركتك؟', ctaB: 'ابدأ استشارة مجانية', back: 'العودة لشغل فعلي',
+  svc: ['إعلانات', 'سوشيال ميديا', 'SEO', 'موقع', 'متجر'], members: ['أحمد', 'سارة', 'منى'],
+  logs: ['سارة حدّثت حالة "عميل D" إلى "في خطر"', 'أحمد أضاف مهمة لـ "عميل B"', 'منى أقفلت مهمة عند "عميل F"', 'المدير غيّر موعد تسليم "عميل A"'],
+  clientPrefix: 'عميل',
+} : {
+  title: 'Demo: client account tracking system | Zeftawii', h1: 'Client account tracking system', kicker: 'DEMO',
+  desc: 'An interactive demo with fake data of an agency client tracking system: status filter, late indicators, a role view and an activity log.',
+  note: 'All names and numbers here are fake, to illustrate the idea. No real client appears in this demo.',
+  role: 'View as', mgr: 'Account manager', mem: 'Team member (Sara)', all: 'All', ok: 'On track', risk: 'At risk', late: 'Late',
+  search: 'Search by client name...', cols: ['Client', 'Service', 'Owner', 'Status', 'Next deadline', 'Open tasks'],
+  k: ['Total accounts', 'On track', 'At risk', 'Late'], log: 'Activity log', empty: 'No accounts match this filter.',
+  today: 'Today', inD: (n: number) => `in ${n} d`, agoD: (n: number) => `${n} d late`,
+  cta: 'Want a system like this for your company?', ctaB: 'Start a free consultation', back: 'Back to selected work',
+  svc: ['Ads', 'Social media', 'SEO', 'Website', 'Store'], members: ['Ahmed', 'Sara', 'Mona'],
+  logs: ['Sara moved "Client D" to "At risk"', 'Ahmed added a task to "Client B"', 'Mona closed a task for "Client F"', 'The manager changed the deadline of "Client A"'],
+  clientPrefix: 'Client',
+};
+// offsets (days from today) + open tasks + owner idx + service idx; status derived in the browser from the date
+const rows = [[-3, 6, 0, 0], [4, 2, 0, 1], [9, 1, 1, 2], [1, 5, 1, 0], [-1, 4, 2, 3], [12, 0, 2, 4], [2, 3, 1, 1], [-6, 7, 0, 3]].map((r, i) => ({ n: `${T.clientPrefix} ${'ABCDEFGH'[i]}`, off: r[0], tasks: r[1], own: r[2], svc: r[3] }));
+const data = { rows, members: T.members, svc: T.svc, T: { ok: T.ok, risk: T.risk, late: T.late, today: T.today, empty: T.empty, all: T.all, ar } };
+const ld = [{ '@type': 'WebPage', name: T.h1, description: T.desc, inLanguage: lang }];
+---
+<Shell lang={lang} title={T.title} desc={T.desc} path={path} alt={{ ar: '/demo/client-tracker/', en: '/en/demo/client-tracker/' }} extraLd={ld}>
+  <div class="wrap page-head"><span class="kicker">{T.kicker}</span><h1>{T.h1}</h1><p>{T.desc}</p></div>
+  <div class="wrap">
+    <p class="ct-note" role="note">{T.note}</p>
+    <div class="ct" id="ct" data-d={JSON.stringify(data)}>
+      <div class="ct-bar">
+        <label>{T.role}
+          <select id="ct-role"><option value="m">{T.mgr}</option><option value="s">{T.mem}</option></select>
+        </label>
+        <div class="ct-f" role="group" aria-label="status">
+          <button type="button" data-f="all" aria-pressed="true">{T.all}</button>
+          <button type="button" data-f="ok" aria-pressed="false">{T.ok}</button>
+          <button type="button" data-f="risk" aria-pressed="false">{T.risk}</button>
+          <button type="button" data-f="late" aria-pressed="false">{T.late}</button>
+        </div>
+        <input id="ct-q" type="search" placeholder={T.search} aria-label={T.search} />
+      </div>
+      <div class="ct-k" aria-live="polite">
+        {T.k.map((x, i) => <div class={`ct-kc k${i}`}><small>{x}</small><b data-k={i}>-</b></div>)}
+      </div>
+      <div class="ct-w"><table class="ct-t"><thead><tr>{T.cols.map((c, i) => <th scope="col"><button type="button" data-s={i}>{c}</button></th>)}</tr></thead><tbody id="ct-b"></tbody></table></div>
+      <p class="ct-empty" id="ct-e" hidden>{T.empty}</p>
+      <h2 class="ct-lh">{T.log}</h2>
+      <ul class="ct-log">{T.logs.map((l, i) => <li><span>{i === 0 ? '10:42' : i === 1 ? '09:15' : i === 2 ? '08:50' : '08:05'}</span>{l}</li>)}</ul>
+    </div>
+    <div class="cta-box"><h2>{T.cta}</h2>
+      <div class="cta-row"><a class="btn btn-primary" href={P(lang, '/?service=4#contact')} data-evt="cta_click" data-loc="demo_tracker">{T.ctaB}</a><a class="btn btn-ghost" href={P(lang, '/work/client-tracker-demo/')}>{T.back}</a></div>
+    </div>
+  </div>
+</Shell>
+<style is:global>
+.ct-note{background:rgba(var(--c),.08);border:1px solid rgba(var(--c),.25);border-radius:12px;padding:.7rem 1rem;margin:0 0 1rem;font-size:.92rem}
+.ct{background:var(--panel);border:1px solid var(--panel-b);border-radius:16px;padding:1rem;margin-bottom:1.5rem}
+.ct-bar{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center;margin-bottom:1rem}
+.ct-bar select,.ct-bar input{background:var(--bg);color:var(--text);border:1px solid var(--panel-b);border-radius:10px;padding:.5rem .7rem;font:inherit}
+.ct-bar input{flex:1;min-width:150px}
+.ct-f{display:flex;gap:.35rem;flex-wrap:wrap}
+.ct-f button{border:1px solid var(--panel-b);background:var(--bg);color:var(--text);border-radius:999px;padding:.35rem .8rem;font:inherit;font-size:.88rem;cursor:pointer}
+.ct-f button[aria-pressed=true]{background:rgb(var(--c));border-color:rgb(var(--c));color:#fff}
+.ct-k{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-bottom:1rem}
+.ct-kc{border:1px solid var(--panel-b);border-top:3px solid rgb(var(--c));border-radius:12px;padding:.7rem .8rem;background:var(--bg)}
+.ct-kc small{display:block;color:var(--muted);font-size:.8rem}.ct-kc b{font-size:1.6rem}
+.ct-kc.k1{border-top-color:rgb(var(--g))}.ct-kc.k2{border-top-color:#b45309}.ct-kc.k3{border-top-color:#c81e1e}
+.ct-w{overflow-x:auto}
+.ct-t{width:100%;border-collapse:collapse;min-width:560px;font-size:.92rem}
+.ct-t th,.ct-t td{text-align:start;padding:.6rem .5rem;border-bottom:1px solid var(--panel-b)}
+.ct-t th button{background:none;border:0;color:var(--muted);font:inherit;font-weight:600;cursor:pointer;padding:0}
+.ct-pill{display:inline-block;border-radius:999px;padding:.15rem .6rem;font-size:.8rem;font-weight:600}
+.ct-pill.ok{background:rgba(var(--g),.14);color:rgb(var(--g))}.ct-pill.risk{background:rgba(180,83,9,.14);color:#b45309}.ct-pill.late{background:rgba(200,30,30,.12);color:#c81e1e}
+html[data-theme=dark] .ct-pill.risk{color:#f5a65b}html[data-theme=dark] .ct-pill.late{color:#ff7b7b}
+.ct-empty{padding:1rem;color:var(--muted)}
+.ct-lh{font-size:1.1rem;margin:1.2rem 0 .5rem}
+.ct-log{list-style:none;padding:0;margin:0;display:grid;gap:.4rem;font-size:.92rem}
+.ct-log span{color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-inline-end:.7rem;font-size:.82rem}
+@media(max-width:640px){.ct-k{grid-template-columns:repeat(2,1fr)}}
+</style>
+<script>
+const root = document.getElementById('ct') as HTMLElement | null;
+if (root) {
+  const D = JSON.parse(root.dataset.d || '{}'); const T = D.T;
+  const st = (off: number) => (off < 0 ? 'late' : off <= 2 ? 'risk' : 'ok');
+  const label: Record<string, string> = { ok: T.ok, risk: T.risk, late: T.late };
+  const rank: Record<string, number> = { late: 0, risk: 1, ok: 2 };
+  let f = 'all', role = 'm', q = '', sk = -1, asc = true;
+  const body = document.getElementById('ct-b')!, empty = document.getElementById('ct-e')!;
+  const when = (o: number) => (o === 0 ? T.today : o > 0 ? (T.ar ? `بعد ${o} يوم` : `in ${o} d`) : (T.ar ? `متأخر ${-o} يوم` : `${-o} d late`));
+  const render = () => {
+    let rows = D.rows.map((r: any) => ({ ...r, s: st(r.off) }));
+    if (role === 's') rows = rows.filter((r: any) => r.own === 1);
+    root.querySelectorAll<HTMLElement>('[data-k]').forEach((el) => {
+      const i = +el.dataset.k!; el.textContent = String(i === 0 ? rows.length : rows.filter((r: any) => r.s === ['', 'ok', 'risk', 'late'][i]).length);
+    });
+    if (f !== 'all') rows = rows.filter((r: any) => r.s === f);
+    if (q) rows = rows.filter((r: any) => r.n.toLowerCase().includes(q));
+    const key = [(r: any) => r.n, (r: any) => r.svc, (r: any) => r.own, (r: any) => rank[r.s], (r: any) => r.off, (r: any) => r.tasks];
+    if (sk >= 0) rows.sort((a: any, b: any) => (key[sk](a) > key[sk](b) ? 1 : -1) * (asc ? 1 : -1));
+    body.innerHTML = rows.map((r: any) => `<tr><td>${r.n}</td><td>${D.svc[r.svc]}</td><td>${D.members[r.own]}</td><td><span class="ct-pill ${r.s}">${label[r.s]}</span></td><td>${when(r.off)}</td><td>${r.tasks}</td></tr>`).join('');
+    empty.hidden = rows.length > 0;
+  };
+  root.querySelectorAll<HTMLButtonElement>('[data-f]').forEach((b) => b.addEventListener('click', () => { f = b.dataset.f!; root.querySelectorAll<HTMLButtonElement>('[data-f]').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); render(); }));
+  (document.getElementById('ct-role') as HTMLSelectElement).addEventListener('change', (e) => { role = (e.target as HTMLSelectElement).value; render(); });
+  (document.getElementById('ct-q') as HTMLInputElement).addEventListener('input', (e) => { q = (e.target as HTMLInputElement).value.trim().toLowerCase(); render(); });
+  root.querySelectorAll<HTMLButtonElement>('[data-s]').forEach((b) => b.addEventListener('click', () => { const i = +b.dataset.s!; asc = sk === i ? !asc : true; sk = i; render(); }));
+  render();
+}
+</script>

@@ -1,0 +1,72 @@
+---
+import Shell from './Shell.astro';
+import type { Lang } from '../i18n';
+import { P } from '../content/ui';
+const { lang } = Astro.props as { lang: Lang };
+const ar = lang === 'ar'; const path = P(lang, '/how-we-work/');
+const T = ar ? {
+  title: 'إزاي بنشتغل مع بعض | Zeftawii', h1: 'إزاي بنشتغل مع بعض', kicker: 'PROCESS',
+  desc: 'من أول رسالة لحد التسليم: الخطوات، وإيه المطلوب منك، وإيه اللي هتستلمه، وإزاي بنتعامل مع التعديلات خارج النطاق.',
+  lead: 'الشغل بيمشي بخطوات واضحة ونطاق مكتوب، علشان متتفاجأش بحاجة في النص.',
+  stepsT: 'الخطوات', steps: [
+    ['1. رسالتك', 'بتبعت وصف بسيط للي محتاجه (من الفورم أو واتساب)، وبرد عليك خلال يوم عمل.'],
+    ['2. استشارة مجانية', 'جلسة قصيرة نفهم فيها هدفك وبياناتك ومشكلتك الحالية. من غير التزام.'],
+    ['3. نطاق وعرض مكتوب', 'ملخص بالتسليمات والمدة والتكلفة قبل أي بدء. بتوافق عليه الأول.'],
+    ['4. تنفيذ بتسليمات أسبوعية', 'بتشوف التقدم أول بأول وبتعلّق قبل ما نكمّل.'],
+    ['5. تسليم وتدريب ودعم', 'بسلّمك الشغل بشرح مبسط وفترة دعم بعد التسليم.'],
+  ],
+  needT: 'إيه اللي محتاجه منك', need: [
+    ['لأي خدمة', ['هدفك من الشغل بجملة واحدة', 'اسم شخص واحد بياخد القرارات ويوافق', 'الوصول للأدوات والحسابات المطلوبة (بصلاحية مناسبة)']],
+    ['للوحات التحكم والتحليل', ['عينة من البيانات أو أسماء المصادر (Excel، متجر، إعلانات)', 'الأسئلة اللي عاوز اللوحة تجاوب عليها', 'مين هيشوف اللوحة وكل قد إيه']],
+    ['لإدارة المشاريع والحسابات', ['قائمة العملاء والمشاريع الحالية', 'المواعيد المهمة والتسليمات المعلّقة', 'قنوات التواصل المعتمدة مع العملاء']],
+  ],
+  getT: 'إيه اللي هتستلمه', get: ['نطاق عمل مكتوب قبل البدء', 'تسليمات أسبوعية بتراجعها', 'شرح بسيط عند التسليم', 'فترة دعم بعد التسليم'],
+  chgT: 'لو الطلبات اتغيّرت', chg: 'أي طلب خارج النطاق المتفق عليه بيتسعّر وبيتحدد وقته قبل ما ينفّذ. مفيش تعديلات "بسيطة" بتتراكم من غير ما تتحسب.',
+  printB: 'اطبع قائمة التجهيز', cta: 'جاهز نبدأ؟', ctaB: 'احجز استشارة مجانية', price: 'شوف الأسعار',
+} : {
+  title: 'How we work together | Zeftawii', h1: 'How we work together', kicker: 'PROCESS',
+  desc: 'From the first message to delivery: the steps, what I need from you, what you receive, and how changes outside the scope are handled.',
+  lead: 'Work runs in clear steps with a written scope, so nothing surprises you halfway.',
+  stepsT: 'The steps', steps: [
+    ['1. Your message', 'You send a short description of what you need (form or WhatsApp), and I reply within one business day.'],
+    ['2. Free consultation', 'A short session to understand your goal, your data and your current problem. No commitment.'],
+    ['3. Written scope and quote', 'A summary of deliverables, timeline and cost before anything starts. You approve it first.'],
+    ['4. Execution with weekly deliverables', 'You see progress as it happens and give feedback before we continue.'],
+    ['5. Handover, training and support', 'I hand over the work with a simple walkthrough and a support period.'],
+  ],
+  needT: 'What I need from you', need: [
+    ['For any service', ['Your goal in one sentence', 'One person who makes decisions and approves', 'Access to the tools and accounts needed (with suitable permissions)']],
+    ['For dashboards and analysis', ['A data sample or the names of the sources (Excel, store, ads)', 'The questions the dashboard should answer', 'Who will view it and how often']],
+    ['For project and account management', ['A list of current clients and projects', 'Important dates and pending deliverables', 'The approved client communication channels']],
+  ],
+  getT: 'What you receive', get: ['A written scope before starting', 'Weekly deliverables you review', 'A simple walkthrough at handover', 'A support period after delivery'],
+  chgT: 'If requests change', chg: 'Anything outside the agreed scope is priced and scheduled before it is done. No "small tweaks" pile up without being counted.',
+  printB: 'Print the prep checklist', cta: 'Ready to start?', ctaB: 'Book a free consultation', price: 'See pricing',
+};
+const ld = [{ '@type': 'WebPage', name: T.h1, description: T.desc, inLanguage: lang }];
+---
+<Shell lang={lang} title={T.title} desc={T.desc} path={path} alt={{ ar: '/how-we-work/', en: '/en/how-we-work/' }} extraLd={ld}>
+  <div class="wrap page-head"><span class="kicker">{T.kicker}</span><h1>{T.h1}</h1><p>{T.lead}</p></div>
+  <div class="wrap">
+    <h2 class="sec-h">{T.stepsT}</h2>
+    <ol class="hw-steps">{T.steps.map(([h, d]) => <li><h3>{h}</h3><p>{d}</p></li>)}</ol>
+    <h2 class="sec-h">{T.needT}</h2>
+    <div class="hw-need">{T.need.map(([h, items]) => <section class="info-box"><h3>{h}</h3><ul>{(items as string[]).map((x) => <li>{x}</li>)}</ul></section>)}</div>
+    <p><button type="button" class="btn btn-ghost btn-sm hw-print" onclick="window.print()">{T.printB}</button></p>
+    <div class="two-col" style="margin-top:1rem">
+      <section class="info-box good"><h2>{T.getT}</h2><ul>{T.get.map((x) => <li>{x}</li>)}</ul></section>
+      <section class="info-box"><h2>{T.chgT}</h2><p class="plain">{T.chg}</p></section>
+    </div>
+    <div class="cta-box"><h2>{T.cta}</h2>
+      <div class="cta-row"><a class="btn btn-primary" href={P(lang, '/#contact')} data-evt="cta_click" data-loc="how_we_work">{T.ctaB}</a><a class="btn btn-ghost" href={P(lang, '/pricing/')}>{T.price}</a></div>
+    </div>
+  </div>
+</Shell>
+<style is:global>
+.hw-steps{list-style:none;padding:0;margin:0 0 1.5rem;display:grid;gap:.7rem}
+.hw-steps li{background:var(--panel);border:1px solid var(--panel-b);border-inline-start:3px solid rgb(var(--c));border-radius:12px;padding:.9rem 1rem}
+.hw-steps h3{margin:0 0 .25rem;font-size:1.02rem}.hw-steps p{margin:0;color:var(--muted)}
+.hw-need{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin-bottom:.8rem}
+.hw-need h3{margin:0 0 .4rem;font-size:1rem}
+@media print{.hw-print,.hw-steps{display:none}}
+</style>

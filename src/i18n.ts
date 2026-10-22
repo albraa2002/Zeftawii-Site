@@ -66,7 +66,7 @@ export const T = {
     workTitle: 'نماذج من شغلي',
     workSub: 'أمثلة على طريقة تفكيري وتنفيذي. بعضها نظام شغّال فعلاً، وبعضها نموذج تجريبي، وكل واحد موضّح بوضوح.',
     work: [
-      { tag: 'قيد التشغيل', t: 'AMMS: نظام متابعة حسابات العملاء', d: 'نظام لوكالة تسويق على Google Sheets وApps Script، بلوحة عربية للقراءة وصلاحيات حسب الدور وسجل للعمليات.', stack: ['Apps Script', 'Google Sheets', 'RTL Dashboard'] },
+      { tag: 'نموذج تجريبي', t: 'نظام متابعة حسابات العملاء', d: 'نموذج تفاعلي ببيانات وهمية: فلترة بالحالة، مؤشرات للمتأخر، عرض حسب الدور وسجل نشاط.', stack: ['Google Sheets', 'Apps Script', 'RTL Dashboard'] },
       { tag: 'أرقام فعلية 2026', t: 'إدارة تسليم المواقع والمتاجر', d: 'أدرت تسليم وإقفال 23 مشروع موقع ومتجر لعملاء، بوسيط 36 يوم من بدء الشغل للتسليم النهائي، على ووردبريس وسلة، وكل مشروع بعقد ونطاق مكتوب ومخالصة عند التسليم.', stack: ['WordPress', 'Salla', 'Delivery'] },
       { tag: 'تحليل بيانات', t: 'تحليلات Python على Jupyter', d: 'تحليلات استكشافية على: متجر آبل، جوجل بلاي، بيتكوين، FitBit، بحث جوجل، وتسعير التأمين.', stack: ['Python', 'Jupyter'] },
       { tag: 'نموذج تجريبي', t: 'Scope-Creep Sentinel: رادار التعديلات خارج النطاق', d: 'أداة بالذكاء الاصطناعي بتقارن طلب العميل بنطاق العمل المتفق عليه وتنبّهك لو خرج عنه.', stack: ['Next.js', 'Claude API'] },
@@ -287,7 +287,7 @@ export const T = {
     workTitle: 'Selected work',
     workSub: 'Examples of how I think and build. Some are live systems, some are proof-of-concept prototypes, and each is labeled as such.',
     work: [
-      { tag: 'In production', t: 'AMMS: Account Management Monitoring System', d: 'A system for a marketing agency on Google Sheets and Apps Script, with a read-only Arabic dashboard, role-based access and an activity log.', stack: ['Apps Script', 'Google Sheets', 'RTL Dashboard'] },
+      { tag: 'Demo', t: 'Client account tracking system', d: 'An interactive demo with fake data: status filter, late indicators, a role view and an activity log.', stack: ['Google Sheets', 'Apps Script', 'RTL Dashboard'] },
       { tag: 'Real numbers, 2026', t: 'Website and store delivery management', d: 'I managed delivery and close-out of 23 website and store projects, with a median of 36 days from kickoff to final sign-off, across WordPress and Salla, each under a written contract and scope with a sign-off at handover.', stack: ['WordPress', 'Salla', 'Delivery'] },
       { tag: 'Data analysis', t: 'Python analyses in Jupyter', d: 'Exploratory analyses on: the Apple App Store, Google Play, Bitcoin, FitBit, Google Search and insurance pricing.', stack: ['Python', 'Jupyter'] },
       { tag: 'Prototype', t: 'Scope-Creep Sentinel: out-of-scope radar', d: 'An AI tool that compares a client request against the agreed scope of work and flags anything outside it.', stack: ['Next.js', 'Claude API'] },

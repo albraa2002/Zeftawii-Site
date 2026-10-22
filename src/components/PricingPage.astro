@@ -1,0 +1,61 @@
+---
+import Shell from './Shell.astro';
+import type { Lang } from '../i18n';
+import { P } from '../content/ui';
+import { packs } from '../content/trust';
+const { lang } = Astro.props as { lang: Lang };
+const ar = lang === 'ar'; const path = P(lang, '/pricing/');
+const T = ar ? {
+  title: 'الأسعار: تبدأ من كام؟ | Zeftawii', h1: 'الأسعار التقريبية', kicker: 'PRICING',
+  desc: 'أسعار تقريبية "تبدأ من" للوحات التحكم والتحليل وأتمتة التقارير وإدارة المشاريع، والعرض النهائي بعد الاستشارة المجانية.',
+  lead: 'دي أسعار تبدأ منها كل خدمة، مش عرض نهائي. السعر الفعلي بيتحدد بعد استشارة مجانية ونطاق عمل مكتوب قبل أي بدء.',
+  from: 'تبدأ من', mo: '/ شهرياً', usd: 'دولار', inc: 'المتضمن', time: 'المدة',
+  affT: 'إيه اللي بيغيّر السعر', aff: ['عدد مصادر البيانات وتعقيدها', 'عدد المؤشرات والصفحات المطلوبة', 'سرعة التسليم المطلوبة', 'هل البيانات نضيفة ولا محتاجة تنضيف', 'التدريب وفترة الدعم بعد التسليم'],
+  alwaysT: 'في كل خدمة', always: ['استشارة أولى مجانية', 'نطاق عمل وعرض سعر مكتوبين قبل البدء', 'تسليمات بتراجعها قبل ما تكمّل', 'أي طلب خارج النطاق بيتسعّر قبل التنفيذ'],
+  note: 'الأسعار بالدولار تقريبية وبتتحوّل للجنيه أو الريال حسب الاتفاق، وبتتغيّر مع ظروف كل مشروع.',
+  cta: 'عايز عرض سعر لحالتك؟', ctaP: 'ابعت وصف بسيط وهرد عليك خلال يوم عمل.', ctaB: 'اطلب عرض سعر', how: 'إزاي بنشتغل مع بعض',
+} : {
+  title: 'Pricing: starting from | Zeftawii', h1: 'Approximate pricing', kicker: 'PRICING',
+  desc: 'Approximate "starting from" prices for dashboards, analysis, report automation and project management, with the final quote after a free consultation.',
+  lead: 'These are the prices each service starts from, not a final quote. The real price is set after a free consultation and a written scope, before anything starts.',
+  from: 'From', mo: '/ month', usd: 'USD', inc: 'Included', time: 'Timeline',
+  affT: 'What changes the price', aff: ['The number and complexity of data sources', 'The number of KPIs and pages needed', 'How fast you need delivery', 'Whether your data is clean or needs cleaning', 'Training and the support period after delivery'],
+  alwaysT: 'With every service', always: ['A free first consultation', 'A written scope and quote before starting', 'Deliverables you review before we continue', 'Anything outside the scope is priced before it is done'],
+  note: 'Prices are approximate, in US dollars, and can be converted to EGP or SAR by agreement. They change with each project.',
+  cta: 'Want a quote for your case?', ctaP: 'Send a short description and I will reply within one business day.', ctaB: 'Request a quote', how: 'How we work together',
+};
+const ld = [{ '@type': 'WebPage', name: T.h1, description: T.desc, inLanguage: lang }];
+---
+<Shell lang={lang} title={T.title} desc={T.desc} path={path} alt={{ ar: '/pricing/', en: '/en/pricing/' }} extraLd={ld}>
+  <div class="wrap page-head"><span class="kicker">{T.kicker}</span><h1>{T.h1}</h1><p>{T.lead}</p></div>
+  <div class="wrap">
+    <div class="price-grid">
+      {packs.map((k) => { const c = k[lang]; return (
+        <article class="price-card">
+          <h2>{c.n}</h2><p class="pd">{c.d}</p>
+          <p class="pp"><small>{T.from}</small> <b dir="ltr">${k.from}</b> <small>{k.per ? T.mo : ''}</small></p>
+          <h3>{T.inc}</h3><ul>{c.inc.map((x) => <li>{x}</li>)}</ul>
+          <p class="pt"><b>{T.time}:</b> {c.time}</p>
+          <a class="btn btn-primary btn-sm" href={P(lang, `/?service=${({ audit: 1, starter: 0, business: 0, auto: 2, pm: 5 } as Record<string, number>)[k.id]}#contact`)} data-evt="cta_click" data-loc={'pricing_' + k.id}>{T.ctaB}</a>
+        </article>
+      ); })}
+    </div>
+    <div class="two-col" style="margin-top:1.2rem">
+      <section class="info-box"><h2>{T.affT}</h2><ul>{T.aff.map((x) => <li>{x}</li>)}</ul></section>
+      <section class="info-box good"><h2>{T.alwaysT}</h2><ul>{T.always.map((x) => <li>{x}</li>)}</ul></section>
+    </div>
+    <p class="art-note">{T.note}</p>
+    <div class="cta-box"><h2>{T.cta}</h2><p>{T.ctaP}</p>
+      <div class="cta-row"><a class="btn btn-primary" href={P(lang, '/#contact')} data-evt="cta_click" data-loc="pricing_bottom">{T.ctaB}</a><a class="btn btn-ghost" href={P(lang, '/how-we-work/')}>{T.how}</a></div>
+    </div>
+  </div>
+</Shell>
+<style is:global>
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.price-card{background:var(--panel);border:1px solid var(--panel-b);border-top:3px solid rgb(var(--c));border-radius:16px;padding:1.2rem;display:flex;flex-direction:column;gap:.5rem}
+.price-card:nth-child(5n+2){border-top-color:rgb(var(--g))}.price-card:nth-child(5n+3){border-top-color:#b45309}.price-card:nth-child(5n+4){border-top-color:#6d28d9}.price-card:nth-child(5n+5){border-top-color:#c81e1e}
+.price-card h2{font-size:1.15rem;margin:0}.price-card h3{font-size:.9rem;color:var(--muted);margin:.4rem 0 0}
+.price-card .pd{color:var(--muted);margin:0}.price-card .pp{margin:.3rem 0}.price-card .pp b{font-size:1.9rem}
+.price-card ul{margin:0;padding-inline-start:1.1rem;display:grid;gap:.3rem;font-size:.93rem}
+.price-card .pt{font-size:.88rem;color:var(--muted);margin:.2rem 0 .6rem}.price-card .btn{margin-top:auto;align-self:flex-start}
+</style>

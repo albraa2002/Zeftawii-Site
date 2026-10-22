@@ -12,7 +12,7 @@
 
 ## Track record
 - Managed delivery and close-out of 23 website and store projects in 2026 (WordPress and Salla), median 36 days from kickoff to sign-off
-- Built AMMS, a production account-management monitoring system for a marketing agency
+- Interactive demo (fake data) of a client account tracking system for agencies
 - Public analysis notebooks: https://github.com/albraa2002
 
 ## Who it is for
@@ -46,6 +46,7 @@
 - https://zeftawii-site-46vp.vercel.app/en/blog/weekly-status-report-one-page/
 - https://zeftawii-site-46vp.vercel.app/en/blog/write-a-project-brief/
 - https://zeftawii-site-46vp.vercel.app/en/dashboards/
+- https://zeftawii-site-46vp.vercel.app/en/demo/client-tracker/
 - https://zeftawii-site-46vp.vercel.app/en/faq/
 - https://zeftawii-site-46vp.vercel.app/en/glossary/
 - https://zeftawii-site-46vp.vercel.app/en/glossary/aov/
@@ -68,6 +69,8 @@
 - https://zeftawii-site-46vp.vercel.app/en/glossary/roas/
 - https://zeftawii-site-46vp.vercel.app/en/glossary/sow/
 - https://zeftawii-site-46vp.vercel.app/en/glossary/utm/
+- https://zeftawii-site-46vp.vercel.app/en/how-we-work/
+- https://zeftawii-site-46vp.vercel.app/en/pricing/
 - https://zeftawii-site-46vp.vercel.app/en/privacy/
 - https://zeftawii-site-46vp.vercel.app/en/resources/
 - https://zeftawii-site-46vp.vercel.app/en/services/account-management/
@@ -90,7 +93,7 @@
 - https://zeftawii-site-46vp.vercel.app/en/tools/cpa-ltv-calculator/
 - https://zeftawii-site-46vp.vercel.app/en/tools/project-brief-generator/
 - https://zeftawii-site-46vp.vercel.app/en/work/
-- https://zeftawii-site-46vp.vercel.app/en/work/amms/
+- https://zeftawii-site-46vp.vercel.app/en/work/client-tracker-demo/
 - https://zeftawii-site-46vp.vercel.app/en/work/delivery-2026/
 - https://zeftawii-site-46vp.vercel.app/en/work/python-analyses/
 - https://zeftawii-site-46vp.vercel.app/en/work/scope-creep-sentinel/

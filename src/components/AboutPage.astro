@@ -5,6 +5,7 @@ import { UI, P } from '../content/ui';
 import { about } from '../content/site';
 import { services } from '../content/services';
 import { CONFIG } from '../config';
+import { certGroups } from '../content/trust';
 const { lang } = Astro.props as { lang: Lang };
 const a = about[lang]; const u = UI[lang]; const base = CONFIG.site.replace(/\/$/, '');
 const path = P(lang, '/about/');
@@ -35,6 +36,11 @@ const ld = [{ '@type': 'AboutPage', name: a.title, url: base + path, inLanguage:
       <section class="info-box good"><h2>{a.toolsT}</h2><ul>{a.tools.map((x) => <li>{x}</li>)}</ul></section>
     </div>
     <section class="info-box" style="margin-top:1rem"><h2>{a.bgT}</h2><ul>{a.bg.map((x) => <li>{x}</li>)}</ul></section>
+    <h2 class="sec-h">{lang === 'ar' ? 'شهادات ودورات' : 'Certificates and courses'}</h2>
+    <p class="plain">{lang === 'ar' ? 'دي شهادات حصلت عليها فعلاً، وتقدر تطلب نسخة منها وقت التواصل.' : 'These are certificates I earned, and I can share a copy when we talk.'}</p>
+    <div class="two-col">{certGroups.map((g) => (
+      <section class="info-box"><h3>{g[lang]}</h3><ul>{g.items.map((c) => <li>{c.name}{c.by ? ` · ${c.by}` : ''}</li>)}</ul></section>
+    ))}</div>
     <div class="cta-box"><h2>{a.ctaT}</h2><p>{a.ctaP}</p>
       <div class="cta-row"><a class="btn btn-primary" href={P(lang, '/#contact')}>{a.ctaBtn}</a><a class="btn btn-ghost" href={P(lang, '/work/')}>{u.allWork}</a></div>
     </div>

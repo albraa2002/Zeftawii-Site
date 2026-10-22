@@ -38,6 +38,7 @@ const ld = [
     <div class="cta-box"><h2>{u.valueT}</h2><p>{c.value}</p>
       <div class="cta-row">
         <a class="btn btn-primary" href={P(lang, `/?service=${cs.svc}#contact`)} data-evt="cta_click" data-loc="case_page">{u.ctaBtn}</a>
+        {slug === 'client-tracker-demo' && <a class="btn btn-ghost" href={P(lang, '/demo/client-tracker/')}>{lang === 'ar' ? 'جرّب النموذج' : 'Try the demo'}</a>}
         {svc && <a class="btn btn-ghost" href={P(lang, `/services/${svc.slug}/`)}>{svc[lang].name}</a>}
       </div>
     </div>
