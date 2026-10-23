@@ -6,6 +6,7 @@ import { about } from '../content/site';
 import { services } from '../content/services';
 import { CONFIG } from '../config';
 import { certGroups } from '../content/trust';
+import { quotes } from '../content/testimonials';
 const { lang } = Astro.props as { lang: Lang };
 const a = about[lang]; const u = UI[lang]; const base = CONFIG.site.replace(/\/$/, '');
 const path = P(lang, '/about/');
@@ -41,6 +42,9 @@ const ld = [{ '@type': 'AboutPage', name: a.title, url: base + path, inLanguage:
     <div class="two-col">{certGroups.map((g) => (
       <section class="info-box"><h3>{g[lang]}</h3><ul>{g.items.map((c) => <li>{c.name}{c.by ? ` · ${c.by}` : ''}</li>)}</ul></section>
     ))}</div>
+    <h2 class="sec-h">{lang === 'ar' ? 'آراء الناس في الشغل' : 'What people say'}</h2>
+    <p class="plain">{lang === 'ar' ? 'اقتباسات حقيقية من رسائل عملاء ومديرين وزملاء، منسوبة بالدور فقط.' : 'Real quotes from messages by clients, managers and teammates, credited by role only.'}</p>
+    <div class="two-col">{quotes.map((q) => <figure class="quote"><blockquote>“{lang === 'ar' ? q.ar : q.en}”</blockquote><figcaption>{lang === 'ar' ? q.role.ar : q.role.en}</figcaption></figure>)}</div>
     <div class="cta-box"><h2>{a.ctaT}</h2><p>{a.ctaP}</p>
       <div class="cta-row"><a class="btn btn-primary" href={P(lang, '/#contact')}>{a.ctaBtn}</a><a class="btn btn-ghost" href={P(lang, '/work/')}>{u.allWork}</a></div>
     </div>

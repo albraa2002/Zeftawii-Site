@@ -64,3 +64,7 @@ footer { background: var(--bg-2); }
 .hero-grid { grid-template-columns: 1fr 1fr; gap: 2.4rem; } @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
 
 .form-note{font-size:.82rem;color:var(--muted);margin-top:.6rem}.form-note a{text-decoration:underline}
+
+.quote { margin: 0; padding: 1.2rem 1.3rem; background: var(--panel); border: 1px solid var(--panel-b); border-top: 3px solid var(--cyan); border-radius: var(--radius); }
+.quote blockquote { margin: 0 0 .8rem; line-height: 1.8; }
+.quote figcaption { font-size: .85rem; opacity: .7; }
