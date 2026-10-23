@@ -12,7 +12,7 @@ import { UI, P } from '../content/ui';
 import { services as svcPages } from '../content/services';
 import { posts } from '../content/posts';
 import { cases } from '../content/site';
-import { quotes } from '../content/testimonials';
+import Testimonials from './Testimonials.astro';
 import { tools } from '../content/tools';
 import { CONFIG, hasKey, hasBooking, hasLog } from '../config';
 interface Props { lang: Lang }
@@ -212,7 +212,7 @@ const quick = ar0 ? [
   <section id="voices">
     <div class="wrap">
       <div class="sec-head rv"><h2>{lang === 'ar' ? 'بيقولوا إيه عن الشغل' : 'What people say'}</h2><p>{lang === 'ar' ? 'آراء حقيقية من عملاء ومديرين وزملاء — بالدور فقط، بدون أسماء.' : 'Real feedback from clients, managers and teammates — by role only, no names.'}</p></div>
-      <div class="why">{quotes.slice(0, 3).map((q) => <figure class="rv quote"><blockquote>“{lang === 'ar' ? q.ar : q.en}”</blockquote><figcaption>{lang === 'ar' ? q.role.ar : q.role.en}{q.src === 'li' ? (lang === 'ar' ? ' · توصية على LinkedIn' : ' · LinkedIn recommendation') : ''}</figcaption></figure>)}</div>
+      <Testimonials lang={lang} />
     </div>
   </section>
 

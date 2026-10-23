@@ -1,0 +1,53 @@
+---
+import { quotes } from '../content/testimonials';
+const { lang = 'ar' } = Astro.props;
+const ar = lang === 'ar';
+const stars = '★★★★★';
+---
+<div class="tslider rv" data-ts dir={ar ? 'rtl' : 'ltr'}>
+  <button class="ts-btn ts-prev" type="button" aria-label={ar ? 'السابق' : 'Previous'}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={ar ? 'M9 6l6 6-6 6' : 'M15 6l-6 6 6 6'} /></svg></button>
+  <div class="ts-track" tabindex="0" aria-label={ar ? 'آراء الناس' : 'Testimonials'}>
+    {quotes.map((q) => (
+      <figure class="ts-card">
+        <div class="ts-top"><span class="ts-mark" aria-hidden="true">“</span><span class="ts-stars" aria-hidden="true">{stars}</span></div>
+        <blockquote lang={q.ar === q.en ? 'en' : undefined}>{ar ? q.ar : q.en}</blockquote>
+        <figcaption>
+          <span class="ts-av" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8.5" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/></svg></span>
+          <span class="ts-who"><strong>{ar ? q.role.ar : q.role.en}</strong><small>{q.src === 'li' ? (ar ? 'توصية على LinkedIn' : 'LinkedIn recommendation') : (ar ? 'رسالة مباشرة' : 'Direct message')}</small></span>
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+  <button class="ts-btn ts-next" type="button" aria-label={ar ? 'التالي' : 'Next'}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={ar ? 'M15 6l-6 6 6 6' : 'M9 6l6 6-6 6'} /></svg></button>
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-ts]').forEach((box) => {
+    const tr = box.querySelector<HTMLElement>('.ts-track')!;
+    const rtl = box.getAttribute('dir') === 'rtl';
+    const step = (d: number) => {
+      const c = tr.querySelector<HTMLElement>('.ts-card')!;
+      const w = c.getBoundingClientRect().width + 16;
+      tr.scrollBy({ left: d * w * (rtl ? -1 : 1), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    };
+    box.querySelector('.ts-next')!.addEventListener('click', () => step(1));
+    box.querySelector('.ts-prev')!.addEventListener('click', () => step(-1));
+  });
+</script>
+<style is:global>
+.tslider { position: relative; display: flex; align-items: center; gap: .6rem; }
+.ts-track { flex: 1; display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: .4rem .1rem 1rem; outline-offset: 2px; }
+.ts-track::-webkit-scrollbar { display: none; }
+.ts-card { flex: 0 0 calc(50% - .5rem); scroll-snap-align: start; margin: 0; padding: 1.2rem 1.4rem 1.1rem; display: flex; flex-direction: column; gap: .7rem; background: var(--panel); border: 1px solid var(--panel-b); border-top: 3px solid var(--cyan); border-radius: var(--radius); box-shadow: 0 1px 2px rgba(var(--k), .07); }
+.ts-top { display: flex; align-items: flex-start; justify-content: space-between; direction: ltr; }
+.ts-mark { font: 700 3.2rem/0.8 Georgia, serif; color: var(--cyan); opacity: .55; height: 1.6rem; }
+.ts-stars { color: var(--cyan); letter-spacing: .12em; font-size: 1rem; }
+.ts-card blockquote { margin: 0; flex: 1; line-height: 1.85; font-size: .98rem; }
+.ts-card figcaption { display: flex; align-items: center; gap: .7rem; padding-top: .8rem; border-top: 1px solid var(--panel-b); }
+.ts-av { flex: none; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: rgba(var(--c), .14); color: var(--cyan); }
+.ts-who { display: flex; flex-direction: column; line-height: 1.4; }
+.ts-who strong { font-size: .92rem; }
+.ts-who small { opacity: .65; font-size: .78rem; }
+.ts-btn { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--panel-b); background: var(--panel); color: inherit; display: grid; place-items: center; cursor: pointer; transition: border-color .2s, transform .2s; }
+.ts-btn:hover { border-color: var(--cyan); transform: scale(1.06); }
+@media (max-width: 760px) { .ts-card { flex-basis: 88%; } .ts-btn { width: 34px; height: 34px; } .tslider { gap: .3rem; } }
+</style>
