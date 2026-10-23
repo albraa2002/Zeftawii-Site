@@ -43,8 +43,8 @@ const ld = [{ '@type': 'AboutPage', name: a.title, url: base + path, inLanguage:
       <section class="info-box"><h3>{g[lang]}</h3><ul>{g.items.map((c) => <li>{c.name}{c.by ? ` · ${c.by}` : ''}</li>)}</ul></section>
     ))}</div>
     <h2 class="sec-h">{lang === 'ar' ? 'آراء الناس في الشغل' : 'What people say'}</h2>
-    <p class="plain">{lang === 'ar' ? 'اقتباسات حقيقية من رسائل عملاء ومديرين وزملاء، منسوبة بالدور فقط.' : 'Real quotes from messages by clients, managers and teammates, credited by role only.'}</p>
-    <div class="two-col">{quotes.map((q) => <figure class="quote"><blockquote>“{lang === 'ar' ? q.ar : q.en}”</blockquote><figcaption>{lang === 'ar' ? q.role.ar : q.role.en}</figcaption></figure>)}</div>
+    <p class="plain">{lang === 'ar' ? 'اقتباسات حقيقية من رسائل عملاء وتوصيات منشورة علنًا على LinkedIn، منسوبة بالدور فقط.' : 'Real quotes from client messages and public LinkedIn recommendations, credited by role only.'}</p>
+    <div class="two-col">{quotes.map((q) => <figure class="quote"><blockquote>“{lang === 'ar' ? q.ar : q.en}”</blockquote><figcaption>{lang === 'ar' ? q.role.ar : q.role.en}{q.src === 'li' ? (lang === 'ar' ? ' · توصية على LinkedIn' : ' · LinkedIn recommendation') : ''}</figcaption></figure>)}</div>
     <div class="cta-box"><h2>{a.ctaT}</h2><p>{a.ctaP}</p>
       <div class="cta-row"><a class="btn btn-primary" href={P(lang, '/#contact')}>{a.ctaBtn}</a><a class="btn btn-ghost" href={P(lang, '/work/')}>{u.allWork}</a></div>
     </div>
