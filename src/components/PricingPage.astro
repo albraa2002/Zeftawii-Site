@@ -51,7 +51,7 @@ const ld = [{ '@type': 'WebPage', name: T.h1, description: T.desc, inLanguage: l
   </div>
 </Shell>
 <style is:global>
-.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.price-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:1.2rem}.price-grid>*{flex:1 1 calc((100% - 2.4rem)/3);max-width:calc((100% - 2.4rem)/3);min-width:260px}
 .price-card{background:var(--panel);border:1px solid var(--panel-b);border-top:3px solid rgb(var(--c));border-radius:16px;padding:1.2rem;display:flex;flex-direction:column;gap:.5rem}
 .price-card:nth-child(5n+2){border-top-color:rgb(var(--g))}.price-card:nth-child(5n+3){border-top-color:#b45309}.price-card:nth-child(5n+4){border-top-color:#6d28d9}.price-card:nth-child(5n+5){border-top-color:#c81e1e}
 .price-card h2{font-size:1.15rem;margin:0}.price-card h3{font-size:.9rem;color:var(--muted);margin:.4rem 0 0}

@@ -93,3 +93,19 @@
 .svc-hb .svc-free { font-size: .85rem; margin: 1rem 0 0; color: #8c97aa; }
 .hb-shot { min-width: 0; } .hb-shot .shot-stage { background: none; border: 0; padding: 0; }
 @media (max-width: 860px) { .svc-hb { grid-template-columns: 1fr; } .svc-hb p { display: block !important; } .hb-shot { order: -1; } }
+/* ===== لاي أوت موحّد: الصف الأخير بيتوسّط بدل ما يبقى كارت يتيم ===== */
+.post-grid, .proj-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2rem; margin-block: 1.5rem; }
+.post-grid > *, .proj-grid > * { flex: 1 1 calc((100% - 2.4rem) / 3); max-width: calc((100% - 2.4rem) / 3); min-width: 270px; }
+.proj-grid > .proj-card:last-child:nth-child(3n+1) { max-width: calc((100% - 2.4rem) / 3); grid-column: auto; justify-self: auto; }
+@media (max-width: 900px) { .post-grid > *, .proj-grid > *, .proj-grid > .proj-card:last-child:nth-child(3n+1) { flex-basis: calc((100% - 1.2rem) / 2); max-width: calc((100% - 1.2rem) / 2); min-width: 0; } .price-grid > * { flex-basis: calc((100% - 1.2rem) / 2); max-width: calc((100% - 1.2rem) / 2); } }
+@media (max-width: 640px) { .post-grid > *, .proj-grid > *, .proj-grid > .proj-card:last-child:nth-child(3n+1), .price-grid > * { flex-basis: 100%; max-width: 100%; } }
+.post-grid.tight { margin-block: .5rem; }
+.two-col { align-items: start; }
+.facts { grid-template-columns: repeat(3, 1fr); } @media (max-width: 760px) { .facts { grid-template-columns: 1fr 1fr; } } @media (max-width: 480px) { .facts { grid-template-columns: 1fr; } }
+/* بنر الصفحات الداخلية: أصغر ومتمركز */
+.page-head.has-art { grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); align-items: center; }
+.page-head.has-art > .hb-art { max-width: 460px; width: 100%; justify-self: end; align-self: center; }
+.shot-stage.stage { padding: .9rem; border-radius: 16px; }
+/* إيقاع المسافات */
+.sec-h { margin-top: 2.6rem; margin-bottom: 1rem; }
+main.inner > .wrap + .wrap { margin-top: 0; }
