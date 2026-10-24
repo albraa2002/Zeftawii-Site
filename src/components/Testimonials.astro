@@ -22,6 +22,7 @@ const stars = '★★★★★';
 </div>
 <script>
   document.querySelectorAll<HTMLElement>('[data-ts]').forEach((box) => {
+    box.classList.add('in');
     const tr = box.querySelector<HTMLElement>('.ts-track')!;
     const rtl = box.getAttribute('dir') === 'rtl';
     const step = (d: number) => {

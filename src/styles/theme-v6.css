@@ -134,3 +134,11 @@ main.inner > .wrap + .wrap { margin-top: 0; }
 .mi-btn.on, .mi-a.on { color: var(--text); }
 @media (min-width: 1081px) { .mi-btn.on::after, .mi-a.on::after { content: ''; position: absolute; inset-inline: 1rem; bottom: -.55rem; height: 3px; border-radius: 3px; background: var(--cyan); } }
 @media (max-width: 1080px) { .mi-btn.on, .mi-a.on { color: var(--cyan); } }
+.track .proj-card { flex: 0 0 calc((100% - (var(--per) - 1) * var(--gap)) / var(--per)); scroll-snap-align: start; }
+.proj-cta { margin-bottom: .6rem; }
+.proj-slider { margin-top: 2.4rem; }
+.proj-slider .sec-h { margin-top: 3.2rem; }
+.proj-slider { margin-top: 0; padding-top: 3rem; }
+.page-head + .proj-slider, .proj-cta { margin-bottom: 0; }
+.track .proj-card { display: flex; flex-direction: column; }
+.track .proj-card .more { margin-top: auto; padding-top: .8rem; }

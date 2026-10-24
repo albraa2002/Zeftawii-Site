@@ -5,6 +5,7 @@ import type { Lang } from '../i18n';
 import { UI, P } from '../content/ui';
 import { projects, projLabels } from '../content/projects';
 import { CONFIG } from '../config';
+import Testimonials from './Testimonials.astro';
 const { lang } = Astro.props as { lang: Lang };
 const u = UI[lang]; const L = projLabels(lang); const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, '/projects/');
 const title = lang === 'ar' ? 'مشاريع تحليل بيانات على GitHub | Zeftawii' : 'Data analytics projects on GitHub | Zeftawii';
@@ -16,18 +17,34 @@ const ld = [{ '@type': 'CollectionPage', name: title, url: base + path, inLangua
     <span class="kicker">PROJECTS</span>
     <h1>{L.h}</h1>
     <p>{L.lead}</p>
-    <div class="cta-row"><a class="btn btn-ghost" href={CONFIG.links.github} target="_blank" rel="noopener noreferrer me">GitHub</a><a class="btn btn-primary" href={P(lang, '/#contact')}>{L.cta}</a></div>
+    <div class="cta-row proj-cta"><a class="btn btn-ghost" href={CONFIG.links.github} target="_blank" rel="noopener noreferrer me">GitHub</a><a class="btn btn-primary" href={P(lang, '/#contact')}>{L.cta}</a></div>
   </div>
-  <div class="wrap proj-grid">
-    {projects.map((p) => (
-      <a class="post-card proj-card" href={P(lang, `/projects/${p.slug}/`)}>
-        <ProjectArt kind={p.kind} lang={lang} name={p[lang].name} />
-        <span class="meta">{p[lang].tag}</span>
-        <h2>{p[lang].name}</h2>
-        <p>{p[lang].hook}</p>
-        <ul class="tags">{p.stack.slice(0, 4).map((s) => <li>{s}</li>)}</ul>
-        <span class="more">{L.more} <i aria-hidden="true">{lang === 'ar' ? '←' : '→'}</i></span>
-      </a>
-    ))}
+  <div class="wrap proj-slider">
+    <div class="carousel" data-carousel>
+      <div class="track" tabindex="0" role="region" aria-roledescription="carousel" aria-label={L.h}>
+        {projects.map((p) => (
+          <a class="post-card proj-card" href={P(lang, `/projects/${p.slug}/`)}>
+            <ProjectArt kind={p.kind} lang={lang} name={p[lang].name} />
+            <span class="meta">{p[lang].tag}</span>
+            <h2>{p[lang].name}</h2>
+            <p>{p[lang].hook}</p>
+            <ul class="tags">{p.stack.slice(0, 4).map((s) => <li>{s}</li>)}</ul>
+            <span class="more">{L.more} <i aria-hidden="true">{lang === 'ar' ? '←' : '→'}</i></span>
+          </a>
+        ))}
+      </div>
+      <div class="car-ctrl">
+        <button type="button" class="car-btn" data-dir="prev" aria-label={lang === 'ar' ? 'السابق' : 'Previous'}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg></button>
+        <div class="car-dots"></div>
+        <button type="button" class="car-btn" data-dir="next" aria-label={lang === 'ar' ? 'التالي' : 'Next'}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
+      </div>
+    </div>
+    <h2 class="sec-h">{lang === 'ar' ? 'اللي اشتغلوا معايا بيقولوا إيه' : 'What people who worked with me say'}</h2>
+    <p class="plain">{lang === 'ar' ? 'آراء حقيقية من عملاء ومديرين وزملاء، منسوبة بالدور فقط.' : 'Real feedback from clients, managers and colleagues, credited by role only.'}</p>
+    <Testimonials lang={lang} />
   </div>
+  <script>
+    import { initCarousels } from '../lib/carousel';
+    initCarousels();
+  </script>
 </Shell>
