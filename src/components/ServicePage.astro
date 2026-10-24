@@ -46,16 +46,21 @@ const ld = [
 ];
 ---
 <Shell lang={lang} title={`${c.h1} | Zeftawii`} desc={c.desc} path={path} alt={{ ar: `/services/${slug}/`, en: `/en/services/${slug}/` }} extraLd={ld}>
-  <div class="wrap page-head has-art"><div class="hb-art"><DashShot stage kind={['profit','ads','report','funnel','accounts','delivery'][s.idx] || 'profit'} lang={lang} /></div>
-    <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/#services')}>{u.services}</a></nav>
-    <span class="kicker">{c.name}</span>
-    <h1>{c.h1}</h1>
-    <p>{c.lead}</p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href={P(lang, `/?service=${s.idx}#contact`)} data-evt="cta_click" data-loc="service_page">{u.ctaBtn}</a>
-      <a class="btn btn-wa" href={wa} target="_blank" rel="noopener" data-evt="whatsapp_click" data-loc="service_page">{u.wa}</a>
+  <div class="wrap svc-top">
+    <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/#services')}>{u.services}</a> <span>/</span> <span>{c.name}</span></nav>
+    <div class="hb svc-hb" style={`--ba:${['#4c9bff', '#f59e0b', '#34d399', '#a78bfa', '#f87171', '#34d399'][s.idx] || '#4c9bff'}`}>
+      <div class="hb-text">
+        <span class="hb-k">{c.name}</span>
+        <h1>{c.h1}</h1>
+        <p>{c.lead}</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href={P(lang, `/?service=${s.idx}#contact`)} data-evt="cta_click" data-loc="service_page">{u.ctaBtn}</a>
+          <a class="btn hb-ghost" href={wa} target="_blank" rel="noopener" data-evt="whatsapp_click" data-loc="service_page">{u.wa}</a>
+        </div>
+        <p class="svc-free">{u.free}</p>
+      </div>
+      <div class="hb-shot"><DashShot stage kind={['profit','ads','report','funnel','accounts','delivery'][s.idx] || 'profit'} lang={lang} /></div>
     </div>
-    <p class="free">{u.free}</p>
   </div>
   <div class="wrap two-col">
     <section class="info-box"><h2>{u.forWho}</h2><ul>{c.forWho.map((x) => <li>{x}</li>)}</ul></section>
@@ -66,20 +71,19 @@ const ld = [
     <p class="plain">{lang === 'ar' ? 'نماذج توضيحية ببيانات تجريبية، بتبيّن شكل اللي هتستلمه. حالتك هتتبني على بياناتك أنت.' : 'Illustrative samples on sample data, showing what you would receive. Your case is built on your own data.'}</p>
     <div class="svc-samples">
       {sampleKinds.map((k) => <figure><DashShot kind={k} lang={lang} /></figure>)}
-      {relProj.map((x) => <figure><a href={P(lang, `/projects/${x.slug}/`)} style="color:inherit;text-decoration:none"><ProjectArt kind={x.kind} lang={lang} name={x[lang].name} /><figcaption><b>{x[lang].name}</b>: {x[lang].hook}</figcaption></a></figure>)}
+      {relProj.slice(0, 1).map((x) => <figure><a href={P(lang, `/projects/${x.slug}/`)} style="color:inherit;text-decoration:none"><ProjectArt kind={x.kind} lang={lang} name={x[lang].name} /><figcaption><b>{x[lang].name}</b>: {x[lang].hook}</figcaption></a></figure>)}
     </div>
     <h2 class="sec-h">{u.how}</h2>
     <ol class="how">{steps.map((x, i) => <li><b>{i + 1}</b><span>{x}</span></li>)}</ol>
     <h2 class="sec-h">{u.faq}</h2>
     <div class="faq-list">{c.faq.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}</div>
-    {rel.length > 0 && (<>
-      <h2 class="sec-h">{u.related}</h2>
-      <div class="post-grid tight">{rel.map((p) => <a class="post-card" href={P(lang, `/blog/${p.slug}/`)}><h3>{p[lang].title}</h3><span class="more">{u.read} <i aria-hidden="true">{lang === 'ar' ? '←' : '→'}</i></span></a>)}</div>
-    </>)}
-    {relTools.length > 0 && (<><h2 class="sec-h">{u.toolsT}</h2><div class="chips-row">{relTools.map((t) => <a class="chip-link" href={t.h}>{t.n}</a>)}</div></>)}
-    {relSol.length > 0 && (<><h2 class="sec-h">{u.solutions}</h2><div class="chips-row">{relSol.map((t) => <a class="chip-link" href={P(lang, `/solutions/${t.slug}/`)}>{t[lang].name}</a>)}</div></>)}
-    {relTerms.length > 0 && (<><h2 class="sec-h">{u.termsT}</h2><div class="chips-row">{relTerms.map((g) => <a class="chip-link" href={P(lang, `/glossary/${g.slug}/`)}>{g[lang].term}</a>)}</div></>)}
-    <PromoBanner lang={lang} kind="tools" />
+    <h2 class="sec-h">{lang === 'ar' ? 'مواد ذات صلة' : 'Related'}</h2>
+    <div class="chips-row">
+      {rel.map((p) => <a class="chip-link" href={P(lang, `/blog/${p.slug}/`)}>{p[lang].title}</a>)}
+      {relTools.map((t) => <a class="chip-link" href={t.h}>{t.n}</a>)}
+      {relSol.map((t) => <a class="chip-link" href={P(lang, `/solutions/${t.slug}/`)}>{t[lang].name}</a>)}
+      {relTerms.map((g) => <a class="chip-link" href={P(lang, `/glossary/${g.slug}/`)}>{g[lang].term}</a>)}
+    </div>
     <h2 class="sec-h">{u.moreSvc}</h2>
     <div class="chips-row">{others.map((o) => <a class="chip-link" href={P(lang, `/services/${o.slug}/`)}>{o[lang].name}</a>)}</div>
   </div>

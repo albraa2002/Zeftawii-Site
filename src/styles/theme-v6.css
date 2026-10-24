@@ -86,3 +86,10 @@
 .foot5 { grid-template-columns: 1.5fr 1fr 1fr 1fr 1.2fr; gap: 2rem; }
 @media (max-width: 1100px) { .foot5 { grid-template-columns: repeat(3, 1fr); } .foot5 .foot-brand { grid-column: 1 / -1; } }
 @media (max-width: 640px) { .foot5 { grid-template-columns: 1fr 1fr; } .foot5 .foot-col:last-child { grid-column: 1 / -1; } }
+/* صفحة الخدمة */
+.svc-top { padding-top: 1.2rem; display: grid; gap: .9rem; }
+.svc-hb { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: 0; }
+.svc-hb h1 { font-size: clamp(1.8rem, 3.8vw, 2.7rem); }
+.svc-hb .svc-free { font-size: .85rem; margin: 1rem 0 0; color: #8c97aa; }
+.hb-shot { min-width: 0; } .hb-shot .shot-stage { background: none; border: 0; padding: 0; }
+@media (max-width: 860px) { .svc-hb { grid-template-columns: 1fr; } .svc-hb p { display: block !important; } .hb-shot { order: -1; } }
