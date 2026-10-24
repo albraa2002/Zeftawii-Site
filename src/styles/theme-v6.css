@@ -120,3 +120,13 @@ main.inner > .wrap + .wrap { margin-top: 0; }
 .faq-sec { padding: 0; } .faq-jump { margin-top: 1.4rem; }
 .calc.tool:has(.quiz) { grid-template-columns: 1fr; max-width: 860px; margin-inline: auto; }
 .article .cta-box a.btn, .prose a.btn, .cta-box a.btn { text-decoration: none; }
+/* ===== الهيدر: القوائم جنب اللوجو بمسافات متساوية ===== */
+@media (min-width: 1081px) {
+  .nav-in { justify-content: flex-start; gap: 1rem; }
+  .mnav { margin-inline-start: 1.6rem; gap: .25rem; font-size: 1rem; font-weight: 600; }
+  .mi-btn, .mi-a { padding: .6rem 1rem; color: var(--text-2); position: relative; }
+  .mi-btn:hover, .mi-a:hover, .mi-btn[aria-expanded='true'] { color: var(--text); background: rgba(var(--c), .1); }
+  .mi-btn svg { opacity: .6; }
+  .nav-actions { margin-inline-start: auto; }
+}
+@media (min-width: 1081px) and (max-width: 1180px) { .mnav { margin-inline-start: .6rem; } .mi-btn, .mi-a { padding: .55rem .7rem; font-size: .95rem; } }
