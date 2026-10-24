@@ -14,6 +14,7 @@ import { posts } from '../content/posts';
 import { cases } from '../content/site';
 import Testimonials from './Testimonials.astro';
 import ProjectArt from './ProjectArt.astro';
+import { projects } from '../content/projects';
 import HeroBanners from './HeroBanners.astro';
 import { quotes } from '../content/testimonials';
 import { certCount } from '../content/certs';
@@ -85,13 +86,6 @@ const quick = ar0 ? [
     <div class="wrap">
       <div class="stats rv">{t.stats.map((s) => <div class="stat"><b>{s.v}</b><span>{s.l}</span></div>)}</div>
     </div>
-    <div class="wrap">
-      <nav class="quick rv" aria-label={ar0 ? 'وصول سريع' : 'Quick access'}>
-        {quick.map((q) => (
-          <a class="q-tile" href={q.h}><span class="q-ic" set:html={icon(q.i, 22)} /><b>{q.t}</b><small>{q.d}</small></a>
-        ))}
-      </nav>
-    </div>
   </div>
 
   <section id="services">
@@ -123,26 +117,18 @@ const quick = ar0 ? [
     </div>
   </section>
 
-  <div class="wrap"><PromoBanner lang={lang} kind="dashboards" /></div>
-
   <section id="work">
     <div class="wrap">
-      <div class="sec-head rv"><h2>{t.workTitle}</h2><p>{t.workSub}</p></div>
-      <div class="work">
-        {t.work.map((w, i) => (
-          <article class="work-card rv">
-            <span class={`tag ${i < 2 ? 'live' : ''}`}>{w.tag}</span>
-            <h3>{w.t}</h3>
-            <p>{w.d}</p>
-            <ul class="stack">{w.stack.map((x) => <li>{x}</li>)}</ul>
-            {cases[i] && <a class="card-more" href={P(lang, `/work/${cases[i].slug}/`)}>{lang === 'ar' ? 'تفاصيل أكتر' : 'More details'}</a>}
-          </article>
+      <div class="sec-head rv"><h2>{ar0 ? 'مشاريع بنيتها بإيدي' : 'Projects I built myself'}</h2><p>{ar0 ? 'أمثلة تحليلية على GitHub. كل مشروع بيحل مشكلة واحدة، ومكتوب بوضوح لما البيانات تجريبية.' : 'Analytics examples on GitHub. Each solves one problem, and simulated data is labelled clearly.'}</p></div>
+      <div class="proj-grid rv">
+        {projects.filter((x) => x.featured).slice(0, 3).map((x) => (
+          <a class="post-card proj-card" href={P(lang, `/projects/${x.slug}/`)}>
+            <ProjectArt kind={x.kind} lang={lang} name={x[lang].name} />
+            <h3>{x[lang].name}</h3><p>{x[lang].hook}</p>
+          </a>
         ))}
       </div>
-      <p class="work-more rv">
-        <a class="btn btn-ghost" href={CONFIG.links.github} target="_blank" rel="noopener noreferrer me" data-evt="github_click" data-loc="work">{t.workCta}</a>
-        <a class="btn btn-ghost" href={CONFIG.links.portfolio} target="_blank" rel="noopener noreferrer me" data-evt="portfolio_click" data-loc="work">{t.portfolioCta}</a>
-      </p>
+      <p class="work-more rv"><a class="btn btn-ghost" href={P(lang, '/projects/')}>{ar0 ? 'كل المشاريع' : 'All projects'}</a><a class="btn btn-ghost" href={P(lang, '/work/')}>{ar0 ? 'دراسات الحالة' : 'Case studies'}</a></p>
     </div>
   </section>
 
@@ -171,39 +157,9 @@ const quick = ar0 ? [
     </div>
   </section>
 
-  <section id="tools" class="latest">
-    <div class="wrap">
-      <div class="sec-head rv"><h2>{u.tools}</h2><p>{lang === 'ar' ? 'أدوات مجانية تفاعلية تساعدك تقرر بالأرقام، وقوالب جاهزة للتحميل.' : 'Free interactive tools that help you decide with numbers, plus downloadable templates.'}</p></div>
-      <div class="post-grid rv">
-        {tools.map((x) => (
-          <a class="post-card" href={P(lang, `/tools/${x.slug}/`)}><span class="meta">FREE</span><h3>{x[lang].name}</h3><p>{x[lang].desc}</p><span class="more">{lang === 'ar' ? 'جرّب الأداة' : 'Try the tool'} <i aria-hidden="true">{lang === 'ar' ? '←' : '→'}</i></span></a>
-        ))}
-      </div>
-      <p style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap"><a class="chip-link" href={P(lang, '/tools/')}>{lang === 'ar' ? 'كل الأدوات' : 'All tools'}</a><a class="chip-link" href={P(lang, '/resources/')}>{u.resources}</a><a class="chip-link" href={P(lang, '/glossary/')}>{u.glossary}</a><a class="chip-link" href={P(lang, '/solutions/')}>{u.solutions}</a></p>
-    </div>
-  </section>
 
 
-  <section id="process">
-    <div class="wrap">
-      <div class="sec-head rv"><h2>{t.processTitle}</h2><p>{t.processSub}</p></div>
-      <div class="steps">
-        {t.process.map((p) => <div class="step rv"><span class="n">{p.n}</span><h3>{p.t}</h3><p>{p.d}</p></div>)}
-      </div>
-    </div>
-  </section>
 
-  <section id="why">
-    <div class="wrap">
-      <div class="about rv">
-        <figure class="about-photo">
-          <img src="/albaraa.jpg" srcset="/albaraa-320.jpg 320w, /albaraa.jpg 640w" sizes="(max-width: 640px) 160px, 220px" width="640" height="640" alt={t.photoAlt} loading="lazy" decoding="async" />
-        </figure>
-        <div class="sec-head"><h2>{t.whyTitle}</h2><p>{t.whySub}</p><p style="margin-top:.8rem"><a class="chip-link" href={P(lang, '/about/')}>{lang === 'ar' ? 'اعرف أكتر عني' : 'More about me'}</a></p></div>
-      </div>
-      <div class="why">{t.why.map((w) => <div class="rv"><h3>{w.t}</h3><p>{w.d}</p></div>)}</div>
-    </div>
-  </section>
 
   <section id="voices">
     <div class="wrap">
@@ -212,22 +168,6 @@ const quick = ar0 ? [
     </div>
   </section>
 
-  <section id="blog" class="latest">
-    <div class="wrap">
-      <div class="sec-head rv"><h2>{u.blogTitle}</h2><p>{u.blogSub}</p></div>
-      <div class="post-grid rv">
-        {posts.slice(0, 3).map((p) => (
-          <a class="post-card" href={P(lang, `/blog/${p.slug}/`)}>
-            <span class="meta">{p.mins} {u.min}</span>
-            <h3>{p[lang].title}</h3>
-            <p>{p[lang].desc}</p>
-            <span class="more">{u.read} <i aria-hidden="true">{lang === 'ar' ? '←' : '→'}</i></span>
-          </a>
-        ))}
-      </div>
-      <p style="margin-top:1rem"><a class="chip-link" href={P(lang, '/blog/')}>{lang === 'ar' ? 'كل المقالات' : 'All articles'}</a></p>
-    </div>
-  </section>
 
   <section id="faq">
     <div class="wrap" style="max-width: 820px">
