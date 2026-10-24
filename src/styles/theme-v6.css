@@ -83,3 +83,6 @@
 .hb-me li { display: grid; text-align: center; background: rgba(255, 255, 255, .06); border-radius: 12px; padding: .5rem .9rem; font-size: .8rem; color: #b6c0d1; min-width: 92px; } .hb-me li b { color: #fff; font-size: 1.35rem; line-height: 1.2; }
 @media (max-width: 860px) { .hb { grid-template-columns: 1fr; min-height: 0; } .hbx { max-height: 240px; order: -1; } .hb-me { order: -1; } .hb-qm { display: none; } }
 @media (max-width: 860px) { .hb { padding: 1.2rem; gap: 1rem; } .hb p { font-size: .95rem; margin-bottom: 1rem; } .hb-k { font-size: .68rem; border-radius: 10px; padding: .2rem .55rem; } .hb1 p, .hb-roles { display: none; } .hb h1, .hb h2 { font-size: 1.7rem; } .hbx { max-height: 180px; } }
+.foot5 { grid-template-columns: 1.5fr 1fr 1fr 1fr 1.2fr; gap: 2rem; }
+@media (max-width: 1100px) { .foot5 { grid-template-columns: repeat(3, 1fr); } .foot5 .foot-brand { grid-column: 1 / -1; } }
+@media (max-width: 640px) { .foot5 { grid-template-columns: 1fr 1fr; } .foot5 .foot-col:last-child { grid-column: 1 / -1; } }

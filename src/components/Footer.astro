@@ -13,7 +13,8 @@ const wa = `https://wa.me/${w}?text=${encodeURIComponent(t.contact.waMsg)}`;
 const socials = Object.entries(CONFIG.links as Record<string, string>).filter(([k, url]) => url && socialDefs[k]).map(([k, url]) => ({ ...socialDefs[k], url }));
 const L = ar ? { bandH: 'جاهز تحوّل أرقامك لقرارات؟', bandP: 'ابعت لي حالتك وهرد عليك خلال يوم عمل. الاستشارة الأولى مجانية وبدون التزام.', explore: 'استكشف', book: 'احجز استشارة مجانية', chat: 'واتساب' }
   : { bandH: 'Ready to turn your numbers into decisions?', bandP: 'Send me your case and I will reply within one business day. The first consultation is free and no-commitment.', explore: 'Explore', book: 'Book a free consultation', chat: 'WhatsApp' };
-const explore = [['tools', u.tools, '/tools/'], ['dashboards', ar ? 'نماذج لوحات التحكم' : 'Dashboard examples', '/dashboards/'], ['solutions', u.solutions, '/solutions/'], ['glossary', u.glossary, '/glossary/'], ['blog', u.blog, '/blog/'], ['resources', u.resources, '/resources/'], ['faq', ar ? 'الأسئلة الشائعة' : 'FAQ', '/faq/'], ['projects', ar ? 'المشاريع' : 'Projects', '/projects/'], ['work', u.work, '/work/'], ['certs', ar ? 'الشهادات' : 'Certificates', '/certificates/'], ['how', ar ? 'إزاي بنشتغل' : 'How we work', '/how-we-work/'], ['pricing', ar ? 'الأسعار' : 'Pricing', '/pricing/'], ['about', u.about, '/about/']] as const;
+const colWork = [[ar ? 'المشاريع' : 'Projects', '/projects/'], [ar ? 'نماذج لوحات التحكم' : 'Dashboard samples', '/dashboards/'], [ar ? 'دراسات حالة' : 'Case studies', '/work/'], [ar ? 'من أنا' : 'About me', '/about/'], [ar ? 'الشهادات' : 'Certificates', '/certificates/'], [ar ? 'إزاي بنشتغل' : 'How we work', '/how-we-work/'], [ar ? 'الأسعار' : 'Pricing', '/pricing/']];
+const colRes = [[u.tools, '/tools/'], [u.solutions, '/solutions/'], [u.blog, '/blog/'], [u.glossary, '/glossary/'], [u.resources, '/resources/'], [ar ? 'الأسئلة الشائعة' : 'FAQ', '/faq/']];
 ---
 {band && (
   <section class="cta-band" aria-labelledby="cb-h">
@@ -28,7 +29,7 @@ const explore = [['tools', u.tools, '/tools/'], ['dashboards', ar ? 'نماذج 
 )}
 <footer>
   <div class="wrap">
-    <div class="foot-top foot4">
+    <div class="foot-top foot5">
       <div class="foot-brand">
         <a href={home} class="logo">{CONFIG.brand}<b> |</b><small>{CONFIG.tagline.toUpperCase()}</small></a>
         <p>{t.footer.about}</p>
@@ -43,9 +44,13 @@ const explore = [['tools', u.tools, '/tools/'], ['dashboards', ar ? 'نماذج 
         <p class="foot-h">{t.footer.colServices}</p>
         <ul>{services.map((s) => <li><a href={P(lang, `/services/${s.slug}/`)}>{s[lang].name}</a></li>)}</ul>
       </div>
-      <nav class="foot-col" aria-label={L.explore}>
-        <p class="foot-h">{L.explore}</p>
-        <ul>{explore.map(([, n, h]) => <li><a href={P(lang, h)}>{n}</a></li>)}</ul>
+      <nav class="foot-col" aria-label={ar ? 'أعمالي' : 'Portfolio'}>
+        <p class="foot-h">{ar ? 'أعمالي ومعلومات' : 'Work and about'}</p>
+        <ul>{colWork.map(([n, h]) => <li><a href={P(lang, h)}>{n}</a></li>)}</ul>
+      </nav>
+      <nav class="foot-col" aria-label={ar ? 'الموارد' : 'Resources'}>
+        <p class="foot-h">{ar ? 'الموارد' : 'Resources'}</p>
+        <ul>{colRes.map(([n, h]) => <li><a href={P(lang, h)}>{n}</a></li>)}</ul>
       </nav>
       <div class="foot-col">
         <p class="foot-h">{t.footer.colContact}</p>
