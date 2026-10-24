@@ -14,6 +14,7 @@ import { posts } from '../content/posts';
 import { cases } from '../content/site';
 import Testimonials from './Testimonials.astro';
 import ProjectArt from './ProjectArt.astro';
+import HeroBanners from './HeroBanners.astro';
 import { quotes } from '../content/testimonials';
 import { certCount } from '../content/certs';
 import { tools } from '../content/tools';
@@ -73,57 +74,7 @@ const quick = ar0 ? [
 <main id="main">
   <div class="hero" id="top">
     <div class="wrap hs" data-hs aria-roledescription="carousel" aria-label={ar0 ? 'عروض الصفحة الرئيسية' : 'Homepage highlights'}>
-      <div class="hs-track" aria-live="off">
-        <div class="hs-slide on" role="group" aria-roledescription="slide" aria-label="1 / 4">
-          <div class="hero-grid">
-            <div>
-              <span class="kicker">{t.hero.kicker}</span>
-              <h1>{t.hero.h1a}<span class="grad">{t.hero.h1b}</span></h1>
-              <p class="sub">{t.hero.sub}</p>
-              <div class="cta-row">
-                <a class="btn btn-primary" href="#contact" data-evt="cta_click" data-loc="hero">{t.hero.primary}</a>
-                <a class="btn btn-ghost" href="#services">{t.hero.secondary}</a>
-              </div>
-              <ul class="trust">{t.hero.trust.map((x) => <li>{x}</li>)}</ul>
-            </div>
-            <div><DashShot stage kind="profit" lang={lang} /></div>
-          </div>
-        </div>
-        <div class="hs-slide" role="group" aria-roledescription="slide" aria-label="2 / 4" aria-hidden="true">
-          <div class="hero-grid">
-            <div>
-              <span class="kicker">{ar0 ? 'مشاريع على GitHub' : 'Projects on GitHub'}</span>
-              <h2 class="hs-h">{ar0 ? 'مش بس بقول، أنا بابني.' : 'I do not just say it, I build it.'}</h2>
-              <p class="sub">{ar0 ? 'سبعة مشاريع تحليلية بنيتها بنفسي: من كشف العملاء المعرّضين للفقد لحد تقييم أوردرات الدفع عند الاستلام. كل مشروع فيه المشكلة والطريقة، ومكتوب بوضوح لما البيانات تجريبية.' : 'Seven analytics projects I built myself, from spotting customers about to churn to scoring cash-on-delivery orders. Each shows the problem and the method, and says clearly when data is simulated.'}</p>
-              <div class="cta-row"><a class="btn btn-primary" href={P(lang, '/projects/')}>{ar0 ? 'شوف المشاريع' : 'See the projects'}</a><a class="btn btn-ghost" href={CONFIG.links.github} target="_blank" rel="noopener noreferrer me">GitHub</a></div>
-            </div>
-            <div><ProjectArt kind="rfm" lang={lang} name="RFM Profit Radar" /></div>
-          </div>
-        </div>
-        <div class="hs-slide" role="group" aria-roledescription="slide" aria-label="3 / 4" aria-hidden="true">
-          <div class="hero-grid">
-            <div>
-              <span class="kicker">{ar0 ? 'آراء حقيقية' : 'Real feedback'}</span>
-              <h2 class="hs-h">{ar0 ? 'اللي اشتغلوا معايا بيقولوا إيه' : 'What people who worked with me say'}</h2>
-              <p class="sub">{ar0 ? 'اقتباسات من رسائل عملاء وتوصيات منشورة علنًا على LinkedIn، منسوبة بالدور فقط.' : 'Quotes from client messages and public LinkedIn recommendations, credited by role only.'}</p>
-              <div class="cta-row"><a class="btn btn-primary" href="#voices">{ar0 ? 'اقرأ الآراء' : 'Read the feedback'}</a><a class="btn btn-ghost" href={P(lang, '/certificates/')}>{ar0 ? 'الشهادات' : 'Certificates'}</a></div>
-            </div>
-            <figure class="hs-big"><blockquote>«{quotes[2][lang]}»</blockquote><small>{quotes[2].role[lang]}</small></figure>
-          </div>
-        </div>
-        <div class="hs-slide" role="group" aria-roledescription="slide" aria-label="4 / 4" aria-hidden="true">
-          <div class="hero-grid">
-            <div>
-              <span class="kicker">{ar0 ? 'قصتي' : 'My story'}</span>
-              <h2 class="hs-h">{ar0 ? 'من المعلوماتية الطبية لتحليل البيانات' : 'From medical informatics to data analytics'}</h2>
-              <p class="sub">{ar0 ? 'خريج كلية الحاسبات والمعلومات بجامعة المنصورة، وشغال من 2023 مع عملاء في مصر والسعودية. اعرف مين اللي هيشتغل على بياناتك.' : 'A Mansoura University Computers and Information graduate working since 2023 with clients in Egypt and Saudi Arabia. Meet the person who will work on your data.'}</p>
-              <div class="cta-row"><a class="btn btn-primary" href={P(lang, '/story/')}>{ar0 ? 'اقرأ قصتي' : 'Read my story'}</a><a class="btn btn-ghost" href={P(lang, '/certificates/')}>{ar0 ? `${certCount} شهادة` : `${certCount} certificates`}</a></div>
-            </div>
-            <div class="hs-big"><div class="row"><img src="/albaraa-320.jpg" width="84" height="84" alt="" loading="lazy" decoding="async" /><div><b>{ar0 ? 'البراء إيهاب الزفتاوي' : 'Albaraa Ehab Elzeftawy'}</b><br /><small>{ar0 ? 'محلل بيانات · مدير حسابات ومشاريع' : 'Data analyst · Account and project manager'}</small></div></div>
-              <div class="tile-row"><div class="pa-k"><small>{ar0 ? 'تخرج' : 'Graduated'}</small><b>2026</b></div><div class="pa-k pa-k2"><small>{ar0 ? 'مشروع موقع ومتجر 2026' : 'Sites and stores 2026'}</small><b>23</b></div><div class="pa-k pa-k1"><small>{ar0 ? 'شهادة ودورة' : 'Certificates'}</small><b>{certCount}</b></div><div class="pa-k"><small>{ar0 ? 'خبرة عملية' : 'Hands-on since'}</small><b>2023</b></div></div></div>
-          </div>
-        </div>
-      </div>
+      <div class="hs-track" aria-live="off"><HeroBanners lang={lang} t={t} /></div>
       <div class="hs-ctl">
         <button type="button" class="hs-btn" data-hs-prev aria-label={ar0 ? 'السابق' : 'Previous'}>{ar0 ? '›' : '‹'}</button>
         <div class="hs-dots" style="display:flex;gap:.4rem">{[0, 1, 2, 3].map((i) => <button type="button" class={`hs-dot${i === 0 ? ' on' : ''}`} data-hs-go={i} aria-label={`${i + 1} / 4`}></button>)}</div>

@@ -57,3 +57,29 @@
 .hs-big figure, figure.hs-big { margin: 0; }
 .proj-grid > .proj-card:last-child:nth-child(3n+1) { grid-column: 1 / -1; max-width: 560px; justify-self: center; }
 @media (max-width: 1100px) { .proj-grid > .proj-card:last-child:nth-child(3n+1) { grid-column: auto; max-width: none; } }
+/* ===== بنرات الهيرو ===== */
+.hero { padding-block: 1.4rem 1rem; }
+.hs-track { align-items: stretch; }
+.hb { --ba: #4c9bff; position: relative; overflow: hidden; border-radius: 22px; padding: clamp(1.6rem, 4vw, 3.2rem); min-height: clamp(380px, 46vw, 460px); display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 2rem; align-items: center; color: #eef2f9; background: #0a0d14; border: 1px solid rgba(255, 255, 255, .08); }
+.hb::before { content: ''; position: absolute; inset: 0; background: radial-gradient(60% 90% at 85% 110%, color-mix(in srgb, var(--ba) 28%, transparent), transparent 70%), repeating-linear-gradient(0deg, rgba(255, 255, 255, .025) 0 1px, transparent 1px 44px); pointer-events: none; }
+.hb2 { --ba: #34d399; } .hb3 { --ba: #f59e0b; } .hb4 { --ba: #a78bfa; }
+.hb > * { position: relative; }
+.hb-k { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: .78rem; letter-spacing: .08em; color: var(--ba); padding: .25rem .7rem; border: 1px solid color-mix(in srgb, var(--ba) 45%, transparent); border-radius: 999px; margin-bottom: 1rem; }
+.hb h1, .hb h2 { font-size: clamp(1.9rem, 4.4vw, 3.3rem); line-height: 1.22; color: #fff; text-wrap: balance; margin-bottom: .9rem; }
+.hb h1 .grad { color: var(--ba); }
+.hb p { color: #b6c0d1; font-size: 1.05rem; max-width: 52ch; margin-bottom: 1.5rem; }
+.hb .btn-primary { background: var(--ba); color: #07101c; box-shadow: none; }
+.hb .hb-ghost { border: 1px solid rgba(255, 255, 255, .28); color: #fff; background: transparent; }
+.hb .hb-ghost:hover { border-color: var(--ba); color: #fff; }
+.hbx { width: 100%; height: auto; max-height: 380px; justify-self: center; }
+.hb-quote { margin: 0; display: grid; gap: .8rem; align-content: center; }
+.hb-qm { font-size: 7rem; line-height: .6; color: var(--ba); font-family: Georgia, serif; height: 3rem; }
+.hb-quote blockquote { font-size: clamp(1.05rem, 2vw, 1.4rem); line-height: 1.85; color: #fff; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+.hb-quote figcaption { color: var(--ba); font-weight: 700; }
+.hb-roles { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem; } .hb-roles li { font-size: .78rem; padding: .2rem .6rem; border-radius: 999px; background: rgba(255, 255, 255, .08); color: #cbd2de; }
+.hb-me { display: grid; justify-items: center; gap: 1.2rem; }
+.hb-me img { width: clamp(170px, 24vw, 250px); height: auto; aspect-ratio: 1; border-radius: 50%; object-fit: cover; object-position: top; border: 3px solid var(--ba); box-shadow: 0 0 0 10px color-mix(in srgb, var(--ba) 18%, transparent); }
+.hb-me ul { list-style: none; display: flex; gap: .6rem; flex-wrap: wrap; justify-content: center; }
+.hb-me li { display: grid; text-align: center; background: rgba(255, 255, 255, .06); border-radius: 12px; padding: .5rem .9rem; font-size: .8rem; color: #b6c0d1; min-width: 92px; } .hb-me li b { color: #fff; font-size: 1.35rem; line-height: 1.2; }
+@media (max-width: 860px) { .hb { grid-template-columns: 1fr; min-height: 0; } .hbx { max-height: 240px; order: -1; } .hb-me { order: -1; } .hb-qm { display: none; } }
+@media (max-width: 860px) { .hb { padding: 1.2rem; gap: 1rem; } .hb p { font-size: .95rem; margin-bottom: 1rem; } .hb-k { font-size: .68rem; border-radius: 10px; padding: .2rem .55rem; } .hb1 p, .hb-roles { display: none; } .hb h1, .hb h2 { font-size: 1.7rem; } .hbx { max-height: 180px; } }
