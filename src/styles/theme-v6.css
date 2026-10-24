@@ -109,3 +109,14 @@
 /* إيقاع المسافات */
 .sec-h { margin-top: 2.6rem; margin-bottom: 1rem; }
 main.inner > .wrap + .wrap { margin-top: 0; }
+.pa-k small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pa-leg { list-style: none; display: flex; gap: 1rem; flex-wrap: wrap; font-size: .78rem; color: var(--muted); } .pa-leg i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-inline-end: .35rem; }
+.timeline { max-width: 820px; }
+.chips-row { max-width: none; }
+.info-box .chips-row { margin-top: .6rem; } .info-box .chip { font-size: .85rem; }
+.cta-box .plain { margin-bottom: .8rem; }
+.page-head.has-art { padding-bottom: 1.6rem; row-gap: .8rem; }
+@media (min-width: 901px) { .post-grid:has(> :nth-child(4):last-child) > *, .post-grid:has(> :nth-child(2):last-child) > * { flex-basis: calc((100% - 1.2rem) / 2); max-width: calc((100% - 1.2rem) / 2); } }
+.faq-sec { padding: 0; } .faq-jump { margin-top: 1.4rem; }
+.calc.tool:has(.quiz) { grid-template-columns: 1fr; max-width: 860px; margin-inline: auto; }
+.article .cta-box a.btn, .prose a.btn, .cta-box a.btn { text-decoration: none; }

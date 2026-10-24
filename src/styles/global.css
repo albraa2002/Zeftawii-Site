@@ -656,7 +656,7 @@ footer { background: var(--bg-2); }
 .q-ic { border-radius: 8px; background: rgba(var(--c), .12); }
 .mbar { backdrop-filter: none; }
 a:not(.btn):not(.chip):not(.post-card):not(.q-tile):not(.soc):not(.logo):hover { text-decoration-thickness: 1px; }
-.prose a, .article a:not(.btn) { color: var(--cyan); text-decoration: underline; text-underline-offset: 3px; }
+.prose a:not(.btn):not(.chip-link):not(.post-card), .article a:not(.btn):not(.chip-link):not(.post-card) { color: var(--cyan); text-decoration: underline; text-underline-offset: 3px; }
 ::selection { background: var(--cyan); color: var(--on-accent); }
 
 /* ===== PROFESSIONAL LAYER v4: numbered sections, ink banners, framed art ===== */

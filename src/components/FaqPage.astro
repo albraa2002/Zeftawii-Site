@@ -20,8 +20,9 @@ const ld = [{ '@type': 'FAQPage', mainEntity: all.map((f) => ({ '@type': 'Questi
 <Shell lang={lang} title={title} desc={desc} path={path} alt={{ ar: '/faq/', en: '/en/faq/' }} extraLd={ld}>
   <div class="wrap page-head"><span class="kicker">FAQ</span><h1>{ar ? 'الأسئلة الشائعة' : 'Frequently asked questions'}</h1><p>{desc}</p></div>
   <div class="wrap">
-    {groups.filter((g) => g.items.length).map((g) => (
-      <section>
+    <nav class="chips-row faq-jump" aria-label={ar ? 'المجموعات' : 'Groups'}>{groups.map((g, gi) => <a class="chip-link" href={`#g${gi}`}>{g.h}</a>)}</nav>
+    {groups.map((g, gi) => (
+      <section class="faq-sec" id={`g${gi}`}>
         <h2 class="sec-h"><a href={g.href}>{g.h}</a></h2>
         <div class="faq-list">{g.items.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}</div>
       </section>
