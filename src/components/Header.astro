@@ -11,8 +11,8 @@ interface Props { lang: Lang; alt: string }
 const { lang, alt } = Astro.props; const t = T[lang]; const u = UI[lang]; const ar = lang === 'ar';
 const home = P(lang, '/');
 const L = ar
-  ? { services: 'الخدمات', solutions: 'الحلول', tools: 'الأدوات', learn: 'تعلّم', work: 'شغل فعلي', about: 'عنّي', contact: 'تواصل', search: 'بحث', theme: 'تبديل الثيم', all: 'كل الخدمات', allTools: 'كل الأدوات', allSol: 'كل الحلول', stores: 'المتاجر', markets: 'الأسواق', latest: 'أحدث المقالات', ph: 'ابحث عن خدمة أو أداة أو مقال أو مصطلح…', none: 'مفيش نتائج. جرّب كلمة تانية.', hint: 'اضغط / للبحث', close: 'إغلاق', roas: 'حاسبة ربحية الإعلانات (ROAS)', blog: 'المدونة', glossary: 'قاموس المصطلحات', res: 'قوالب مجانية', blogD: 'شروحات عملية من الشغل', glD: '20 مصطلح بالمعادلة والمثال', resD: 'SOW وتقرير حالة وKPIs' }
-  : { services: 'Services', solutions: 'Solutions', tools: 'Tools', learn: 'Learn', work: 'Work', about: 'About', contact: 'Contact', search: 'Search', theme: 'Toggle theme', all: 'All services', allTools: 'All tools', allSol: 'All solutions', stores: 'Stores', markets: 'Markets', latest: 'Latest articles', ph: 'Search a service, tool, article or term…', none: 'No results. Try another word.', hint: 'Press / to search', close: 'Close', roas: 'Ad profitability calculator (ROAS)', blog: 'Blog', glossary: 'Glossary', res: 'Free templates', blogD: 'Practical write-ups from real work', glD: '20 terms with formula and example', resD: 'SOW, status report and KPIs' };
+  ? { services: 'الخدمات', solutions: 'الحلول', tools: 'الأدوات', learn: 'تعلّم', work: 'شغل فعلي', about: 'من أنا', contact: 'تواصل', search: 'بحث', theme: 'تبديل الثيم', all: 'كل الخدمات', allTools: 'كل الأدوات', allSol: 'كل الحلول', stores: 'المتاجر', markets: 'الأسواق', latest: 'أحدث المقالات', ph: 'ابحث عن خدمة أو أداة أو مقال أو مصطلح…', none: 'مفيش نتائج. جرّب كلمة تانية.', hint: 'اضغط / للبحث', close: 'إغلاق', roas: 'حاسبة ربحية الإعلانات (ROAS)', blog: 'المدونة', glossary: 'قاموس المصطلحات', res: 'قوالب مجانية', blogD: 'شروحات عملية من الشغل', glD: '20 مصطلح بالمعادلة والمثال', resD: 'SOW وتقرير حالة وKPIs' }
+  : { services: 'Services', solutions: 'Solutions', tools: 'Tools', learn: 'Learn', work: 'Work', about: 'About me', contact: 'Contact', search: 'Search', theme: 'Toggle theme', all: 'All services', allTools: 'All tools', allSol: 'All solutions', stores: 'Stores', markets: 'Markets', latest: 'Latest articles', ph: 'Search a service, tool, article or term…', none: 'No results. Try another word.', hint: 'Press / to search', close: 'Close', roas: 'Ad profitability calculator (ROAS)', blog: 'Blog', glossary: 'Glossary', res: 'Free templates', blogD: 'Practical write-ups from real work', glD: '20 terms with formula and example', resD: 'SOW, status report and KPIs' };
 const tag = ar
   ? ['لوحات تفاعلية بمؤشراتك', 'ROAS وCPA وتحليل الحملات', 'تقارير بتتحدث لوحدها', 'أدوات ونماذج تنبؤية', 'مدير حسابات بدوام جزئي', 'نطاق وجدول وتقارير حالة']
   : ['Interactive KPI dashboards', 'ROAS, CPA and campaign analysis', 'Reports that refresh themselves', 'Smart tools and predictive models', 'A part-time account manager', 'Scope, schedule and status reports'];
@@ -39,41 +39,32 @@ const arrow = ar ? '←' : '→';
         </div>
       </div>
       <div class="mi">
-        <button type="button" class="mi-btn" aria-expanded="false" aria-controls="mega-sol">{L.solutions}<Fragment set:html={icon('chevron', 16)} /></button>
-        <div class="mega narrow" id="mega-sol" hidden>
-          <div class="mega-cols">
-            <div><p class="mega-h">{L.stores}</p>{solutions.filter((x) => x.kind === 'store').map((x) => <a class="mega-link" href={P(lang, `/solutions/${x.slug}/`)}><span set:html={icon('store', 18)}></span>{x[lang].name}</a>)}</div>
-            <div><p class="mega-h">{L.markets}</p>{solutions.filter((x) => x.kind === 'market').map((x) => <a class="mega-link" href={P(lang, `/solutions/${x.slug}/`)}><span set:html={icon('globe', 18)}></span>{x[lang].name}</a>)}</div>
+        <button type="button" class="mi-btn" aria-expanded="false" aria-controls="mega-work">{ar ? 'أعمالي' : 'Portfolio'}<Fragment set:html={icon('chevron', 16)} /></button>
+        <div class="mega narrow" id="mega-work" hidden>
+          <div class="mega-list">
+            <a class="mega-link two" href={P(lang, '/projects/')}><span set:html={icon('tool', 18)}></span><span><b>{ar ? 'المشاريع' : 'Projects'}</b><small>{ar ? '7 مشاريع على GitHub' : '7 projects on GitHub'}</small></span></a>
+            <a class="mega-link two" href={P(lang, '/dashboards/')}><span set:html={icon('chart', 18)}></span><span><b>{ar ? 'نماذج لوحات التحكم' : 'Dashboard samples'}</b><small>{ar ? 'شكل اللي هتستلمه' : 'What you will receive'}</small></span></a>
+            <a class="mega-link two" href={P(lang, '/work/')}><span set:html={icon('book', 18)}></span><span><b>{ar ? 'دراسات حالة' : 'Case studies'}</b><small>{ar ? 'شغل فعلي بتفاصيله' : 'Real work in detail'}</small></span></a>
           </div>
-          <a class="mega-foot" href={P(lang, '/solutions/')}>{L.allSol} <i>{arrow}</i></a>
         </div>
       </div>
-      <div class="mi">
-        <button type="button" class="mi-btn" aria-expanded="false" aria-controls="mega-tools">{L.tools}<Fragment set:html={icon('chevron', 16)} /></button>
-        <div class="mega narrow" id="mega-tools" hidden>
-          <div class="mega-list">{toolList.map((x) => <a class="mega-link" href={x.h}><span set:html={icon('tool', 18)}></span>{x.n}</a>)}</div>
-          <a class="mega-foot" href={P(lang, '/tools/')}>{L.allTools} <i>{arrow}</i></a>
-        </div>
-      </div>
-      <div class="mi">
-        <button type="button" class="mi-btn" aria-expanded="false" aria-controls="mega-learn">{L.learn}<Fragment set:html={icon('chevron', 16)} /></button>
-        <div class="mega narrow" id="mega-learn" hidden>
-          <div class="mega-cols">
-            <div>
-              <a class="mega-link two" href={P(lang, '/blog/')}><span set:html={icon('blog', 18)}></span><span><b>{L.blog}</b><small>{L.blogD}</small></span></a>
-              <a class="mega-link two" href={P(lang, '/glossary/')}><span set:html={icon('book', 18)}></span><span><b>{L.glossary}</b><small>{L.glD}</small></span></a>
-              <a class="mega-link two" href={P(lang, '/resources/')}><span set:html={icon('download', 18)}></span><span><b>{L.res}</b><small>{L.resD}</small></span></a>
+      <div class="mi wide">
+        <button type="button" class="mi-btn" aria-expanded="false" aria-controls="mega-res">{ar ? 'الموارد' : 'Resources'}<Fragment set:html={icon('chevron', 16)} /></button>
+        <div class="mega" id="mega-res" hidden>
+          <div class="mega-cols three">
+            <div><p class="mega-h">{L.tools}</p>{toolList.map((x) => <a class="mega-link" href={x.h}><span set:html={icon('tool', 18)}></span>{x.n}</a>)}</div>
+            <div><p class="mega-h">{L.solutions}</p>{solutions.map((x) => <a class="mega-link" href={P(lang, `/solutions/${x.slug}/`)}><span set:html={icon(x.kind === 'store' ? 'store' : 'globe', 18)}></span>{x[lang].name}</a>)}</div>
+            <div><p class="mega-h">{L.learn}</p>
+              <a class="mega-link" href={P(lang, '/blog/')}><span set:html={icon('blog', 18)}></span>{L.blog}</a>
+              <a class="mega-link" href={P(lang, '/glossary/')}><span set:html={icon('book', 18)}></span>{L.glossary}</a>
+              <a class="mega-link" href={P(lang, '/resources/')}><span set:html={icon('download', 18)}></span>{L.res}</a>
+              <a class="mega-link" href={P(lang, '/faq/')}><span set:html={icon('book', 18)}></span>{ar ? 'الأسئلة الشائعة' : 'FAQ'}</a>
             </div>
-            <div><p class="mega-h">{L.latest}</p>{latest.map((p) => <a class="mega-link" href={P(lang, `/blog/${p.slug}/`)}>{p[lang].title}</a>)}</div>
           </div>
         </div>
       </div>
-      <a class="mi-a" href={P(lang, '/dashboards/')}>{ar ? 'لوحات مثال' : 'Dashboards'}</a>
-      <a class="mi-a" href={P(lang, '/projects/')}>{ar ? 'المشاريع' : 'Projects'}</a>
-      <a class="mi-a" href={P(lang, '/work/')}>{L.work}</a>
-      <a class="mi-a" href={P(lang, '/story/')}>{ar ? 'قصتي' : 'My story'}</a>
+      <a class="mi-a" href={P(lang, '/pricing/')}>{ar ? 'الأسعار' : 'Pricing'}</a>
       <a class="mi-a" href={P(lang, '/about/')}>{L.about}</a>
-      <a class="mi-a" href={home + '#contact'}>{L.contact}</a>
       <a class="btn btn-primary btn-sm menu-cta" href={home + '#contact'} data-evt="cta_click" data-loc="menu">{t.nav.cta}</a>
     </nav>
     <div class="nav-actions">
@@ -99,9 +90,10 @@ const arrow = ar ? '←' : '→';
   const closeAll = () => btns.forEach((b) => { b.setAttribute('aria-expanded', 'false'); document.getElementById(b.getAttribute('aria-controls')!)!.hidden = true; });
   const openOne = (b: HTMLButtonElement) => { closeAll(); b.setAttribute('aria-expanded', 'true'); document.getElementById(b.getAttribute('aria-controls')!)!.hidden = false; };
   const fine = matchMedia('(hover: hover) and (min-width: 961px)');
+  let tm = 0;
   btns.forEach((b) => {
     b.addEventListener('click', () => { b.getAttribute('aria-expanded') === 'true' ? closeAll() : openOne(b); });
-    const mi = b.parentElement!; let tm: number;
+    const mi = b.parentElement!;
     mi.addEventListener('mouseenter', () => { if (fine.matches) { clearTimeout(tm); openOne(b); } });
     mi.addEventListener('mouseleave', () => { if (fine.matches) tm = window.setTimeout(closeAll, 140); });
   });

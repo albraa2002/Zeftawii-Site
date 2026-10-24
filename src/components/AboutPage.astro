@@ -5,10 +5,11 @@ import { UI, P } from '../content/ui';
 import { about } from '../content/site';
 import { services } from '../content/services';
 import { CONFIG } from '../config';
-import { certGroups } from '../content/trust';
+import { story } from '../content/story';
+import { certCount } from '../content/certs';
 import Testimonials from './Testimonials.astro';
 const { lang } = Astro.props as { lang: Lang };
-const a = about[lang]; const u = UI[lang]; const base = CONFIG.site.replace(/\/$/, '');
+const st = story[lang]; const a = about[lang]; const u = UI[lang]; const base = CONFIG.site.replace(/\/$/, '');
 const path = P(lang, '/about/');
 const wa = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(lang === 'ar' ? 'أهلاً، قرأت صفحة عنّك وحابب أتكلم عن شغلي.' : 'Hi, I read your about page and would like to talk about my business.')}`;
 const ld = [{ '@type': 'AboutPage', name: a.title, url: base + path, inLanguage: lang, mainEntity: { '@id': `${base}/#person` } }];
@@ -27,9 +28,15 @@ const ld = [{ '@type': 'AboutPage', name: a.title, url: base + path, inLanguage:
     </div>
   </div>
   <div class="wrap">
-    <h2 class="sec-h">{a.storyT}</h2>
-    <div class="prose narrow">{a.story.map((x) => <p>{x}</p>)}</div>
+    <h2 class="sec-h">{st.factsT}</h2>
+    <div class="facts">{st.facts.map((f) => <div><b>{f.v}</b><span>{f.l}</span></div>)}</div>
+    <h2 class="sec-h">{st.tlT}</h2>
+    <ol class="timeline">{st.tl.map((x) => <li><time>{x.t}</time><h3>{x.h}</h3><p>{x.p}</p></li>)}</ol>
     <div class="stats-row">{a.nums.map((n) => <div class="stat"><b>{n.v}</b><span>{n.l}</span></div>)}</div>
+    <div class="two-col">
+      <section class="info-box"><h2>{st.courseT}</h2><p class="plain">{st.courseP}</p><ul>{st.courses.map((c) => <li>{c}</li>)}</ul></section>
+      <section class="info-box good"><h2>{st.whyT}</h2><ul>{st.why.map((c) => <li>{c}</li>)}</ul></section>
+    </div>
     <h2 class="sec-h">{a.doT}</h2>
     <div class="chips-row">{services.map((s) => <a class="chip-link" href={P(lang, `/services/${s.slug}/`)}>{s[lang].name}</a>)}</div>
     <div class="two-col">
@@ -38,10 +45,7 @@ const ld = [{ '@type': 'AboutPage', name: a.title, url: base + path, inLanguage:
     </div>
     <section class="info-box" style="margin-top:1rem"><h2>{a.bgT}</h2><ul>{a.bg.map((x) => <li>{x}</li>)}</ul></section>
     <h2 class="sec-h">{lang === 'ar' ? 'شهادات ودورات' : 'Certificates and courses'}</h2>
-    <p class="plain">{lang === 'ar' ? 'دي شهادات حصلت عليها فعلاً، وتقدر تطلب نسخة منها وقت التواصل.' : 'These are certificates I earned, and I can share a copy when we talk.'}</p>
-    <div class="two-col">{certGroups.map((g) => (
-      <section class="info-box"><h3>{g[lang]}</h3><ul>{g.items.map((c) => <li>{c.name}{c.by ? ` · ${c.by}` : ''}</li>)}</ul></section>
-    ))}</div>
+    <p class="plain">{lang === 'ar' ? `${certCount} شهادة ودورة في تحليل البيانات وإدارة المشاريع والتسويق.` : `${certCount} certificates and courses in data analytics, project management and marketing.`} <a class="chip-link" href={P(lang, '/certificates/')}>{lang === 'ar' ? 'شوف الكل' : 'See all'}</a> <a class="chip-link" href={P(lang, '/projects/')}>{lang === 'ar' ? 'المشاريع' : 'Projects'}</a></p>
     <h2 class="sec-h">{lang === 'ar' ? 'آراء الناس في الشغل' : 'What people say'}</h2>
     <p class="plain">{lang === 'ar' ? 'اقتباسات حقيقية من رسائل عملاء وتوصيات منشورة علنًا على LinkedIn، منسوبة بالدور فقط.' : 'Real quotes from client messages and public LinkedIn recommendations, credited by role only.'}</p>
     <Testimonials lang={lang} />

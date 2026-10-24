@@ -7,6 +7,7 @@ for d, _, fs in os.walk('dist'):
     if 'index.html' in fs:
         rel = os.path.relpath(d, 'dist'); rel = '' if rel == '.' else rel
         if rel == '404': continue
+        if 'http-equiv="refresh"' in open(os.path.join(d,'index.html'),encoding='utf8').read(2000): continue
         paths.append('/' + rel + ('/' if rel else ''))
 ar = sorted(p for p in paths if not p.startswith('/en'))
 def en(p): return '/en' + (p if p != '/' else '/')

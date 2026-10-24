@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 // بعد ما تنشر الموقع غيّر السطر ده لدومينك الحقيقي
 export default defineConfig({
   site: 'https://zeftawii-site-46vp.vercel.app',
+  redirects: { '/story': '/about/', '/en/story': '/en/about/' },
   trailingSlash: 'ignore',
   build: { format: 'directory' },
 });

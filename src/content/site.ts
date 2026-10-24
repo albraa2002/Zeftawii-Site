@@ -52,7 +52,7 @@ export const cases: Case[] = [
 
 export type About = { title: string; desc: string; h1: string; lead: string; storyT: string; story: string[]; doT: string; howT: string; how: string[]; numT: string; nums: { v: string; l: string }[]; toolsT: string; tools: string[]; bgT: string; bg: string[]; ctaT: string; ctaP: string; ctaBtn: string };
 export const about: Record<Lang, About> = {
-  ar: { title: 'عن البراء | محلل بيانات ومدير حسابات ومشاريع | Zeftawii', desc: 'البراء إيهاب الزفتاوي: محلل بيانات و Business Intelligence ومدير حسابات ومشاريع تسويق رقمي، بشتغل مع شركات في السعودية ومصر.',
+  ar: { title: 'من أنا: البراء الزفتاوي، محلل بيانات | Zeftawii', desc: 'البراء إيهاب الزفتاوي: محلل بيانات و Business Intelligence ومدير حسابات ومشاريع تسويق رقمي، بشتغل مع شركات في السعودية ومصر.',
     h1: 'أنا البراء إيهاب الزفتاوي', lead: 'محلل بيانات و Business Intelligence، وبشتغل كمان مدير حسابات ومشاريع تسويق رقمي. بحوّل البيانات لقرارات، وطلبات العملاء لنطاق عمل واضح.',
     storyT: 'حكايتي باختصار',
     story: ['بدأت شغلي العملي في أوائل 2023 داخل وكالات التسويق الرقمي والتجارة الإلكترونية كمحلل بيانات ومدير حسابات، وبقدم خدماتي دلوقتي باسم Zeftawii.', 'خلفيتي الأكاديمية في علوم الحاسب والمعلوماتية الطبية، ودمجتها مع خبرة فعلية في التسويق وإدارة العملاء. فبفهم الجانبين: لغة الأرقام ولغة العميل.', 'بشتغل أونلاين بالعربي والإنجليزي مع شركات في السعودية ومصر، وبقدم خدماتي كمان بشكل مستقل تحت اسم Zeftawii | Decoding Data.'],
@@ -62,7 +62,7 @@ export const about: Record<Lang, About> = {
     toolsT: 'الأدوات اللي بشتغل بيها', tools: ['Power BI (DAX ونمذجة)', 'Python (pandas, scikit-learn, Plotly)', 'SQL', 'Excel متقدم', 'Google Sheets وApps Script', 'تحليلات تسويقية (CPA, ROAS, Funnels, RFM)'],
     bgT: 'الخلفية', bg: ['علوم الحاسب (المعلوماتية الطبية)', 'خبرة عملية منذ أوائل 2023', 'شغل مع عملاء في السعودية ومصر', 'شغل مستقل وخبرة داخل وكالات تسويق'],
     ctaT: 'عاوز نتكلم عن شغلك؟', ctaP: 'الاستشارة الأولى مجانية بدون التزام، وهتخرج بتوصية واضحة.', ctaBtn: 'ابدأ استشارة مجانية' },
-  en: { title: 'About Albaraa | Data analyst, account and project manager | Zeftawii', desc: 'Albaraa Ehab Elzeftawy: data analyst, Business Intelligence specialist and digital marketing account and project manager serving businesses in Saudi Arabia and Egypt.',
+  en: { title: 'About me: Albaraa Elzeftawy, data analyst | Zeftawii', desc: 'Albaraa Ehab Elzeftawy: data analyst, Business Intelligence specialist and digital marketing account and project manager serving businesses in Saudi Arabia and Egypt.',
     h1: 'I am Albaraa Ehab Elzeftawy', lead: 'A data analyst and Business Intelligence specialist who also works as a digital marketing account and project manager. I turn data into decisions and client requests into a clear scope.',
     storyT: 'My story in short',
     story: ['I started hands-on work in early 2023 inside digital marketing and e-commerce agencies as a data analyst and account manager, and I now offer my services as Zeftawii.', 'My academic background is in Computer Science and Medical Informatics, combined with real experience in marketing and client management. So I understand both sides: the language of numbers and the language of clients.', 'I work online in Arabic and English with businesses in Saudi Arabia and Egypt, and I also offer my services independently as Zeftawii | Decoding Data.'],

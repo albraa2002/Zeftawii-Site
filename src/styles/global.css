@@ -486,6 +486,7 @@ footer { margin-top: 6rem; border-top: 1px solid var(--panel-b); background: lin
 .mega-card small { display: block; color: var(--muted); font-size: .8rem; line-height: 1.5; }
 .mi-ico { flex: none; width: 42px; height: 42px; display: grid; place-items: center; border-radius: 12px; background: rgba(var(--c), .12); color: var(--cyan); }
 .mega-cols { display: grid; grid-template-columns: repeat(2, minmax(210px, 1fr)); gap: 1.2rem; }
+.mega-cols.three { grid-template-columns: repeat(3, minmax(190px, 1fr)); }
 .mega-h { font-size: .74rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; margin: 0 .5rem .35rem; }
 .mega-link { display: flex; align-items: flex-start; gap: .6rem; padding: .55rem .6rem; border-radius: 10px; color: var(--text-2); font-size: .9rem; line-height: 1.5; transition: background .2s, color .2s; }
 .mega-link > span:first-child { color: var(--cyan); flex: none; margin-top: 2px; }

@@ -94,7 +94,6 @@
 - https://zeftawii-site-46vp.vercel.app/en/solutions/saudi-ecommerce-analytics/
 - https://zeftawii-site-46vp.vercel.app/en/solutions/shopify-store-analytics/
 - https://zeftawii-site-46vp.vercel.app/en/solutions/woocommerce-store-analytics/
-- https://zeftawii-site-46vp.vercel.app/en/story/
 - https://zeftawii-site-46vp.vercel.app/en/tools/
 - https://zeftawii-site-46vp.vercel.app/en/tools/automation-savings-calculator/
 - https://zeftawii-site-46vp.vercel.app/en/tools/break-even-calculator/
