@@ -130,3 +130,7 @@ main.inner > .wrap + .wrap { margin-top: 0; }
   .nav-actions { margin-inline-start: auto; }
 }
 @media (min-width: 1081px) and (max-width: 1180px) { .mnav { margin-inline-start: .6rem; } .mi-btn, .mi-a { padding: .55rem .7rem; font-size: .95rem; } }
+/* الصفحة الحالية في الهيدر */
+.mi-btn.on, .mi-a.on { color: var(--text); }
+@media (min-width: 1081px) { .mi-btn.on::after, .mi-a.on::after { content: ''; position: absolute; inset-inline: 1rem; bottom: -.55rem; height: 3px; border-radius: 3px; background: var(--cyan); } }
+@media (max-width: 1080px) { .mi-btn.on, .mi-a.on { color: var(--cyan); } }
