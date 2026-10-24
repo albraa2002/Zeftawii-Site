@@ -19,7 +19,7 @@ const ld = [
     { '@type': 'ListItem', position: 3, name: c.name, item: base + path } ] },
 ];
 ---
-<Shell lang={lang} title={`${c.name} | ${L.crumb} | Zeftawii`} desc={c.hook} path={path} alt={{ ar: `/projects/${slug}/`, en: `/en/projects/${slug}/` }} extraLd={ld}>
+<Shell lang={lang} title={`${c.name} | ${L.crumb} | Zeftawii`} desc={`${c.hook} ${c.problem.split(/[.،]/)[0]}.`.slice(0, 158)} path={path} alt={{ ar: `/projects/${slug}/`, en: `/en/projects/${slug}/` }} extraLd={ld}>
   <div class="wrap proj-hero">
     <div class="page-head" style="padding-top:0">
       <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/projects/')}>{L.crumb}</a></nav>
