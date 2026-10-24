@@ -45,6 +45,7 @@
 - https://zeftawii-site-46vp.vercel.app/en/blog/vat-inclusive-margin-ksa/
 - https://zeftawii-site-46vp.vercel.app/en/blog/weekly-status-report-one-page/
 - https://zeftawii-site-46vp.vercel.app/en/blog/write-a-project-brief/
+- https://zeftawii-site-46vp.vercel.app/en/certificates/
 - https://zeftawii-site-46vp.vercel.app/en/dashboards/
 - https://zeftawii-site-46vp.vercel.app/en/demo/client-tracker/
 - https://zeftawii-site-46vp.vercel.app/en/faq/
@@ -72,6 +73,14 @@
 - https://zeftawii-site-46vp.vercel.app/en/how-we-work/
 - https://zeftawii-site-46vp.vercel.app/en/pricing/
 - https://zeftawii-site-46vp.vercel.app/en/privacy/
+- https://zeftawii-site-46vp.vercel.app/en/projects/
+- https://zeftawii-site-46vp.vercel.app/en/projects/arsenal-analytics/
+- https://zeftawii-site-46vp.vercel.app/en/projects/auto-arbitrage-sentinel/
+- https://zeftawii-site-46vp.vercel.app/en/projects/client-guillotine/
+- https://zeftawii-site-46vp.vercel.app/en/projects/rfm-radar/
+- https://zeftawii-site-46vp.vercel.app/en/projects/rto-shield/
+- https://zeftawii-site-46vp.vercel.app/en/projects/saas-executive-dashboard/
+- https://zeftawii-site-46vp.vercel.app/en/projects/time-vampire-matrix/
 - https://zeftawii-site-46vp.vercel.app/en/resources/
 - https://zeftawii-site-46vp.vercel.app/en/services/account-management/
 - https://zeftawii-site-46vp.vercel.app/en/services/dashboards-bi/
@@ -85,6 +94,7 @@
 - https://zeftawii-site-46vp.vercel.app/en/solutions/saudi-ecommerce-analytics/
 - https://zeftawii-site-46vp.vercel.app/en/solutions/shopify-store-analytics/
 - https://zeftawii-site-46vp.vercel.app/en/solutions/woocommerce-store-analytics/
+- https://zeftawii-site-46vp.vercel.app/en/story/
 - https://zeftawii-site-46vp.vercel.app/en/tools/
 - https://zeftawii-site-46vp.vercel.app/en/tools/automation-savings-calculator/
 - https://zeftawii-site-46vp.vercel.app/en/tools/break-even-calculator/

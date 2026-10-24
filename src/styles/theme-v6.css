@@ -1,0 +1,59 @@
+/* ===== THEME v6: بنرات المشاريع + سلايدر الهيرو + صفحات القصة والشهادات ===== */
+.pa { border-radius: 14px; overflow: hidden; border: 1px solid var(--panel-b); background: var(--panel); box-shadow: var(--shadow); color: var(--text-2); }
+.pa-chrome { display: flex; align-items: center; gap: 6px; padding: .55rem .8rem; background: var(--bg-2); border-bottom: 1px solid var(--panel-b); font-size: .72rem; }
+.pa-chrome i { width: 9px; height: 9px; border-radius: 50%; background: #f87171; } .pa-chrome i:nth-child(2) { background: #f59e0b; } .pa-chrome i:nth-child(3) { background: #34d399; }
+.pa-chrome span { margin-inline-start: .6rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; } .pa-chrome em { margin-inline-start: auto; font-style: normal; color: var(--orange); font-weight: 700; }
+.pa-body { padding: .9rem; display: grid; gap: .7rem; }
+.pa-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+.pa-k { background: var(--bg-2); border-radius: 8px; padding: .5rem .65rem; border-inline-start: 3px solid var(--cyan); display: grid; }
+.pa-k1 { border-color: var(--red); } .pa-k2 { border-color: var(--green); }
+.pa-k small { color: var(--muted); font-size: .68rem; } .pa-k b { color: var(--text); font-size: 1.15rem; line-height: 1.2; }
+.pa-svg { width: 100%; height: auto; color: var(--text-2); }
+.proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 1.2rem; margin-block: 1.4rem; }
+.proj-card { display: grid; gap: .8rem; align-content: start; color: inherit; text-decoration: none; }
+.proj-card h2, .proj-card h3 { font-size: 1.15rem; }
+.proj-card p { color: var(--muted); }
+.proj-card .pa { transition: transform .25s; } .proj-card:hover .pa { transform: translateY(-3px); }
+.tags { display: flex; flex-wrap: wrap; gap: .4rem; list-style: none; } .tags li { font-size: .75rem; padding: .15rem .55rem; border-radius: 6px; background: rgba(var(--c), .1); color: var(--cyan); font-family: 'IBM Plex Mono', monospace; }
+.proj-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2.4rem; align-items: center; padding-top: 2rem; }
+@media (max-width: 860px) { .proj-hero { grid-template-columns: 1fr; } }
+.honest { border-inline-start: 4px solid var(--orange); background: rgba(245, 158, 11, .08); padding: .9rem 1.1rem; border-radius: 8px; margin-block: 1.4rem; }
+.honest b { color: var(--orange); }
+/* hero slider */
+.hs { position: relative; }
+.hs-track { display: grid; }
+.hs-slide { grid-area: 1 / 1; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity .6s ease, transform .6s ease, visibility .6s; }
+.hs-slide.on { opacity: 1; visibility: visible; transform: none; }
+.hs-ctl { display: flex; align-items: center; gap: .5rem; margin-top: 1.1rem; flex-wrap: wrap; }
+.hs-dot { width: 34px; height: 6px; border-radius: 4px; border: 0; background: var(--panel-b); cursor: pointer; padding: 0; position: relative; overflow: hidden; }
+.hs-dot::after { content: ''; position: absolute; inset: 0; background: var(--cyan); transform: scaleX(0); transform-origin: left; }
+[dir='rtl'] .hs-dot::after { transform-origin: right; }
+.hs-dot.on::after { transform: scaleX(1); }
+.hs.run .hs-dot.on::after { animation: hsfill var(--hs-ms, 6500ms) linear; }
+@keyframes hsfill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.hs-btn { background: var(--panel); border: 1px solid var(--panel-b); color: var(--text); width: 34px; height: 34px; border-radius: 8px; cursor: pointer; display: grid; place-items: center; }
+.hs-pp { margin-inline-start: auto; font-size: .8rem; padding: 0 .8rem; width: auto; }
+.hs-slide .tile-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: .6rem; }
+.hs-big { display: grid; gap: .7rem; padding: 1.2rem; border-radius: 16px; background: var(--panel); border: 1px solid var(--panel-b); box-shadow: var(--shadow); }
+.hs-big .row { display: flex; gap: .8rem; align-items: center; } .hs-big img { width: 84px; height: 84px; border-radius: 14px; object-fit: cover; object-position: top; }
+.hs-big blockquote { font-size: 1.05rem; line-height: 1.8; color: var(--text); }
+.hs-big small { color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .hs-slide { transition: none; } .hs.run .hs-dot.on::after { animation: none; } }
+/* story */
+.timeline { list-style: none; display: grid; gap: 0; border-inline-start: 2px solid var(--panel-b); margin-inline-start: .6rem; padding-inline-start: 1.6rem; }
+.timeline li { position: relative; padding-bottom: 1.8rem; }
+.timeline li::before { content: ''; position: absolute; inset-inline-start: -2.15rem; top: .45rem; width: 12px; height: 12px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 0 4px var(--bg); }
+.timeline time { color: var(--cyan); font-family: 'IBM Plex Mono', monospace; font-size: .8rem; }
+.timeline h3 { margin-block: .15rem .3rem; } .timeline p { color: var(--muted); }
+.facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: .8rem; margin-block: 1.2rem; }
+.facts div { background: var(--panel); border: 1px solid var(--panel-b); border-radius: 12px; padding: .9rem 1rem; display: grid; } .facts b { font-size: 1.15rem; } .facts span { color: var(--muted); font-size: .85rem; }
+.cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: .8rem; }
+.cert { background: var(--panel); border: 1px solid var(--panel-b); border-radius: 12px; padding: .9rem 1rem; display: grid; gap: .2rem; border-inline-start: 3px solid var(--cyan); }
+.cert b { font-size: .95rem; line-height: 1.5; } .cert small { color: var(--muted); }
+.svc-samples { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1.2rem; margin-block: 1rem 2rem; }
+.svc-samples figcaption { color: var(--muted); font-size: .9rem; margin-top: .5rem; }
+.hs-h { font-size: clamp(1.9rem, 4.6vw, 3.1rem); line-height: 1.2; text-wrap: balance; }
+.hs-slide .cta-row { display: flex; flex-wrap: wrap; gap: .7rem; }
+.hs-big figure, figure.hs-big { margin: 0; }
+.proj-grid > .proj-card:last-child:nth-child(3n+1) { grid-column: 1 / -1; max-width: 560px; justify-self: center; }
+@media (max-width: 1100px) { .proj-grid > .proj-card:last-child:nth-child(3n+1) { grid-column: auto; max-width: none; } }

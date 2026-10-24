@@ -1,0 +1,47 @@
+---
+import Shell from './Shell.astro';
+import ProjectArt from './ProjectArt.astro';
+import type { Lang } from '../i18n';
+import { UI, P } from '../content/ui';
+import { projects, projLabels } from '../content/projects';
+import { services } from '../content/services';
+import { CONFIG } from '../config';
+const { lang, slug } = Astro.props as { lang: Lang; slug: string };
+const p = projects.find((x) => x.slug === slug)!; const c = p[lang]; const u = UI[lang]; const L = projLabels(lang);
+const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, `/projects/${slug}/`);
+const svc = services.find((s) => s.slug === c.svc);
+const others = projects.filter((x) => x.slug !== slug);
+const ld = [
+  { '@type': 'SoftwareSourceCode', name: c.name, description: c.hook, codeRepository: p.repo, programmingLanguage: p.stack, author: { '@id': `${base}/#person` }, inLanguage: lang },
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: u.crumbHome, item: base + P(lang, '/') },
+    { '@type': 'ListItem', position: 2, name: L.crumb, item: base + P(lang, '/projects/') },
+    { '@type': 'ListItem', position: 3, name: c.name, item: base + path } ] },
+];
+---
+<Shell lang={lang} title={`${c.name} | ${L.crumb} | Zeftawii`} desc={c.hook} path={path} alt={{ ar: `/projects/${slug}/`, en: `/en/projects/${slug}/` }} extraLd={ld}>
+  <div class="wrap proj-hero">
+    <div class="page-head" style="padding-top:0">
+      <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/projects/')}>{L.crumb}</a></nav>
+      <span class="kicker">{c.tag}</span>
+      <h1>{c.name}</h1>
+      <p>{c.hook}</p>
+      <ul class="tags">{p.stack.map((s) => <li>{s}</li>)}</ul>
+      <div class="cta-row"><a class="btn btn-primary" href={p.repo} target="_blank" rel="noopener noreferrer" data-evt="github_click" data-loc="project">{L.code}</a><a class="btn btn-ghost" href={P(lang, '/#contact')} data-evt="cta_click" data-loc="project">{L.cta}</a></div>
+    </div>
+    <ProjectArt kind={p.kind} lang={lang} name={c.name} />
+  </div>
+  <div class="wrap">
+    <div class="two-col">
+      <section class="info-box"><h2>{L.problem}</h2><p class="plain">{c.problem}</p></section>
+      <section class="info-box good"><h2>{L.out}</h2><ul>{c.out.map((x) => <li>{x}</li>)}</ul></section>
+    </div>
+    <h2 class="sec-h">{L.how}</h2>
+    <ol class="how">{c.how.map((x, i) => <li><b>{i + 1}</b><span>{x}</span></li>)}</ol>
+    <p class="honest"><b>{L.honest}:</b> {c.honest}</p>
+    {svc && <p class="plain">{L.svc}: <a class="chip-link" href={P(lang, `/services/${svc.slug}/`)}>{svc[lang].name}</a></p>}
+    <div class="cta-box"><h2>{L.apply}</h2><p>{L.applyP}</p><div class="cta-row"><a class="btn btn-primary" href={P(lang, '/#contact')}>{L.cta}</a></div></div>
+    <h2 class="sec-h">{L.all}</h2>
+    <div class="chips-row">{others.map((o) => <a class="chip-link" href={P(lang, `/projects/${o.slug}/`)}>{o[lang].name}</a>)}</div>
+  </div>
+</Shell>

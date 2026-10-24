@@ -1,0 +1,31 @@
+---
+import Shell from './Shell.astro';
+import type { Lang } from '../i18n';
+import { UI, P } from '../content/ui';
+import { certsAll, certCount } from '../content/certs';
+import Testimonials from './Testimonials.astro';
+import { CONFIG } from '../config';
+const { lang } = Astro.props as { lang: Lang };
+const u = UI[lang]; const ar = lang === 'ar'; const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, '/certificates/');
+const title = ar ? 'الشهادات والدورات | Zeftawii' : 'Certificates and courses | Zeftawii';
+const desc = ar ? `${certCount} شهادة ودورة في تحليل البيانات وPower BI وPython وSQL وإدارة المشاريع والتسويق، ومعاها آراء حقيقية عن الشغل.` : `${certCount} certificates and courses in data analytics, Power BI, Python, SQL, project management and marketing, plus real feedback on the work.`;
+const ld = [{ '@type': 'CollectionPage', name: title, url: base + path, inLanguage: lang }];
+---
+<Shell lang={lang} title={title} desc={desc} path={path} alt={{ ar: '/certificates/', en: '/en/certificates/' }} extraLd={ld}>
+  <div class="wrap page-head">
+    <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <span>{ar ? 'الشهادات' : 'Certificates'}</span></nav>
+    <span class="kicker">CERTIFICATES</span>
+    <h1>{ar ? 'شهادات ودورات حصلت عليها' : 'Certificates and courses I earned'}</h1>
+    <p>{desc} {ar ? 'تقدر تطلب نسخة من أي شهادة وقت التواصل.' : 'I can share a copy of any certificate when we talk.'}</p>
+    <div class="facts"><div><b>{certCount}</b><span>{ar ? 'شهادة ودورة' : 'certificates and courses'}</span></div><div><b>Udemy · DataCamp · hp LIFE</b><span>{ar ? 'أبرز الجهات' : 'main providers'}</span></div><div><b>{ar ? 'جامعة المنصورة' : 'Mansoura University'}</b><span>{ar ? 'بكالوريوس معلوماتية طبية' : 'B.Sc. Medical Informatics'}</span></div></div>
+  </div>
+  <div class="wrap">
+    {certsAll.map((g) => (<>
+      <h2 class="sec-h">{g[lang]} <small style="color:var(--muted);font-weight:500">({g.items.length})</small></h2>
+      <div class="cert-grid">{g.items.map((c) => <div class="cert"><b>{c.n}</b>{c.by && <small>{c.by}</small>}</div>)}</div>
+    </>))}
+    <h2 class="sec-h">{ar ? 'آراء الناس في الشغل' : 'What people say'}</h2>
+    <Testimonials lang={lang} />
+    <div class="cta-box"><h2>{ar ? 'عاوز تشوف الشغل بنفسك؟' : 'Want to see the work yourself?'}</h2><div class="cta-row"><a class="btn btn-primary" href={P(lang, '/projects/')}>{ar ? 'المشاريع' : 'Projects'}</a><a class="btn btn-ghost" href={P(lang, '/story/')}>{ar ? 'قصتي' : 'My story'}</a></div></div>
+  </div>
+</Shell>

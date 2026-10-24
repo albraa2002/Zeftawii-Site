@@ -1,0 +1,33 @@
+---
+import Shell from './Shell.astro';
+import type { Lang } from '../i18n';
+import { UI, P } from '../content/ui';
+import { story } from '../content/story';
+import { CONFIG } from '../config';
+const { lang } = Astro.props as { lang: Lang };
+const s = story[lang]; const u = UI[lang]; const ar = lang === 'ar'; const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, '/story/');
+const wa = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(ar ? 'أهلاً، قرأت قصتك وحابب أتكلم عن شغلي.' : 'Hi, I read your story and would like to talk about my business.')}`;
+const ld = [{ '@type': 'AboutPage', name: s.title, url: base + path, inLanguage: lang, mainEntity: { '@id': `${base}/#person` } }];
+---
+<Shell lang={lang} title={s.title} desc={s.desc} path={path} alt={{ ar: '/story/', en: '/en/story/' }} extraLd={ld}>
+  <div class="wrap about-hero">
+    <img class="about-img" src="/albaraa.jpg" srcset="/albaraa-320.jpg 320w, /albaraa.jpg 640w" sizes="200px" width="640" height="640" alt={ar ? 'البراء إيهاب الزفتاوي' : 'Albaraa Ehab Elzeftawy'} decoding="async" />
+    <div class="page-head">
+      <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <span>{ar ? 'قصتي' : 'My story'}</span></nav>
+      <h1>{s.h1}</h1><p>{s.lead}</p>
+      <div class="cta-row"><a class="btn btn-primary" href={P(lang, '/#contact')}>{s.ctaT}</a><a class="btn btn-wa" href={wa} target="_blank" rel="noopener">{u.wa}</a></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <h2 class="sec-h">{s.factsT}</h2>
+    <div class="facts">{s.facts.map((f) => <div><b>{f.v}</b><span>{f.l}</span></div>)}</div>
+    <h2 class="sec-h">{s.tlT}</h2>
+    <ol class="timeline">{s.tl.map((x) => <li><time>{x.t}</time><h3>{x.h}</h3><p>{x.p}</p></li>)}</ol>
+    <div class="two-col">
+      <section class="info-box"><h2>{s.courseT}</h2><p class="plain">{s.courseP}</p><ul>{s.courses.map((c) => <li>{c}</li>)}</ul></section>
+      <section class="info-box good"><h2>{s.whyT}</h2><ul>{s.why.map((c) => <li>{c}</li>)}</ul></section>
+    </div>
+    <div class="chips-row" style="margin-top:1.2rem"><a class="chip-link" href={P(lang, '/projects/')}>{ar ? 'شوف المشاريع' : 'See the projects'}</a><a class="chip-link" href={P(lang, '/certificates/')}>{ar ? 'الشهادات' : 'Certificates'}</a><a class="chip-link" href={P(lang, '/about/')}>{ar ? 'عنّي' : 'About'}</a></div>
+    <div class="cta-box"><h2>{s.ctaT}</h2><p>{s.ctaP}</p><div class="cta-row"><a class="btn btn-primary" href={P(lang, '/#contact')}>{u.ctaBtn}</a></div></div>
+  </div>
+</Shell>

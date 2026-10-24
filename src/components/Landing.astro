@@ -13,6 +13,9 @@ import { services as svcPages } from '../content/services';
 import { posts } from '../content/posts';
 import { cases } from '../content/site';
 import Testimonials from './Testimonials.astro';
+import ProjectArt from './ProjectArt.astro';
+import { quotes } from '../content/testimonials';
+import { certCount } from '../content/certs';
 import { tools } from '../content/tools';
 import { CONFIG, hasKey, hasBooking, hasLog } from '../config';
 interface Props { lang: Lang }
@@ -69,21 +72,63 @@ const quick = ar0 ? [
 
 <main id="main">
   <div class="hero" id="top">
-    <div class="wrap hero-grid">
-      <div>
-        <span class="kicker">{t.hero.kicker}</span>
-        <h1>{t.hero.h1a}<span class="grad">{t.hero.h1b}</span></h1>
-        <p class="sub">{t.hero.sub}</p>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="#contact" data-evt="cta_click" data-loc="hero">{t.hero.primary}</a>
-          <a class="btn btn-ghost" href="#services">{t.hero.secondary}</a>
+    <div class="wrap hs" data-hs aria-roledescription="carousel" aria-label={ar0 ? 'عروض الصفحة الرئيسية' : 'Homepage highlights'}>
+      <div class="hs-track" aria-live="off">
+        <div class="hs-slide on" role="group" aria-roledescription="slide" aria-label="1 / 4">
+          <div class="hero-grid">
+            <div>
+              <span class="kicker">{t.hero.kicker}</span>
+              <h1>{t.hero.h1a}<span class="grad">{t.hero.h1b}</span></h1>
+              <p class="sub">{t.hero.sub}</p>
+              <div class="cta-row">
+                <a class="btn btn-primary" href="#contact" data-evt="cta_click" data-loc="hero">{t.hero.primary}</a>
+                <a class="btn btn-ghost" href="#services">{t.hero.secondary}</a>
+              </div>
+              <ul class="trust">{t.hero.trust.map((x) => <li>{x}</li>)}</ul>
+            </div>
+            <div><DashShot stage kind="profit" lang={lang} /></div>
+          </div>
         </div>
-        <ul class="trust">{t.hero.trust.map((x) => <li>{x}</li>)}</ul>
-        <div class="chips">{t.hero.chips.map((c) => <span class="chip">{c}</span>)}</div>
+        <div class="hs-slide" role="group" aria-roledescription="slide" aria-label="2 / 4" aria-hidden="true">
+          <div class="hero-grid">
+            <div>
+              <span class="kicker">{ar0 ? 'مشاريع على GitHub' : 'Projects on GitHub'}</span>
+              <h2 class="hs-h">{ar0 ? 'مش بس بقول، أنا بابني.' : 'I do not just say it, I build it.'}</h2>
+              <p class="sub">{ar0 ? 'سبعة مشاريع تحليلية بنيتها بنفسي: من كشف العملاء المعرّضين للفقد لحد تقييم أوردرات الدفع عند الاستلام. كل مشروع فيه المشكلة والطريقة، ومكتوب بوضوح لما البيانات تجريبية.' : 'Seven analytics projects I built myself, from spotting customers about to churn to scoring cash-on-delivery orders. Each shows the problem and the method, and says clearly when data is simulated.'}</p>
+              <div class="cta-row"><a class="btn btn-primary" href={P(lang, '/projects/')}>{ar0 ? 'شوف المشاريع' : 'See the projects'}</a><a class="btn btn-ghost" href={CONFIG.links.github} target="_blank" rel="noopener noreferrer me">GitHub</a></div>
+            </div>
+            <div><ProjectArt kind="rfm" lang={lang} name="RFM Profit Radar" /></div>
+          </div>
+        </div>
+        <div class="hs-slide" role="group" aria-roledescription="slide" aria-label="3 / 4" aria-hidden="true">
+          <div class="hero-grid">
+            <div>
+              <span class="kicker">{ar0 ? 'آراء حقيقية' : 'Real feedback'}</span>
+              <h2 class="hs-h">{ar0 ? 'اللي اشتغلوا معايا بيقولوا إيه' : 'What people who worked with me say'}</h2>
+              <p class="sub">{ar0 ? 'اقتباسات من رسائل عملاء وتوصيات منشورة علنًا على LinkedIn، منسوبة بالدور فقط.' : 'Quotes from client messages and public LinkedIn recommendations, credited by role only.'}</p>
+              <div class="cta-row"><a class="btn btn-primary" href="#voices">{ar0 ? 'اقرأ الآراء' : 'Read the feedback'}</a><a class="btn btn-ghost" href={P(lang, '/certificates/')}>{ar0 ? 'الشهادات' : 'Certificates'}</a></div>
+            </div>
+            <figure class="hs-big"><blockquote>«{quotes[2][lang]}»</blockquote><small>{quotes[2].role[lang]}</small></figure>
+          </div>
+        </div>
+        <div class="hs-slide" role="group" aria-roledescription="slide" aria-label="4 / 4" aria-hidden="true">
+          <div class="hero-grid">
+            <div>
+              <span class="kicker">{ar0 ? 'قصتي' : 'My story'}</span>
+              <h2 class="hs-h">{ar0 ? 'من المعلوماتية الطبية لتحليل البيانات' : 'From medical informatics to data analytics'}</h2>
+              <p class="sub">{ar0 ? 'خريج كلية الحاسبات والمعلومات بجامعة المنصورة، وشغال من 2023 مع عملاء في مصر والسعودية. اعرف مين اللي هيشتغل على بياناتك.' : 'A Mansoura University Computers and Information graduate working since 2023 with clients in Egypt and Saudi Arabia. Meet the person who will work on your data.'}</p>
+              <div class="cta-row"><a class="btn btn-primary" href={P(lang, '/story/')}>{ar0 ? 'اقرأ قصتي' : 'Read my story'}</a><a class="btn btn-ghost" href={P(lang, '/certificates/')}>{ar0 ? `${certCount} شهادة` : `${certCount} certificates`}</a></div>
+            </div>
+            <div class="hs-big"><div class="row"><img src="/albaraa-320.jpg" width="84" height="84" alt="" loading="lazy" decoding="async" /><div><b>{ar0 ? 'البراء إيهاب الزفتاوي' : 'Albaraa Ehab Elzeftawy'}</b><br /><small>{ar0 ? 'محلل بيانات · مدير حسابات ومشاريع' : 'Data analyst · Account and project manager'}</small></div></div>
+              <div class="tile-row"><div class="pa-k"><small>{ar0 ? 'تخرج' : 'Graduated'}</small><b>2026</b></div><div class="pa-k pa-k2"><small>{ar0 ? 'مشروع موقع ومتجر 2026' : 'Sites and stores 2026'}</small><b>23</b></div><div class="pa-k pa-k1"><small>{ar0 ? 'شهادة ودورة' : 'Certificates'}</small><b>{certCount}</b></div><div class="pa-k"><small>{ar0 ? 'خبرة عملية' : 'Hands-on since'}</small><b>2023</b></div></div></div>
+          </div>
+        </div>
       </div>
-
-      <div>
-        <DashShot stage kind="profit" lang={lang} />
+      <div class="hs-ctl">
+        <button type="button" class="hs-btn" data-hs-prev aria-label={ar0 ? 'السابق' : 'Previous'}>{ar0 ? '›' : '‹'}</button>
+        <div class="hs-dots" style="display:flex;gap:.4rem">{[0, 1, 2, 3].map((i) => <button type="button" class={`hs-dot${i === 0 ? ' on' : ''}`} data-hs-go={i} aria-label={`${i + 1} / 4`}></button>)}</div>
+        <button type="button" class="hs-btn" data-hs-next aria-label={ar0 ? 'التالي' : 'Next'}>{ar0 ? '‹' : '›'}</button>
+        <button type="button" class="hs-btn hs-pp" data-hs-pp aria-pressed="false">{ar0 ? 'إيقاف التبديل' : 'Pause'}</button>
       </div>
     </div>
     <div class="wrap">
@@ -357,6 +402,35 @@ const quick = ar0 ? [
     track.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
     window.addEventListener('resize', () => { buildDots(); update(); });
     buildDots(); update();
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-hs]').forEach((root) => {
+    const slides = Array.from(root.querySelectorAll<HTMLElement>('.hs-slide'));
+    const dots = Array.from(root.querySelectorAll<HTMLElement>('.hs-dot'));
+    const pp = root.querySelector('[data-hs-pp]') as HTMLButtonElement;
+    const ms = 7000; root.style.setProperty('--hs-ms', ms + 'ms');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i = 0, timer = 0, paused = reduce, hover = false;
+    const labels = pp.textContent!.includes('إيقاف') ? ['إيقاف التبديل', 'تشغيل التبديل'] : ['Pause', 'Play'];
+    const show = (n: number) => {
+      i = (n + slides.length) % slides.length;
+      slides.forEach((s, k) => { s.classList.toggle('on', k === i); s.setAttribute('aria-hidden', String(k !== i)); s.querySelectorAll<HTMLElement>('a,button').forEach((x) => (x.tabIndex = k === i ? 0 : -1)); });
+      dots.forEach((d, k) => { d.classList.remove('on'); if (k === i) { void d.offsetWidth; d.classList.add('on'); } });
+      arm();
+    };
+    const arm = () => { clearTimeout(timer); root.classList.toggle('run', !paused && !hover); if (!paused && !hover) timer = window.setTimeout(() => show(i + 1), ms); };
+    const setPaused = (p: boolean) => { paused = p; pp.setAttribute('aria-pressed', String(p)); pp.textContent = p ? labels[1] : labels[0]; arm(); };
+    dots.forEach((d, k) => d.addEventListener('click', () => show(k)));
+    (root.querySelector('[data-hs-prev]') as HTMLElement).addEventListener('click', () => show(i - 1));
+    (root.querySelector('[data-hs-next]') as HTMLElement).addEventListener('click', () => show(i + 1));
+    pp.addEventListener('click', () => setPaused(!paused));
+    root.addEventListener('mouseenter', () => { hover = true; arm(); }); root.addEventListener('mouseleave', () => { hover = false; arm(); });
+    root.addEventListener('focusin', () => { hover = true; arm(); }); root.addEventListener('focusout', () => { hover = false; arm(); });
+    document.addEventListener('visibilitychange', () => { hover = document.hidden; arm(); });
+    let x0 = 0; root.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+    root.addEventListener('touchend', (e) => { const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) show(i + (dx < 0 ? 1 : -1) * (document.documentElement.dir === 'rtl' ? -1 : 1)); }, { passive: true });
+    slides.forEach((s, k) => s.querySelectorAll<HTMLElement>('a,button').forEach((x) => (x.tabIndex = k === 0 ? 0 : -1)));
+    pp.textContent = paused ? labels[1] : labels[0]; pp.setAttribute('aria-pressed', String(paused)); arm();
   });
 
   const trk = (name: string, params: Record<string, unknown> = {}) => {
