@@ -190,3 +190,11 @@ main.inner > .wrap + .wrap { margin-top: 0; }
 .pa-chrome em { color: #fbbf24; }
 :root[data-theme='light'] .pa-chrome em { color: #92400e; }
 .f-hint { opacity: 1; color: var(--muted); }
+/* touch targets (mobile / coarse pointers) */
+@media (max-width: 900px), (pointer: coarse) {
+  .hs-dot, .car-dot { position: relative; }
+  .hs-dot::after, .car-dot::after { content: ''; position: absolute; inset: -16px -4px; }
+  .card-more, .card-cta, .crumbs a, .foot-bottom a, .foot-top li a, .more { display: inline-flex; align-items: center; min-height: 40px; }
+  .foot-top li a { padding-block: .2rem; }
+  .logo { min-height: 44px; display: inline-flex; align-items: center; }
+}
