@@ -12,7 +12,6 @@ export function searchIndex(lang: Lang): Item[] {
   const out: Item[] = [];
   services.forEach((s) => out.push({ t: s[lang].name, d: s[lang].desc, u: P(lang, `/services/${s.slug}/`), g: g.s }));
   solutions.forEach((s) => out.push({ t: s[lang].name, d: s[lang].desc, u: P(lang, `/solutions/${s.slug}/`), g: g.so }));
-  out.push({ t: ar ? 'حاسبة ربحية الإعلانات (ROAS)' : 'Ad profitability calculator (ROAS)', d: ar ? 'اعرف حملتك بتكسب ولا بتخسر.' : 'Find out if your campaign earns or loses.', u: P(lang, '/#calc'), g: g.t });
   tools.forEach((s) => out.push({ t: s[lang].name, d: s[lang].desc, u: P(lang, `/tools/${s.slug}/`), g: g.t }));
   posts.forEach((s) => out.push({ t: s[lang].title, d: s[lang].desc, u: P(lang, `/blog/${s.slug}/`), g: g.b }));
   glossary.forEach((s) => out.push({ t: `${s[lang].term} · ${s[lang].full}`, d: s[lang].short, u: P(lang, `/glossary/${s.slug}/`), g: g.gl }));

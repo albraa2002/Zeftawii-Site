@@ -1,10 +1,20 @@
 // الأدوات المجانية. عدّل النصوص والأسئلة هنا.
 import type { Lang } from '../i18n';
+import { T } from '../i18n';
 export type TF = { k: string; l: string; ph?: string; t?: 'area' | 'svc'; wide?: boolean };
 export type TL = { name: string; desc: string; h1: string; lead: string; cta: string; waHead: string; note: string; f?: TF[]; r?: Record<string, string>; v?: Record<string, string>; empty?: string; q?: { area: string; items: string[] }[]; opts?: string[]; areas?: string[]; levels?: string[]; tips?: Record<string, string[]>; resT?: string };
-export type Tool = { slug: string; kind: 'savings' | 'cod' | 'check' | 'cpaltv' | 'be' | 'brief'; svc: number; ar: TL; en: TL };
+export type Tool = { slug: string; kind: 'roas' | 'savings' | 'cod' | 'check' | 'cpaltv' | 'be' | 'brief'; svc: number; ar: TL; en: TL };
+
+const roasOf = (l: Lang): TL => {
+  const c = (T as any)[l].calc;
+  const ph: Record<string, string> = { spend: '20000', orders: '100', aov: '500', cogs: '40', ship: '60', ret: '20' };
+  return { name: l === 'ar' ? 'حاسبة ربحية الإعلانات (ROAS)' : 'Ad profitability calculator (ROAS)', desc: c.sub, h1: c.title, lead: c.sub, cta: c.cta, waHead: c.waHead, note: c.note, empty: c.empty,
+    f: ['spend', 'orders', 'aov', 'cogs', 'ship', 'ret'].map((k) => ({ k, l: c.f[k], ph: ph[k] })), r: c.r,
+    v: { broke: c.broke, win: c.win, winOk: c.winOk, winTight: c.winTight, lose: c.lose } } as TL;
+};
 
 export const tools: Tool[] = [
+  { slug: 'roas-profitability-calculator', kind: 'roas', svc: 1, ar: roasOf('ar'), en: roasOf('en') },
   { slug: 'automation-savings-calculator', kind: 'savings', svc: 2,
     ar: { name: 'حاسبة توفير وقت الأتمتة', desc: 'احسب كام ساعة وفلوس بتضيع في السنة على تقارير بتتعمل يدوي، وكام ممكن توفر بالأتمتة.', h1: 'كام بتخسر على التقارير اليدوي؟', lead: 'اكتب عدد التقارير والوقت وتكلفة الساعة، وهتشوف تكلفة الشغل اليدوي في السنة وتقدير التوفير.', cta: 'عاوز تأتمت تقاريرك؟', waHead: 'أهلاً، جربت حاسبة توفير الأتمتة وحابب أستشير:', note: 'تقدير مبسّط وليس ضماناً. نسبة التوفير الفعلية بتتحدد بعد فحص تقاريرك ومصادر بياناتها.',
       f: [{ k: 'reports', l: 'عدد التقارير في الشهر' }, { k: 'hours', l: 'الساعات لكل تقرير' }, { k: 'rate', l: 'تكلفة ساعة الشغل (بأي عملة)' }, { k: 'save', l: 'نسبة الوقت المتوقع توفيرها %', ph: '60' }],

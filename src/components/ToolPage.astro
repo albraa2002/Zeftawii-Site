@@ -5,10 +5,12 @@ import type { Lang } from '../i18n';
 import { UI, P } from '../content/ui';
 import { tools } from '../content/tools';
 import { services } from '../content/services';
+import { hints } from '../content/tool-hints';
 import { CONFIG } from '../config';
 const { lang, slug } = Astro.props as { lang: Lang; slug: string };
 const tool = tools.find((x) => x.slug === slug)!; const c = tool[lang]; const u = UI[lang];
 const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, `/tools/${slug}/`);
+const H = hints[slug]; const hint = (k: string) => H?.f[k]?.[lang];
 const others = tools.filter((x) => x.slug !== slug);
 const ld = [
   { '@type': 'WebApplication', name: c.name, description: c.desc, url: base + path, inLanguage: lang, applicationCategory: 'BusinessApplication', operatingSystem: 'Web', offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }, author: { '@id': `${base}/#person` } },
@@ -28,16 +30,17 @@ const data = { kind: tool.kind, svc: tool.svc, lang, ...c, wa: CONFIG.whatsapp, 
     <p>{c.lead}</p>
   </div>
   <div class="wrap">
+    {H && (<div class="tool-guide"><b>{lang === 'ar' ? 'إزاي تستخدم الأداة' : 'How to use this tool'}</b><ol>{H.guide[lang].map((x) => <li>{x}</li>)}</ol></div>)}
     <div class="calc tool" id="tool" data-t={JSON.stringify(data)}>
       {tool.kind !== 'check' ? (<>
         <div class="calc-in">
           {c.f!.map((f) => f.t === 'svc' ? (
-            <label class={f.wide ? 'wide' : ''}>{f.l}<select data-k={f.k}><option value="">{lang === 'ar' ? 'اختر الخدمة' : 'Choose a service'}</option>{services.map((sv) => <option value={String(sv.idx)}>{sv[lang].name}</option>)}<option value="6">{lang === 'ar' ? 'مش متأكد' : 'Not sure'}</option></select></label>
+            <label class={f.wide ? 'wide' : ''}><span class="f-l">{f.l}</span><select data-k={f.k}><option value="">{lang === 'ar' ? 'اختر الخدمة' : 'Choose a service'}</option>{services.map((sv) => <option value={String(sv.idx)}>{sv[lang].name}</option>)}<option value="6">{lang === 'ar' ? 'مش متأكد' : 'Not sure'}</option></select>{hint(f.k) && <small class="f-hint">{hint(f.k)}</small>}</label>
           ) : f.t === 'area' ? (
-            <label class={f.wide ? 'wide' : ''}>{f.l}<textarea data-k={f.k} placeholder={f.ph || ''} maxlength="400"></textarea></label>
+            <label class={f.wide ? 'wide' : ''}><span class="f-l">{f.l}</span><textarea data-k={f.k} placeholder={f.ph || ''} maxlength="400"></textarea>{hint(f.k) && <small class="f-hint">{hint(f.k)}</small>}</label>
           ) : tool.kind === 'brief' ? (
-            <label>{f.l}<input data-k={f.k} autocomplete="off" placeholder={f.ph || ''} maxlength="120" /></label>
-          ) : (<label>{f.l}<input data-k={f.k} inputmode="decimal" dir="ltr" autocomplete="off" placeholder={f.ph || ''} /></label>))}
+            <label><span class="f-l">{f.l}</span><input data-k={f.k} autocomplete="off" placeholder={f.ph || ''} maxlength="120" />{hint(f.k) && <small class="f-hint">{hint(f.k)}</small>}</label>
+          ) : (<label><span class="f-l">{f.l}</span><input data-k={f.k} inputmode="decimal" dir="ltr" autocomplete="off" placeholder={f.ph || ''} />{hint(f.k) && <small class="f-hint">{hint(f.k)}</small>}</label>))}
         </div>
         {tool.kind === 'brief' ? (
         <div class="calc-out" aria-live="polite">
@@ -59,7 +62,7 @@ const data = { kind: tool.kind, svc: tool.svc, lang, ...c, wa: CONFIG.whatsapp, 
           <div class="calc-grid" hidden>
             {Object.entries(c.r!).map(([k, l]) => (<div class="calc-k"><small>{l}</small><b data-o={k}>-</b></div>))}
           </div>
-          <p class="calc-verdict">{c.empty}</p>
+          <p class="calc-verdict" data-l={lang === 'ar' ? 'تقرير سريع' : 'Quick report'}>{c.empty}</p>
           <p class="calc-note">{c.note}</p>
           <div class="calc-cta" hidden>
             <span>{c.cta}</span>
@@ -95,7 +98,6 @@ const data = { kind: tool.kind, svc: tool.svc, lang, ...c, wa: CONFIG.whatsapp, 
     </div>
     <h2 class="sec-h">{u.tools}</h2>
     <div class="post-grid tight">
-      <a class="post-card" href={P(lang, '/#calc')}><h3>{lang === 'ar' ? 'حاسبة ربحية الإعلانات (ROAS)' : 'Ad profitability calculator (ROAS)'}</h3></a>
       {others.map((o) => <a class="post-card" href={P(lang, `/tools/${o.slug}/`)}><h3>{o[lang].name}</h3></a>)}
     </div>
   </div>
@@ -169,7 +171,18 @@ const data = { kind: tool.kind, svc: tool.svc, lang, ...c, wa: CONFIG.whatsapp, 
         const v: Record<string, number> = {}; ins.forEach((i) => { v[i.dataset.k!] = num(i.value); });
         const d = (k: string, def = 0) => (isNaN(v[k]) ? def : v[k]);
         let ok = false, verdictKey = '';
-        if (kind === 'savings') {
+        if (kind === 'roas') {
+          ok = v.spend > 0 && v.orders > 0 && v.aov > 0;
+          if (ok) {
+            const cogs = Math.min(Math.max(d('cogs'), 0), 100) / 100, ret = Math.min(Math.max(d('ret'), 0), 100) / 100, ship = Math.max(d('ship'), 0);
+            const gross = v.orders * v.aov, contrib = gross * (1 - ret) * (1 - cogs) - ship * v.orders, profit = contrib - v.spend, roas = gross / v.spend, cpa = v.spend / v.orders;
+            out('roas', f(roas)); out('cpa', f(cpa)); out('profit', f(profit));
+            const pos = contrib > 0, be = pos ? gross / contrib : NaN; out('be', pos ? f(be) : '-'); out('becpa', pos ? f(contrib / v.orders) : '-');
+            if (!pos) verdictKey = 'broke';
+            else if (profit >= 0) { verdictKey = 'win'; const mg = Math.round((roas / be - 1) * 100); T.v.win_ = T.v.win.replace('{x}', String(mg)).replace('{m}', mg < 25 ? T.v.winTight : T.v.winOk); }
+            else { verdictKey = 'lose'; T.v.lose_ = T.v.lose.replace('{b}', f(be)).replace('{c}', f(contrib / v.orders)); }
+          }
+        } else if (kind === 'savings') {
           ok = v.reports > 0 && v.hours > 0 && v.rate > 0;
           if (ok) {
             const save = Math.min(Math.max(d('save', 60), 0), 100) / 100; const hy = v.reports * v.hours * 12, cy = hy * v.rate, sh = hy * save, sc = cy * save;
@@ -200,7 +213,7 @@ const data = { kind: tool.kind, svc: tool.svc, lang, ...c, wa: CONFIG.whatsapp, 
           }
         }
         if (!ok) { grid.hidden = true; cta.hidden = true; verdict.className = 'calc-verdict'; verdict.textContent = T.empty; return; }
-        grid.hidden = false; cta.hidden = false; verdict.textContent = T.v[verdictKey]; verdict.className = 'calc-verdict ' + (['big', 'high', 'bad', 'neg'].includes(verdictKey) ? 'bad' : ['low', 'tight', 'thin'].includes(verdictKey) ? '' : 'good');
+        grid.hidden = false; cta.hidden = false; verdict.textContent = T.v[verdictKey + '_'] || T.v[verdictKey]; verdict.className = 'calc-verdict rep ' + (['big', 'high', 'bad', 'neg', 'broke', 'lose'].includes(verdictKey) ? 'bad' : ['low', 'tight', 'thin'].includes(verdictKey) ? '' : 'good');
         const lines = [T.waHead, '', ...ins.filter((i) => i.value).map((i) => `• ${T.f.find((x: any) => x.k === i.dataset.k).l}: ${toLatinDigits(i.value)}`), '', ...Object.keys(T.r).map((k) => `${T.r[k]}: ${(root.querySelector(`[data-o="${k}"]`) as HTMLElement).textContent}`), src()];
         waA.href = waLink(T.wa, lines.join('\n'));
         if (!sent) { sent = true; trk('tool_used', { tool: kind }); }

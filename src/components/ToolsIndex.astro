@@ -16,7 +16,6 @@ const ld = [{ '@type': 'CollectionPage', name: title, url: base + path, inLangua
 <Shell lang={lang} title={title} desc={desc} path={path} alt={{ ar: '/tools/', en: '/en/tools/' }} extraLd={ld}>
   <div class="wrap page-head has-art"><span class="kicker">FREE TOOLS</span><h1>{u.tools}</h1><p>{desc}</p><div class="hb-art"><DashShot stage kind="ads" lang={lang} /></div></div>
   <div class="wrap post-grid">
-    <a class="post-card" href={P(lang, '/#calc')}><span class="meta">ROAS</span><h2>{lang === 'ar' ? 'حاسبة ربحية الإعلانات' : 'Ad profitability calculator'}</h2><p>{lang === 'ar' ? 'اعرف حملتك بتكسب ولا بتخسر بعد التكلفة والشحن والمرتجعات.' : 'Find out whether your campaign earns or loses after cost, shipping and returns.'}</p><span class="more">{lang === 'ar' ? 'جرّب الأداة' : 'Try the tool'} <i aria-hidden="true">{lang === 'ar' ? '←' : '→'}</i></span></a>
     {tools.map((t) => (
       <a class="post-card" href={P(lang, `/tools/${t.slug}/`)}><span class="meta">FREE</span><h2>{t[lang].name}</h2><p>{t[lang].desc}</p><span class="more">{lang === 'ar' ? 'جرّب الأداة' : 'Try the tool'} <i aria-hidden="true">{lang === 'ar' ? '←' : '→'}</i></span></a>
     ))}

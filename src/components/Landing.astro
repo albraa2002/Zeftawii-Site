@@ -134,32 +134,28 @@ const quick = ar0 ? [
 
   <section id="calc">
     <div class="wrap">
-      <div class="sec-head rv"><h2>{t.calc.title}</h2><p>{t.calc.sub}</p></div>
-      <div class="calc rv" id="calc-box" data-c={JSON.stringify(t.calc)} data-lang={lang} data-wa={CONFIG.whatsapp}>
-        <div class="calc-in">
-          {(['spend', 'orders', 'aov', 'cogs', 'ship', 'ret'] as const).map((k) => (
-            <label>{t.calc.f[k]}<input data-k={k} inputmode="decimal" dir="ltr" autocomplete="off" placeholder={({ spend: '20000', orders: '100', aov: '500', cogs: '40', ship: '60', ret: '20' } as Record<string, string>)[k]} /></label>
+      <div class="sec-head rv"><h2>{ar0 ? 'أدوات مجانية تجرّبها بنفسك' : 'Free tools you can try yourself'}</h2><p>{ar0 ? 'حاسبات وفحوصات سريعة. اختار الأداة، اكتب أرقامك، وخد تقرير قصير فيه نصيحة.' : 'Quick calculators and checks. Pick a tool, enter your numbers and get a short report with advice.'}</p></div>
+      <div class="carousel tool-car rv" data-carousel>
+        <div class="track" tabindex="0" role="region" aria-roledescription="carousel" aria-label={ar0 ? 'الأدوات المجانية' : 'Free tools'}>
+          {tools.map((x, i) => (
+            <a class="post-card tool-card" href={P(lang, `/tools/${x.slug}/`)}>
+              <span class="tool-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <span class="meta">{x.kind === 'check' ? (ar0 ? 'فحص سريع' : 'QUICK CHECK') : x.kind === 'brief' ? (ar0 ? 'مولّد' : 'GENERATOR') : (ar0 ? 'حاسبة' : 'CALCULATOR')}</span>
+              <h3>{x[lang].name}</h3>
+              <p>{x[lang].desc}</p>
+              <span class="more">{ar0 ? 'جرّب الأداة' : 'Try the tool'} <i aria-hidden="true">{ar0 ? '←' : '→'}</i></span>
+            </a>
           ))}
         </div>
-        <div class="calc-out" aria-live="polite">
-          <div class="calc-grid" hidden>
-            {(['roas', 'be', 'cpa', 'becpa', 'profit'] as const).map((k) => (<div class="calc-k"><small>{t.calc.r[k]}</small><b data-o={k}>-</b></div>))}
-          </div>
-          <p class="calc-verdict">{t.calc.empty}</p>
-          <p class="calc-note">{t.calc.note}</p>
-          <div class="calc-cta" hidden>
-            <span>{t.calc.cta}</span>
-            <a class="btn btn-primary btn-sm" href="#contact" data-service="1" data-evt="cta_click" data-loc="calc">{t.calc.ctaBtn}</a>
-            <a class="btn btn-wa btn-sm" id="calc-wa" target="_blank" rel="noopener" data-evt="whatsapp_click" data-loc="calc">{t.calc.waBtn}</a>
-          </div>
+        <div class="car-ctrl">
+          <button type="button" class="car-btn" data-dir="prev" aria-label={ar0 ? 'السابق' : 'Previous'}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg></button>
+          <div class="car-dots"></div>
+          <button type="button" class="car-btn" data-dir="next" aria-label={ar0 ? 'التالي' : 'Next'}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
         </div>
       </div>
+      <p class="work-more rv"><a class="btn btn-ghost" href={P(lang, '/tools/')}>{ar0 ? 'كل الأدوات' : 'All tools'}</a></p>
     </div>
   </section>
-
-
-
-
 
   <section id="voices">
     <div class="wrap">
@@ -509,41 +505,6 @@ const quick = ar0 ? [
   })();
 
 
-  // ===== حاسبة ربحية الإعلانات =====
-  (() => {
-    const box = document.getElementById('calc-box'); if (!box) return;
-    const C = JSON.parse(box.dataset.c || '{}'); const CL = box.dataset.lang as 'ar' | 'en';
-    const ins = Array.from(box.querySelectorAll<HTMLInputElement>('input[data-k]'));
-    const grid = box.querySelector('.calc-grid') as HTMLElement; const verdict = box.querySelector('.calc-verdict') as HTMLElement;
-    const cta = box.querySelector('.calc-cta') as HTMLElement; const waA = document.getElementById('calc-wa') as HTMLAnchorElement;
-    const num = (s: string) => { const v = parseFloat(toLatinDigits(s).replace(/[,،٬\s]/g, '').replace('٫', '.')); return isFinite(v) ? v : NaN; };
-    const f = (n: number) => n.toLocaleString('en-US', { maximumFractionDigits: 2 });
-    const out = (k: string, v: string) => { const e = box.querySelector(`[data-o="${k}"]`); if (e) e.textContent = v; };
-    let sent = false;
-    const calc = () => {
-      const v: Record<string, number> = {}; ins.forEach((i) => { v[i.dataset.k!] = num(i.value); });
-      const need = ['spend', 'orders', 'aov'].every((k) => v[k] > 0);
-      if (!need) { grid.hidden = true; cta.hidden = true; verdict.className = 'calc-verdict'; verdict.textContent = C.empty; return; }
-      const cogs = Math.min(Math.max(isNaN(v.cogs) ? 0 : v.cogs, 0), 100) / 100, ret = Math.min(Math.max(isNaN(v.ret) ? 0 : v.ret, 0), 100) / 100, ship = Math.max(isNaN(v.ship) ? 0 : v.ship, 0);
-      const gross = v.orders * v.aov, net = gross * (1 - ret);
-      const contrib = net * (1 - cogs) - ship * v.orders, profit = contrib - v.spend;
-      const roas = gross / v.spend, cpa = v.spend / v.orders;
-      out('roas', f(roas)); out('cpa', f(cpa)); out('profit', f(profit));
-      const ok = contrib > 0; const be = ok ? gross / contrib : NaN;
-      out('be', ok ? f(be) : '-'); out('becpa', ok ? f(contrib / v.orders) : '-');
-      grid.hidden = false; cta.hidden = false;
-      let msg = '', cls = '';
-      if (!ok) { msg = C.broke; cls = 'bad'; }
-      else if (profit >= 0) { const mg = Math.round((roas / be - 1) * 100); msg = C.win.replace('{x}', String(mg)).replace('{m}', mg < 25 ? C.winTight : C.winOk); cls = 'good'; }
-      else { msg = C.lose.replace('{b}', f(be)).replace('{c}', f(contrib / v.orders)); cls = 'bad'; }
-      verdict.textContent = msg; verdict.className = 'calc-verdict ' + cls;
-      const lines = [C.waHead, '', ...ins.filter((i) => i.value).map((i) => `• ${C.f[i.dataset.k!]}: ${toLatinDigits(i.value)}`), '', `ROAS ${f(roas)} / ${C.r.be} ${ok ? f(be) : '-'} / ${C.r.profit} ${f(profit)}`];
-      const cx = getCtx(); lines.push('——', `${CL === 'ar' ? 'المصدر' : 'Source'}: calculator${cx.utm_source ? ' · ' + cx.utm_source : ''}`);
-      waA.href = waLink(box.dataset.wa!, lines.join('\n'));
-      if (!sent) { sent = true; trk('calc_used'); }
-    };
-    ins.forEach((i) => i.addEventListener('input', calc));
-  })();
 
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12 });
   document.querySelectorAll('.rv').forEach((el) => io.observe(el));

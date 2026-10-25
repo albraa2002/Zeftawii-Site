@@ -17,7 +17,7 @@ const tag = ar
   ? ['لوحات تفاعلية بمؤشراتك', 'ROAS وCPA وتحليل الحملات', 'تقارير بتتحدث لوحدها', 'أدوات ونماذج تنبؤية', 'مدير حسابات بدوام جزئي', 'نطاق وجدول وتقارير حالة']
   : ['Interactive KPI dashboards', 'ROAS, CPA and campaign analysis', 'Reports that refresh themselves', 'Smart tools and predictive models', 'A part-time account manager', 'Scope, schedule and status reports'];
 const latest = [...posts].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
-const toolList = [{ n: L.roas, h: P(lang, '/#calc') }, ...tools.map((x) => ({ n: x[lang].name, h: P(lang, `/tools/${x.slug}/`) }))];
+const toolList = [...tools.map((x) => ({ n: x[lang].name, h: P(lang, `/tools/${x.slug}/`) }))];
 const arrow = ar ? '←' : '→';
 const cur = Astro.url.pathname.replace(/^\/en(?=\/|$)/, '') || '/';
 const act = (...pre: string[]) => (pre.some((x) => cur === x || cur.startsWith(x + '/')) ? ' on' : '');

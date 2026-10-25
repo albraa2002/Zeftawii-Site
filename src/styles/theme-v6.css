@@ -142,3 +142,19 @@ main.inner > .wrap + .wrap { margin-top: 0; }
 .page-head + .proj-slider, .proj-cta { margin-bottom: 0; }
 .track .proj-card { display: flex; flex-direction: column; }
 .track .proj-card .more { margin-top: auto; padding-top: .8rem; }
+/* tools carousel on home */
+.track .tool-card { flex: 0 0 calc((100% - (var(--per) - 1) * var(--gap)) / var(--per)); scroll-snap-align: start; display: flex; flex-direction: column; gap: .5rem; position: relative; }
+.tool-card .tool-n { position: absolute; inset-block-start: 1rem; inset-inline-end: 1.2rem; font: 700 1.6rem/1 var(--font-mono, monospace); color: rgba(var(--c), .35); }
+.tool-card p { display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.tool-card .more { margin-top: auto; padding-top: .6rem; }
+.tool-car { margin-top: 1.6rem; }
+/* tool page guidance */
+.tool-guide { margin: 1.6rem 0 1.2rem; padding: 1rem 1.3rem; border: 1px solid var(--panel-b); border-inline-start: 3px solid var(--cyan); border-radius: var(--radius); background: var(--panel); }
+.tool-guide b { display: block; margin-bottom: .4rem; }
+.tool-guide ol { margin: 0; padding-inline-start: 1.3rem; display: grid; gap: .25rem; color: var(--muted, inherit); }
+.calc.tool .calc-in label .f-l { display: block; }
+.f-hint { display: block; margin-top: .35rem; font-size: .8rem; line-height: 1.5; opacity: .72; font-weight: 400; }
+.calc.tool .calc-verdict.rep { padding: .9rem 1.1rem; border-radius: var(--radius); background: rgba(var(--c), .08); border: 1px solid rgba(var(--c), .25); }
+.calc.tool .calc-verdict.rep.good { background: rgba(var(--g), .09); border-color: rgba(var(--g), .3); }
+.calc.tool .calc-verdict.rep.bad { background: rgba(var(--w), .09); border-color: rgba(var(--w), .3); }
+.calc.tool .calc-verdict.rep::before { content: attr(data-l); display: block; font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; opacity: .7; margin-bottom: .25rem; }

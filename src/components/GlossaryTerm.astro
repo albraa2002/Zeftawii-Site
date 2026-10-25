@@ -12,7 +12,7 @@ const g = glossary.find((x) => x.slug === slug)!; const c = g[lang]; const u = U
 const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, `/glossary/${slug}/`);
 const svc = services.find((s) => s.idx === g.svc);
 const tool = g.tool && g.tool !== 'roas' ? tools.find((t) => t.slug === g.tool) : undefined;
-const toolHref = g.tool === 'roas' ? P(lang, '/#calc') : tool ? P(lang, `/tools/${tool.slug}/`) : '';
+const toolHref = g.tool === 'roas' ? P(lang, '/tools/roas-profitability-calculator/') : tool ? P(lang, `/tools/${tool.slug}/`) : '';
 const toolName = g.tool === 'roas' ? (ar ? 'حاسبة ربحية الإعلانات (ROAS)' : 'Ad profitability calculator (ROAS)') : tool ? tool[lang].name : '';
 const rel = g.rel.map((r) => glossary.find((x) => x.slug === r)).filter(Boolean) as typeof glossary;
 const title = ar ? `${c.term} يعني إيه؟ الشرح والمعادلة | Zeftawii` : `What is ${c.term}? Definition and formula | Zeftawii`;

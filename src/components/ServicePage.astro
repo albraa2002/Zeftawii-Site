@@ -31,7 +31,7 @@ const REL: Record<number, { t: string[]; g: string[]; s: string[] }> = {
 const sampleKinds = ([['profit','accounts'],['ads','funnel'],['report','profit'],['funnel','ads'],['accounts','delivery'],['delivery','accounts']][s.idx] || ['profit','accounts']) as ('profit'|'accounts'|'ads'|'funnel'|'report'|'delivery')[];
 const relProj = projects.filter((x) => x.ar.svc === slug);
 const R = REL[s.idx] || { t: [], g: [], s: [] };
-const relTools = R.t.map((x) => x === 'roas' ? { n: lang === 'ar' ? 'حاسبة ربحية الإعلانات (ROAS)' : 'Ad profitability calculator (ROAS)', h: P(lang, '/#calc') } : { n: tools.find((y) => y.slug === x)![lang].name, h: P(lang, `/tools/${x}/`) });
+const relTools = R.t.map((x) => x === 'roas' ? { n: lang === 'ar' ? 'حاسبة ربحية الإعلانات (ROAS)' : 'Ad profitability calculator (ROAS)', h: P(lang, '/tools/roas-profitability-calculator/') } : { n: tools.find((y) => y.slug === x)![lang].name, h: P(lang, `/tools/${x}/`) });
 const relTerms = R.g.map((x) => glossary.find((y) => y.slug === x)!).filter(Boolean);
 const relSol = R.s.map((x) => solutions.find((y) => y.slug === x)!).filter(Boolean);
 const wa = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent((lang === 'ar' ? 'أهلاً، حابب أستفسر عن خدمة: ' : 'Hi, I would like to ask about: ') + c.name)}`;

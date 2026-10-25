@@ -15,7 +15,7 @@ const { lang, slug } = Astro.props as { lang: Lang; slug: string };
 const s = solutions.find((x) => x.slug === slug)!; const c = s[lang]; const u = UI[lang]; const ar = lang === 'ar';
 const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, `/solutions/${slug}/`);
 const svc = services.find((x) => x.idx === s.svc)!;
-const tl = s.tools.map((t) => t === 'roas' ? { href: P(lang, '/#calc'), name: ar ? 'حاسبة ربحية الإعلانات (ROAS)' : 'Ad profitability calculator (ROAS)' } : { href: P(lang, `/tools/${t}/`), name: tools.find((x) => x.slug === t)![lang].name });
+const tl = s.tools.map((t) => t === 'roas' ? { href: P(lang, '/tools/roas-profitability-calculator/'), name: ar ? 'حاسبة ربحية الإعلانات (ROAS)' : 'Ad profitability calculator (ROAS)' } : { href: P(lang, `/tools/${t}/`), name: tools.find((x) => x.slug === t)![lang].name });
 const terms = s.terms.map((t) => glossary.find((g) => g.slug === t)).filter(Boolean) as typeof glossary;
 const rel = posts.filter((p) => s.posts.includes(p.slug));
 const others = solutions.filter((x) => x.slug !== slug);

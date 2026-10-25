@@ -101,6 +101,7 @@
 - https://zeftawii-site-46vp.vercel.app/en/tools/cod-returns-cost-calculator/
 - https://zeftawii-site-46vp.vercel.app/en/tools/cpa-ltv-calculator/
 - https://zeftawii-site-46vp.vercel.app/en/tools/project-brief-generator/
+- https://zeftawii-site-46vp.vercel.app/en/tools/roas-profitability-calculator/
 - https://zeftawii-site-46vp.vercel.app/en/work/
 - https://zeftawii-site-46vp.vercel.app/en/work/client-tracker-demo/
 - https://zeftawii-site-46vp.vercel.app/en/work/delivery-2026/

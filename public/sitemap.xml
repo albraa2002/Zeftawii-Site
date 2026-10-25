@@ -1333,6 +1333,24 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-46vp.vercel.app/tools/project-brief-generator/"/>
   </url>
   <url>
+    <loc>https://zeftawii-site-46vp.vercel.app/tools/roas-profitability-calculator/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-46vp.vercel.app/tools/roas-profitability-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-46vp.vercel.app/en/tools/roas-profitability-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-46vp.vercel.app/tools/roas-profitability-calculator/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-46vp.vercel.app/en/tools/roas-profitability-calculator/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-46vp.vercel.app/tools/roas-profitability-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-46vp.vercel.app/en/tools/roas-profitability-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-46vp.vercel.app/tools/roas-profitability-calculator/"/>
+  </url>
+  <url>
     <loc>https://zeftawii-site-46vp.vercel.app/work/</loc>
     <lastmod>2026-10-25</lastmod>
     <changefreq>monthly</changefreq>
