@@ -186,3 +186,7 @@ main.inner > .wrap + .wrap { margin-top: 0; }
 @media (max-width: 900px) { .pr-grid { grid-template-columns: repeat(2, 1fr); } .pr-bot { grid-template-columns: 1fr; } }
 @media (max-width: 560px) { .pr-grid, .pr-links { grid-template-columns: 1fr; } .trustbar li { max-width: none; flex-basis: 100%; } }
 .wrap .promise .wrap { padding: 0; max-width: none; width: auto; margin: 0; } .wrap .promise { padding-block: 2.4rem 0; }
+/* contrast fixes (WCAG AA) */
+.pa-chrome em { color: #fbbf24; }
+:root[data-theme='light'] .pa-chrome em { color: #92400e; }
+.f-hint { opacity: 1; color: var(--muted); }
