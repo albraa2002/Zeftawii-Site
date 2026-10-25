@@ -10,10 +10,10 @@ const { lang, noindex = false, inner = false, extraLd = [], ogType = 'website' }
 const t = T[lang];
 const rawTitle = Astro.props.title ?? t.title;
 const fitTitle = (x: string) => {
-  if (x.length <= 70) return x;
+  if (x.length <= 60) return x;
   let y = x.replace(/ \| Zeftawii$/, '');
-  if (y.length <= 70) return y;
-  y = y.slice(0, 67);
+  if (y.length <= 62) return y;
+  y = y.slice(0, 60);
   return y.slice(0, y.lastIndexOf(' ')).replace(/[\s:,\-–|]+$/, '') + '…';
 };
 const title = fitTitle(rawTitle);
@@ -116,8 +116,6 @@ const graph = [
 const innerGraph = [graph[0], graph[1], ...extraLd];
 const ld = { '@context': 'https://schema.org', '@graph': noindex ? [] : (inner ? innerGraph : graph) };
 
-const fontsHref =
-  'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Inter:wght@500;600;700;800&display=swap';
 ---
 <!doctype html>
 <html lang={t.htmlLang} dir={t.dir}>
@@ -172,10 +170,9 @@ const fontsHref =
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href={fontsHref} media="print" onload="this.media='all'" />
-    <noscript><link rel="stylesheet" href={fontsHref} /></noscript>
+    <link rel="preload" href="/fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/ibm-plex-sans-arabic-arabic-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/fonts/fonts.css" />
 
     {!noindex && <script type="application/ld+json" set:html={JSON.stringify(ld)} />}
 

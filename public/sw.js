@@ -1,5 +1,5 @@
 /* Zeftawii service worker: pages network-first (offline fallback), assets stale-while-revalidate */
-const V = 'zf-v1';
+const V = 'zf-v2';
 const SHELL = ['/offline.html', '/favicon.svg', '/icon-192.png'];
 self.addEventListener('install', (e) => { e.waitUntil(caches.open(V).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== V).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
