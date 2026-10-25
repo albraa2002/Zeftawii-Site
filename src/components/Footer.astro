@@ -66,6 +66,7 @@ const colRes = [[u.tools, '/tools/'], [u.solutions, '/solutions/'], [u.blog, '/b
       <span>© {new Date().getFullYear()} {CONFIG.brand} | {CONFIG.tagline}. {t.footer.rights}.</span>
       <span class="built">{t.footer.built}</span>
       <a href={P(lang, '/privacy/')}>{ar ? 'الخصوصية' : 'Privacy'}</a>
+      <button type="button" class="install-app" id="install-app" hidden data-ios={ar ? 'على آيفون: اضغط زر المشاركة ثم "إضافة إلى الشاشة الرئيسية".' : 'On iPhone: tap Share, then "Add to Home Screen".'}>{ar ? 'ثبّت الموقع كتطبيق' : 'Install as app'}</button>
       <a class="to-top" href="#top">{t.footer.top} <span aria-hidden="true">↑</span></a>
     </div>
   </div>
@@ -74,3 +75,19 @@ const colRes = [[u.tools, '/tools/'], [u.solutions, '/solutions/'], [u.blog, '/b
   <a class="btn btn-primary btn-sm" href={home + '#contact'} data-evt="cta_click" data-loc="mbar">{t.nav.cta}</a>
   <a class="btn btn-wa btn-sm" href={wa} target="_blank" rel="noopener" data-evt="whatsapp_click" data-loc="mbar">{L.chat}</a>
 </div>
+
+<script>
+  const btn = document.getElementById('install-app') as HTMLButtonElement | null;
+  if (btn) {
+    const standalone = matchMedia('(display-mode: standalone)').matches || (navigator as any).standalone;
+    const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    let dp: any = null;
+    addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); dp = e; if (!standalone) btn.hidden = false; });
+    if (ios && !standalone) btn.hidden = false;
+    btn.addEventListener('click', async () => {
+      if (dp) { dp.prompt(); await dp.userChoice.catch(() => {}); dp = null; btn.hidden = true; }
+      else alert(btn.dataset.ios);
+    });
+    addEventListener('appinstalled', () => { btn.hidden = true; });
+  }
+</script>

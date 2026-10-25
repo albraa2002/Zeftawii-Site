@@ -158,3 +158,6 @@ main.inner > .wrap + .wrap { margin-top: 0; }
 .calc.tool .calc-verdict.rep.good { background: rgba(var(--g), .09); border-color: rgba(var(--g), .3); }
 .calc.tool .calc-verdict.rep.bad { background: rgba(var(--w), .09); border-color: rgba(var(--w), .3); }
 .calc.tool .calc-verdict.rep::before { content: attr(data-l); display: block; font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; opacity: .7; margin-bottom: .25rem; }
+.install-app { font: inherit; font-size: .85rem; padding: .35rem .9rem; border-radius: 999px; border: 1px solid var(--panel-b); background: var(--panel); color: inherit; cursor: pointer; }
+.install-app:hover { border-color: var(--cyan); color: var(--cyan); }
+.install-app[hidden] { display: none; }

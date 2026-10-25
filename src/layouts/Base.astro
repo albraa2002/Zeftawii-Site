@@ -130,6 +130,9 @@ const fontsHref =
     <meta name="author" content={personName} />
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
     <meta name="theme-color" content="#f3f5f9" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Zeftawii" />
     <meta name="color-scheme" content="dark light" />
     <script is:inline>try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark')t='light';document.documentElement.dataset.theme=t;}catch(e){document.documentElement.dataset.theme='dark';}</script>
     <meta name="format-detection" content="telephone=no" />
@@ -202,5 +205,6 @@ const fontsHref =
   </head>
   <body>
     <slot />
-  </body>
+  <script is:inline>if ('serviceWorker' in navigator && location.protocol === 'https:') addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function () {}); });</script>
+</body>
 </html>
