@@ -1,4 +1,5 @@
 ---
+import Pledge from './Pledge.astro';
 import Shell from './Shell.astro';
 import type { Lang } from '../i18n';
 import { UI, P } from '../content/ui';
@@ -48,6 +49,7 @@ const ld = [{ '@type': 'AboutPage', name: a.title, url: base + path, inLanguage:
     <h2 class="sec-h">{lang === 'ar' ? 'آراء الناس في الشغل' : 'What people say'}</h2>
     <p class="plain">{lang === 'ar' ? 'اقتباسات حقيقية من رسائل عملاء وتوصيات منشورة علنًا على LinkedIn، منسوبة بالدور فقط.' : 'Real quotes from client messages and public LinkedIn recommendations, credited by role only.'}</p>
     <Testimonials lang={lang} />
+    <Pledge lang={lang} />
     <div class="cta-box"><h2>{a.ctaT}</h2><p>{a.ctaP}</p>
       <div class="cta-row"><a class="btn btn-primary" href={P(lang, '/#contact')}>{a.ctaBtn}</a><a class="btn btn-ghost" href={P(lang, '/work/')}>{u.allWork}</a></div>
     </div>

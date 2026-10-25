@@ -1,5 +1,6 @@
 ---
 import Shell from './Shell.astro';
+import Pledge from './Pledge.astro';
 import type { Lang } from '../i18n';
 import { P } from '../content/ui';
 import { packs } from '../content/trust';
@@ -58,6 +59,7 @@ const ld = [{ '@type': 'WebPage', name: T.h1, description: T.desc, inLanguage: l
       <section class="info-box good"><h2>{T.alwaysT}</h2><ul>{T.always.map((x) => <li>{x}</li>)}</ul></section>
     </div>
     <p class="art-note">{T.note}</p>
+    <Pledge lang={lang} />
     <div class="cta-box"><h2>{T.cta}</h2><p>{T.ctaP}</p>
       <div class="cta-row"><a class="btn btn-primary" href={P(lang, '/#contact')} data-evt="cta_click" data-loc="pricing_bottom">{T.ctaB}</a><a class="btn btn-ghost" href={P(lang, '/how-we-work/')}>{T.how}</a></div>
     </div>

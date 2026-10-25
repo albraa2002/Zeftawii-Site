@@ -21,6 +21,12 @@ const P: Record<string, string> = {
   arrow: 'M5 12h14M13 6l6 6-6 6',
   chat: 'M4 5h16v11H9l-5 4V5Z',
   check: 'M5 12l5 5 9-10',
+  award: 'M12 14a6 6 0 1 0 0-12 6 6 0 0 0 0 12ZM8.5 13.5 7 22l5-3 5 3-1.5-8.5',
+  star: 'M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.8 6.6 19.5l1.2-6L3.3 9.3l6.1-.7L12 3Z',
+  code: 'M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16',
+  shield: 'M12 3l8 3v6c0 4.5-3.2 8.2-8 9-4.8-.8-8-4.5-8-9V6l8-3ZM9 12l2.2 2.2L15.5 10',
+  clock: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 7v5l3 2',
+  cap: 'M2 9l10-5 10 5-10 5L2 9ZM6 11.5V16c0 1.2 2.7 3 6 3s6-1.8 6-3v-4.5',
   rss: 'M5 5a14 14 0 0 1 14 14M5 11a8 8 0 0 1 8 8M6 19a1 1 0 1 0 0-.01',
 };
 export const icon = (name: string, size = 20) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${P[name] || P.arrow}"/></svg>`;

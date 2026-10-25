@@ -1,0 +1,49 @@
+---
+// وعود مكتوبة + "اتأكد بنفسك" + عرض اختبار مجاني. الوعود دي التزام من صاحب الموقع، عدّلها هنا بس.
+import type { Lang } from '../i18n';
+import { P } from '../content/ui';
+import { icon } from '../lib/icons';
+import { CONFIG } from '../config';
+import { certCount } from '../content/certs';
+import { quotes } from '../content/testimonials';
+const { lang } = Astro.props as { lang: Lang };
+const ar = lang === 'ar';
+const pr = ar ? [
+  { i: 'clock', t: 'رد خلال يوم عمل', d: 'أي رسالة بترد عليها بنفسي، مش بوت ولا فريق مبيعات.' },
+  { i: 'project', t: 'نطاق وسعر مكتوبين قبل البدء', d: 'مفيش شغل بيبدأ من غير ورقة واضحة فيها التسليمات والمدة والتكلفة.' },
+  { i: 'check', t: 'تراجع قبل ما نكمّل', d: 'التسليمات بتتسلّم على مراحل، وبتوافق على كل مرحلة قبل اللي بعدها.' },
+  { i: 'shield', t: 'بياناتك ملكك', d: 'بشتغل على بياناتك للمشروع بس، ولا بتتشارك مع حد، واتفاق سرية مكتوب لو طلبت.' },
+  { i: 'bi', t: 'مفيش أسعار مخفية', d: 'أي طلب خارج النطاق بيتسعّر وتوافق عليه قبل التنفيذ.' },
+  { i: 'user', t: 'هقولك لو مش مناسب', d: 'لو احتياجك برا اللي بعمله كويس هقولك بصراحة وأوجّهك لمكان أنسب.' },
+] : [
+  { i: 'clock', t: 'Reply within a business day', d: 'Every message is answered by me, not a bot or a sales team.' },
+  { i: 'project', t: 'Written scope and price first', d: 'No work starts without a clear document of deliverables, timeline and cost.' },
+  { i: 'check', t: 'Review before we continue', d: 'Deliverables come in stages and you approve each one before the next.' },
+  { i: 'shield', t: 'Your data stays yours', d: 'I use your data for the project only, never share it, and sign an NDA if you ask.' },
+  { i: 'bi', t: 'No hidden prices', d: 'Anything outside the scope is priced and approved before it is done.' },
+  { i: 'user', t: 'I will tell you if it is not a fit', d: 'If your need is outside what I do well, I will say so and point you somewhere better.' },
+];
+const verify = [
+  { i: 'user', h: CONFIG.links.linkedin, t: ar ? 'LinkedIn' : 'LinkedIn', d: ar ? 'التوصيات منشورة علناً بأسماء أصحابها' : 'Recommendations are public, under their authors names', ext: true },
+  { i: 'code', h: CONFIG.links.github, t: 'GitHub', d: ar ? 'كل كود المشاريع مفتوح' : 'All project code is open', ext: true },
+  { i: 'award', h: P(lang, '/certificates/'), t: ar ? 'الشهادات' : 'Certificates', d: ar ? `${certCount} شهادة، وأقدر أبعت نسخة من أي واحدة` : `${certCount} certificates, copies on request` },
+  { i: 'star', h: P(lang, '/certificates/'), t: ar ? 'الآراء' : 'Reviews', d: ar ? `${quotes.length} رأي بالدور` : `${quotes.length} reviews by role` },
+].filter((x) => x.h);
+---
+<section class="promise" id="promise" aria-labelledby="promise-h">
+  <div class="wrap">
+    <div class="sec-head rv"><h2 id="promise-h">{ar ? 'وعودي ليك قبل ما نبدأ' : 'My promises before we start'}</h2><p>{ar ? 'مش كلام تسويق: دي شروط الشغل اللي بلتزم بيها مع كل عميل.' : 'Not marketing talk: these are the working terms I keep with every client.'}</p></div>
+    <ul class="pr-grid rv">{pr.map((x) => <li><span class="pr-i" set:html={icon(x.i, 22)} /><b>{x.t}</b><p>{x.d}</p></li>)}</ul>
+    <div class="pr-bot rv">
+      <div class="pr-ver">
+        <h3>{ar ? 'اتأكد بنفسك، مش لازم تصدقني' : 'Check for yourself'}</h3>
+        <div class="pr-links">{verify.map((x) => <a href={x.h} {...(x.ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}><span set:html={icon(x.i, 20)} /><b>{x.t}</b><small>{x.d}</small></a>)}</div>
+      </div>
+      <div class="pr-test">
+        <h3>{ar ? 'جرّبني الأول، من غير التزام' : 'Try me first, no commitment'}</h3>
+        <p>{ar ? 'ابعت تقرير أو شيت حملة واحد، وهرجعلك بـ3 ملاحظات مجانية تبقى معاك سواء كملنا شغل مع بعض أو لا.' : 'Send one report or campaign sheet and I will reply with 3 free observations that are yours whether or not we work together.'}</p>
+        <a class="btn btn-primary btn-sm" href={P(lang, '/?service=1#contact')} data-evt="cta_click" data-loc="promise_test">{ar ? 'ابعت تقرير للمراجعة' : 'Send a report for review'}</a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -13,6 +13,8 @@ import { services as svcPages } from '../content/services';
 import { posts } from '../content/posts';
 import { cases } from '../content/site';
 import Testimonials from './Testimonials.astro';
+import TrustBar from './TrustBar.astro';
+import Pledge from './Pledge.astro';
 import ProjectArt from './ProjectArt.astro';
 import { projects } from '../content/projects';
 import HeroBanners from './HeroBanners.astro';
@@ -85,6 +87,7 @@ const quick = ar0 ? [
     </div>
     <div class="wrap">
       <div class="stats rv">{t.stats.map((s) => <div class="stat"><b>{s.v}</b><span>{s.l}</span></div>)}</div>
+      <TrustBar lang={lang} />
     </div>
   </div>
 
@@ -171,6 +174,8 @@ const quick = ar0 ? [
       {t.faq.map((f) => <details class="rv"><summary>{f.q}</summary><p>{f.a}</p></details>)}
     </div>
   </section>
+
+  <Pledge lang={lang} />
 
   <section id="contact">
     <div class="wrap contact-grid">

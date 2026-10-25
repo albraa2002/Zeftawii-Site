@@ -1,0 +1,23 @@
+---
+// شريط ثقة: كل رقم بيتحسب من البيانات الفعلية (شهادات، آراء، مشاريع) فمش ممكن يتحدّث غلط.
+import type { Lang } from '../i18n';
+import { P } from '../content/ui';
+import { icon } from '../lib/icons';
+import { certCount } from '../content/certs';
+import { quotes } from '../content/testimonials';
+import { projects } from '../content/projects';
+const { lang } = Astro.props as { lang: Lang };
+const ar = lang === 'ar';
+const items = [
+  { i: 'cap', h: P(lang, '/about/'), b: ar ? 'خريج حاسبات ومعلومات' : 'CS and Informatics graduate', s: ar ? 'جامعة المنصورة · 2026' : 'Mansoura University · 2026' },
+  { i: 'award', h: P(lang, '/certificates/'), b: `${certCount} ${ar ? 'شهادة موثّقة' : 'certificates'}`, s: 'Udemy · DataCamp' },
+  { i: 'star', h: P(lang, '/certificates/'), b: `${quotes.length} ${ar ? 'رأي حقيقي' : 'real reviews'}`, s: ar ? 'عملاء ومديرين وزملاء' : 'clients, managers, colleagues' },
+  { i: 'code', h: P(lang, '/projects/'), b: `${projects.length} ${ar ? 'مشاريع على GitHub' : 'projects on GitHub'}`, s: ar ? 'الكود مفتوح تراجعه بنفسك' : 'open code you can review' },
+  { i: 'clock', h: P(lang, '/#contact'), b: ar ? 'رد خلال يوم عمل' : 'Reply in one business day', s: ar ? 'والاستشارة الأولى مجانية' : 'first consultation is free' },
+];
+---
+<ul class="trustbar rv" aria-label={ar ? 'ليه تثق فيّ' : 'Why trust me'}>
+  {items.map((x) => (
+    <li><a href={x.h}><span class="tb-i" set:html={icon(x.i, 22)} /><span class="tb-t"><b>{x.b}</b><small>{x.s}</small></span></a></li>
+  ))}
+</ul>
