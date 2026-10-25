@@ -161,3 +161,4 @@ main.inner > .wrap + .wrap { margin-top: 0; }
 .install-app { font: inherit; font-size: .85rem; padding: .35rem .9rem; border-radius: 999px; border: 1px solid var(--panel-b); background: var(--panel); color: inherit; cursor: pointer; }
 .install-app:hover { border-color: var(--cyan); color: var(--cyan); }
 .install-app[hidden] { display: none; }
+#pricing .mkt { margin-top: 1.6rem; margin-bottom: 1.6rem; }

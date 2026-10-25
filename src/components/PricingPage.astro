@@ -9,36 +9,49 @@ const T = ar ? {
   title: 'الأسعار: تبدأ من كام؟ | Zeftawii', h1: 'الأسعار التقريبية', kicker: 'PRICING',
   desc: 'أسعار تقريبية "تبدأ من" للوحات التحكم والتحليل وأتمتة التقارير وإدارة المشاريع، والعرض النهائي بعد الاستشارة المجانية.',
   lead: 'دي أسعار تبدأ منها كل خدمة، مش عرض نهائي. السعر الفعلي بيتحدد بعد استشارة مجانية ونطاق عمل مكتوب قبل أي بدء.',
+  mEg: 'ولاد البلد', mEgS: 'مصر · بالجنيه', mSa: 'أهلنا وناسنا', mSaS: 'الخليج والسعودية · بالريال', cEg: 'ج.م', cSa: 'ر.س', prev: 'السابق', next: 'التالي', pick: 'اختار فئتك',
   from: 'تبدأ من', mo: '/ شهرياً', usd: 'دولار', inc: 'المتضمن', time: 'المدة',
   affT: 'إيه اللي بيغيّر السعر', aff: ['عدد مصادر البيانات وتعقيدها', 'عدد المؤشرات والصفحات المطلوبة', 'سرعة التسليم المطلوبة', 'هل البيانات نضيفة ولا محتاجة تنضيف', 'التدريب وفترة الدعم بعد التسليم'],
   alwaysT: 'في كل خدمة', always: ['استشارة أولى مجانية', 'نطاق عمل وعرض سعر مكتوبين قبل البدء', 'تسليمات بتراجعها قبل ما تكمّل', 'أي طلب خارج النطاق بيتسعّر قبل التنفيذ'],
-  note: 'الأسعار بالدولار تقريبية وبتتحوّل للجنيه أو الريال حسب الاتفاق، وبتتغيّر مع ظروف كل مشروع.',
+  note: 'الأسعار تقريبية "تبدأ من" لكل فئة (جنيه للمصريين وريال للخليج والسعودية)، وبتتغيّر مع ظروف كل مشروع. العرض النهائي بعد الاستشارة.',
   cta: 'عايز عرض سعر لحالتك؟', ctaP: 'ابعت وصف بسيط وهرد عليك خلال يوم عمل.', ctaB: 'اطلب عرض سعر', how: 'إزاي بنشتغل مع بعض',
 } : {
   title: 'Pricing: starting from | Zeftawii', h1: 'Approximate pricing', kicker: 'PRICING',
   desc: 'Approximate "starting from" prices for dashboards, analysis, report automation and project management, with the final quote after a free consultation.',
   lead: 'These are the prices each service starts from, not a final quote. The real price is set after a free consultation and a written scope, before anything starts.',
+  mEg: 'Oulad El-Balad', mEgS: 'Egypt · EGP', mSa: 'Ahlena w Nasena', mSaS: 'Gulf and Saudi Arabia · SAR', cEg: 'EGP', cSa: 'SAR', prev: 'Previous', next: 'Next', pick: 'Choose your tier',
   from: 'From', mo: '/ month', usd: 'USD', inc: 'Included', time: 'Timeline',
   affT: 'What changes the price', aff: ['The number and complexity of data sources', 'The number of KPIs and pages needed', 'How fast you need delivery', 'Whether your data is clean or needs cleaning', 'Training and the support period after delivery'],
   alwaysT: 'With every service', always: ['A free first consultation', 'A written scope and quote before starting', 'Deliverables you review before we continue', 'Anything outside the scope is priced before it is done'],
-  note: 'Prices are approximate, in US dollars, and can be converted to EGP or SAR by agreement. They change with each project.',
+  note: 'Prices are approximate "starting from" figures for each tier (EGP for Egypt, SAR for the Gulf and Saudi Arabia) and change with each project. The final quote comes after the consultation.',
   cta: 'Want a quote for your case?', ctaP: 'Send a short description and I will reply within one business day.', ctaB: 'Request a quote', how: 'How we work together',
 };
 const ld = [{ '@type': 'WebPage', name: T.h1, description: T.desc, inLanguage: lang }];
 ---
 <Shell lang={lang} title={T.title} desc={T.desc} path={path} alt={{ ar: '/pricing/', en: '/en/pricing/' }} extraLd={ld}>
   <div class="wrap page-head"><span class="kicker">{T.kicker}</span><h1>{T.h1}</h1><p>{T.lead}</p></div>
-  <div class="wrap">
-    <div class="price-grid">
-      {packs.map((k) => { const c = k[lang]; return (
-        <article class="price-card">
-          <h2>{c.n}</h2><p class="pd">{c.d}</p>
-          <p class="pp"><small>{T.from}</small> <b dir="ltr">${k.from}</b> <small>{k.per ? T.mo : ''}</small></p>
-          <h3>{T.inc}</h3><ul>{c.inc.map((x) => <li>{x}</li>)}</ul>
-          <p class="pt"><b>{T.time}:</b> {c.time}</p>
-          <a class="btn btn-primary btn-sm" href={P(lang, `/?service=${({ audit: 1, starter: 0, business: 0, auto: 2, pm: 5 } as Record<string, number>)[k.id]}#contact`)} data-evt="cta_click" data-loc={'pricing_' + k.id}>{T.ctaB}</a>
-        </article>
-      ); })}
+  <div class="wrap" id="pricing" data-market="eg">
+    <div class="mkt" role="tablist" aria-label={T.pick}>
+      <button type="button" role="tab" class="mkt-b" data-m="eg" aria-selected="true"><b>{T.mEg}</b><small>{T.mEgS}</small></button>
+      <button type="button" role="tab" class="mkt-b" data-m="sa" aria-selected="false"><b>{T.mSa}</b><small>{T.mSaS}</small></button>
+    </div>
+    <div class="carousel price-car" data-carousel>
+      <div class="track" tabindex="0" role="region" aria-roledescription="carousel" aria-label={T.h1}>
+        {packs.map((k) => { const c = k[lang]; return (
+          <article class="price-card">
+            <h2>{c.n}</h2><p class="pd">{c.d}</p>
+            <p class="pp"><small>{T.from}</small> <b dir="ltr" class="px px-eg">{k.eg.toLocaleString('en-US')}</b><b dir="ltr" class="px px-sa">{k.sa.toLocaleString('en-US')}</b> <span class="cur"><span class="px px-eg">{T.cEg}</span><span class="px px-sa">{T.cSa}</span></span> <small>{k.per ? T.mo : ''}</small></p>
+            <h3>{T.inc}</h3><ul>{c.inc.map((x) => <li>{x}</li>)}</ul>
+            <p class="pt"><b>{T.time}:</b> {c.time}</p>
+            <a class="btn btn-primary btn-sm" href={P(lang, `/?service=${({ audit: 1, starter: 0, business: 0, auto: 2, pm: 5 } as Record<string, number>)[k.id]}#contact`)} data-evt="cta_click" data-loc={'pricing_' + k.id}>{T.ctaB}</a>
+          </article>
+        ); })}
+      </div>
+      <div class="car-ctrl">
+        <button type="button" class="car-btn" data-dir="prev" aria-label={T.prev}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg></button>
+        <div class="car-dots"></div>
+        <button type="button" class="car-btn" data-dir="next" aria-label={T.next}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
+      </div>
     </div>
     <div class="two-col" style="margin-top:1.2rem">
       <section class="info-box"><h2>{T.affT}</h2><ul>{T.aff.map((x) => <li>{x}</li>)}</ul></section>
@@ -50,8 +63,26 @@ const ld = [{ '@type': 'WebPage', name: T.h1, description: T.desc, inLanguage: l
     </div>
   </div>
 </Shell>
+<script>
+  import { initCarousels } from '../lib/carousel';
+  initCarousels();
+  const root = document.getElementById('pricing');
+  const bs = Array.from(document.querySelectorAll<HTMLButtonElement>('.mkt-b'));
+  const set = (m: string, save = true) => { root?.setAttribute('data-market', m); bs.forEach((b) => b.setAttribute('aria-selected', String(b.dataset.m === m))); if (save) { try { localStorage.setItem('zf-market', m); } catch {} } };
+  let m = '';
+  try { m = new URLSearchParams(location.search).get('market') || localStorage.getItem('zf-market') || ''; } catch {}
+  if (m !== 'eg' && m !== 'sa') { let tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch {} m = /Riyadh|Dubai|Kuwait|Qatar|Bahrain|Muscat/.test(tz) ? 'sa' : /Cairo/.test(tz) ? 'eg' : (root?.getAttribute('data-market') || 'eg'); }
+  set(m, false);
+  bs.forEach((b) => b.addEventListener('click', () => set(b.dataset.m!)));
+</script>
 <style is:global>
-.price-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:1.2rem}.price-grid>*{flex:1 1 calc((100% - 2.4rem)/3);max-width:calc((100% - 2.4rem)/3);min-width:260px}
+.track .price-card{flex:0 0 calc((100% - (var(--per) - 1) * var(--gap))/var(--per));scroll-snap-align:start}
+#pricing[data-market=eg] .px-sa,#pricing[data-market=sa] .px-eg{display:none}
+.price-car{margin-top:1.4rem}.price-card .cur{font-size:1rem;font-weight:700}
+.mkt{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+.mkt-b{display:flex;flex-direction:column;gap:.1rem;align-items:center;min-width:200px;padding:.7rem 1.4rem;border-radius:14px;border:1px solid var(--panel-b);background:var(--panel);color:inherit;font:inherit;cursor:pointer;transition:border-color .2s,background .2s}
+.mkt-b small{opacity:.7;font-size:.78rem}.mkt-b:hover{border-color:rgb(var(--c))}
+.mkt-b[aria-selected=true]{border-color:rgb(var(--c));background:rgba(var(--c),.1);box-shadow:0 0 0 1px rgb(var(--c)) inset}
 .price-card{background:var(--panel);border:1px solid var(--panel-b);border-top:3px solid rgb(var(--c));border-radius:16px;padding:1.2rem;display:flex;flex-direction:column;gap:.5rem}
 .price-card:nth-child(5n+2){border-top-color:rgb(var(--g))}.price-card:nth-child(5n+3){border-top-color:#b45309}.price-card:nth-child(5n+4){border-top-color:#6d28d9}.price-card:nth-child(5n+5){border-top-color:#c81e1e}
 .price-card h2{font-size:1.15rem;margin:0}.price-card h3{font-size:.9rem;color:var(--muted);margin:.4rem 0 0}
