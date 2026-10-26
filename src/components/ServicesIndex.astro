@@ -1,0 +1,111 @@
+---
+import Shell from './Shell.astro';
+import type { Lang } from '../i18n';
+import { UI, P } from '../content/ui';
+import { services } from '../content/services';
+import { icon, svcIcons } from '../lib/icons';
+import { CONFIG } from '../config';
+const { lang } = Astro.props as { lang: Lang };
+const ar = lang === 'ar'; const u = UI[lang];
+const base = CONFIG.site.replace(/\/$/, '');
+const path = P(lang, '/services/');
+const col = ['#4c9bff', '#f59e0b', '#34d399', '#a78bfa', '#f87171', '#2dd4bf'];
+const steps = u.howSteps.split('|');
+const T = ar ? {
+  title: 'الخدمات | تحليل بيانات وBI وإدارة حسابات ومشاريع', k: '٦ خدمات، فريق واحد',
+  h1: 'كل اللي محتاجه عشان بياناتك تتحوّل لقرارات',
+  lead: 'من لوحات التحكم والتحليلات التسويقية لحد أتمتة التقارير وإدارة الحسابات والمشاريع. اختار الخدمة اللي تناسبك أو ابدأ باستشارة مجانية وأنا أرشحلك الأنسب.',
+  c1: 'اطلب استشارة مجانية', c2: 'شوف الأسعار', stats: ['٦ خدمات', 'عربي وإنجليزي', 'استشارة أولى مجانية'],
+  all: 'كل الخدمات', allP: 'كل خدمة ليها صفحة بتفاصيلها وأسئلتها الشائعة ونماذج شغل.',
+  more: 'التفاصيل', ask: 'اطلب الخدمة', fit: 'مناسبة لو', get: 'هتاخد',
+  pickH: 'مش عارف تبدأ منين؟', pickP: 'اختار اللي أقرب لمشكلتك وهتلاقي الخدمة المناسبة.',
+  pick: [['مش عارف أنهي إعلان بيكسّب', 1], ['بقرر من ملفات Excel متفرقة', 0], ['بضيع وقت في تقارير بتتعمل يدوي', 2], ['عاوز أرقام تتابع عملائي وعملياتي', 3], ['محتاج حد ينظم عميل أو حساب', 4], ['مشروع متأخر ومحتاج خطة وتسليم', 5]],
+  howH: 'طريقة الشغل', ctaH: 'مش متأكد أنهي خدمة تناسبك؟', ctaP: 'احجز استشارة مجانية بدون التزام، وهقولك أنسب خطوة لحالتك.', wa: 'كلمني واتساب', crumb: 'الخدمات',
+} : {
+  title: 'Services | Data analytics, BI, account and project management', k: '6 services, one team',
+  h1: 'Everything you need to turn your data into decisions',
+  lead: 'From dashboards and marketing analytics to report automation, account and project management. Pick the service that fits, or start with a free consultation and I will recommend the best one.',
+  c1: 'Book a free consultation', c2: 'See pricing', stats: ['6 services', 'Arabic and English', 'Free first consultation'],
+  all: 'All services', allP: 'Every service has its own page with details, FAQs and work samples.',
+  more: 'Details', ask: 'Request this', fit: 'Fits if', get: 'You get',
+  pickH: 'Not sure where to start?', pickP: 'Pick what is closest to your problem and find the right service.',
+  pick: [['I do not know which ads earn', 1], ['I decide from scattered Excel files', 0], ['I lose time on manual reports', 2], ['I want numbers on my customers and operations', 3], ['I need someone to organize a client or account', 4], ['A project is late and needs a plan', 5]],
+  howH: 'How we work', ctaH: 'Not sure which service fits?', ctaP: 'Book a free, no-commitment consultation and I will tell you the best next step.', wa: 'Chat on WhatsApp', crumb: 'Services',
+};
+const wa = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(ar ? 'أهلاً، حابب أستفسر عن خدماتك' : 'Hi, I would like to ask about your services')}`;
+// كوكبة: ٦ عقد حوالين مركز
+const pts = services.map((_, i) => { const a = (-90 + i * 60) * Math.PI / 180; return [200 + 128 * Math.cos(a), 200 + 128 * Math.sin(a)]; });
+const ld = [
+  { '@type': 'CollectionPage', name: T.h1, url: base + path, inLanguage: lang },
+  { '@type': 'ItemList', itemListElement: services.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s[lang].name, url: base + P(lang, `/services/${s.slug}/`) })) },
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: u.crumbHome, item: base + P(lang, '/') },
+    { '@type': 'ListItem', position: 2, name: T.crumb, item: base + path },
+  ] },
+];
+---
+<Shell lang={lang} title={T.title} desc={T.lead} path={path} alt={{ ar: '/services/', en: '/en/services/' }} extraLd={ld}>
+  <div class="wrap svc-top">
+    <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <span>{T.crumb}</span></nav>
+    <div class="hb sx-hb">
+      <div class="hb-text">
+        <span class="hb-k">{T.k}</span>
+        <h1>{T.h1}</h1>
+        <p>{T.lead}</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href={P(lang, '/#contact')} data-evt="cta_click" data-loc="services_index">{T.c1}</a>
+          <a class="btn hb-ghost" href={P(lang, '/pricing/')}>{T.c2}</a>
+        </div>
+        <ul class="sx-stats">{T.stats.map((x) => <li>{x}</li>)}</ul>
+      </div>
+      <div class="sx-orbit" aria-hidden="true">
+        <svg viewBox="0 0 400 400" dir="ltr">
+          <circle class="sx-ring" cx="200" cy="200" r="128" />
+          <circle class="sx-ring r2" cx="200" cy="200" r="70" />
+          {pts.map((p, i) => <line x1="200" y1="200" x2={p[0].toFixed(1)} y2={p[1].toFixed(1)} stroke={col[i]} stroke-opacity=".45" stroke-width="1.5" />)}
+          <circle cx="200" cy="200" r="34" class="sx-hub" /><text x="200" y="206" text-anchor="middle" class="sx-hubt">Z</text>
+        </svg>
+        {services.map((s, i) => <a class="sx-node" href={`#${s.slug}`} tabindex="-1" style={`--c:${col[i]};left:${(pts[i][0] / 4).toFixed(2)}%;top:${(pts[i][1] / 4).toFixed(2)}%`} title={s[lang].name}><span set:html={icon(svcIcons[i], 22)} /></a>)}
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <h2 class="sec-h">{T.all}</h2>
+    <p class="plain">{T.allP}</p>
+    <div class="sx-grid">
+      {services.map((s, i) => (
+        <article class="sx-card" id={s.slug} style={`--c:${col[i]}`}>
+          <div class="sx-ico" set:html={icon(svcIcons[i], 26)} />
+          <h3><a href={P(lang, `/services/${s.slug}/`)}>{s[lang].name}</a></h3>
+          <p class="sx-d">{s[lang].desc}</p>
+          <div class="sx-lists">
+            <div><b>{T.fit}</b><ul>{s[lang].forWho.slice(0, 2).map((x) => <li>{x}</li>)}</ul></div>
+            <div><b>{T.get}</b><ul>{s[lang].get.slice(0, 2).map((x) => <li>{x}</li>)}</ul></div>
+          </div>
+          <div class="sx-act">
+            <a class="btn btn-primary" href={P(lang, `/?service=${s.idx}#contact`)} data-evt="service_click" data-loc="services_index">{T.ask}</a>
+            <a class="sx-more" href={P(lang, `/services/${s.slug}/`)}>{T.more}<span aria-hidden="true">{ar ? ' ←' : ' →'}</span></a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <h2 class="sec-h">{T.pickH}</h2>
+    <p class="plain">{T.pickP}</p>
+    <div class="sx-pick">
+      {T.pick.map(([q, i]) => <a href={P(lang, `/services/${services[i as number].slug}/`)} style={`--c:${col[i as number]}`}><span>{q}</span><em>{services[i as number][lang].name}<i aria-hidden="true">{ar ? ' ←' : ' →'}</i></em></a>)}
+    </div>
+
+    <h2 class="sec-h">{T.howH}</h2>
+    <ol class="how">{steps.map((x, i) => <li><b>{i + 1}</b><span>{x}</span></li>)}</ol>
+
+    <section class="sx-cta">
+      <h2>{T.ctaH}</h2><p>{T.ctaP}</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={P(lang, '/#contact')} data-evt="cta_click" data-loc="services_index_bottom">{T.c1}</a>
+        <a class="btn hb-ghost" href={wa} target="_blank" rel="noopener" data-evt="whatsapp_click" data-loc="services_index">{T.wa}</a>
+      </div>
+    </section>
+  </div>
+</Shell>

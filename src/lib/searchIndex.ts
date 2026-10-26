@@ -10,6 +10,7 @@ export type Item = { t: string; d: string; u: string; g: string };
 export function searchIndex(lang: Lang): Item[] {
   const ar = lang === 'ar'; const g = ar ? { s: 'خدمة', so: 'حل', t: 'أداة', b: 'مقال', gl: 'مصطلح', w: 'شغل', p: 'صفحة' } : { s: 'Service', so: 'Solution', t: 'Tool', b: 'Article', gl: 'Term', w: 'Work', p: 'Page' };
   const out: Item[] = [];
+  out.push({ t: ar ? 'كل الخدمات' : 'All services', d: ar ? 'صفحة الخدمات: ٦ خدمات في مكان واحد' : 'Services page: all 6 services in one place', u: P(lang, '/services/'), g: g.p });
   services.forEach((s) => out.push({ t: s[lang].name, d: s[lang].desc, u: P(lang, `/services/${s.slug}/`), g: g.s }));
   solutions.forEach((s) => out.push({ t: s[lang].name, d: s[lang].desc, u: P(lang, `/solutions/${s.slug}/`), g: g.so }));
   tools.forEach((s) => out.push({ t: s[lang].name, d: s[lang].desc, u: P(lang, `/tools/${s.slug}/`), g: g.t }));

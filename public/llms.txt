@@ -82,6 +82,7 @@
 - https://zeftawii-site-46vp.vercel.app/en/projects/saas-executive-dashboard/
 - https://zeftawii-site-46vp.vercel.app/en/projects/time-vampire-matrix/
 - https://zeftawii-site-46vp.vercel.app/en/resources/
+- https://zeftawii-site-46vp.vercel.app/en/services/
 - https://zeftawii-site-46vp.vercel.app/en/services/account-management/
 - https://zeftawii-site-46vp.vercel.app/en/services/dashboards-bi/
 - https://zeftawii-site-46vp.vercel.app/en/services/marketing-analytics/
