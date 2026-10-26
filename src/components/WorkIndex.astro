@@ -13,7 +13,7 @@ const desc = lang === 'ar' ? 'نماذج حقيقية من شغلي: نظام ش
 const ld = [{ '@type': 'CollectionPage', name: title, url: base + path, inLanguage: lang }];
 ---
 <Shell lang={lang} title={title} desc={desc} path={path} alt={{ ar: '/work/', en: '/en/work/' }} extraLd={ld}>
-  <div class="wrap page-head has-art"><span class="kicker">WORK</span><h1>{u.work}</h1><p>{desc}</p><div class="hb-art"><DashShot stage kind="accounts" lang={lang} /></div></div>
+  <div class="wrap page-head has-art"><span class="kicker kk-en">WORK</span><h1>{u.work}</h1><p>{desc}</p><div class="hb-art"><DashShot stage kind="accounts" lang={lang} /></div></div>
   <div class="wrap post-grid">
     {cases.map((c) => (
       <a class="post-card" href={P(lang, `/work/${c.slug}/`)}>

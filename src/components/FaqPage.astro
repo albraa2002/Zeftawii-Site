@@ -18,7 +18,7 @@ groups.forEach((g) => { g.items = g.items.filter((f) => { if (seen.has(f.q)) ret
 const ld = [{ '@type': 'FAQPage', mainEntity: all.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }];
 ---
 <Shell lang={lang} title={title} desc={desc} path={path} alt={{ ar: '/faq/', en: '/en/faq/' }} extraLd={ld}>
-  <div class="wrap page-head"><span class="kicker">FAQ</span><h1>{ar ? 'الأسئلة الشائعة' : 'Frequently asked questions'}</h1><p>{desc}</p></div>
+  <div class="wrap page-head"><span class="kicker kk-en">FAQ</span><h1>{ar ? 'الأسئلة الشائعة' : 'Frequently asked questions'}</h1><p>{desc}</p></div>
   <div class="wrap">
     <nav class="chips-row faq-jump" aria-label={ar ? 'المجموعات' : 'Groups'}>{groups.map((g, gi) => <a class="chip-link" href={`#g${gi}`}>{g.h}</a>)}</nav>
     {groups.map((g, gi) => (

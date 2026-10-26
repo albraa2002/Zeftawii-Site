@@ -113,3 +113,14 @@ html[lang='en'] .hero-band .hb1 .hb-text { max-width: 700px; }
   .mega-card { padding: .7rem .5rem; }
   .mega-foot { padding: .8rem .5rem 0; }
 }
+
+/* ===== Review pass: structure over decoration, readability, focus ===== */
+.sec-head { grid-template-columns: minmax(0, 1fr); }
+.sec-head::before { display: none; }
+.sec-head > * { grid-column: 1; }
+html[lang='ar'] .kk-en { display: none; }
+button:focus-visible, summary:focus-visible, [role='button']:focus-visible, .car-btn:focus-visible, .hs-btn:focus-visible, .hs-dot:focus-visible, .car-dot:focus-visible, .icon-btn:focus-visible, .mi-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+.hero-band button:focus-visible, .hero-band a:focus-visible, .hb button:focus-visible, .hb a:focus-visible { outline-color: #fff; }
+.faq-list summary, .faq-item summary { min-height: 44px; display: flex; align-items: center; }
+.chips-row .chip-link, .chip-link { display: inline-flex; align-items: center; min-height: 40px; }
+.tool-card .tool-n { display: none; }

@@ -14,7 +14,7 @@ const ld = [{ '@type': 'CollectionPage', name: title, url: base + path, inLangua
 <Shell lang={lang} title={title} desc={desc} path={path} alt={{ ar: '/certificates/', en: '/en/certificates/' }} extraLd={ld}>
   <div class="wrap page-head">
     <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <span>{ar ? 'الشهادات' : 'Certificates'}</span></nav>
-    <span class="kicker">CERTIFICATES</span>
+    <span class="kicker kk-en">CERTIFICATES</span>
     <h1>{ar ? 'شهادات ودورات حصلت عليها' : 'Certificates and courses I earned'}</h1>
     <p>{desc} {ar ? 'تقدر تطلب نسخة من أي شهادة وقت التواصل.' : 'I can share a copy of any certificate when we talk.'}</p>
     <div class="facts"><div><b>{certCount}</b><span>{ar ? 'شهادة ودورة' : 'certificates and courses'}</span></div><div><b>Udemy · DataCamp · hp LIFE</b><span>{ar ? 'أبرز الجهات' : 'main providers'}</span></div><div><b>{ar ? 'جامعة المنصورة' : 'Mansoura University'}</b><span>{ar ? 'بكالوريوس معلوماتية طبية' : 'B.Sc. Medical Informatics'}</span></div></div>

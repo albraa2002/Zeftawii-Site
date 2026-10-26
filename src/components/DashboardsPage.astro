@@ -22,7 +22,7 @@ const T = ar ? {
 const ld = [{ '@type': 'CollectionPage', name: T.title, url: base + path, inLanguage: lang }];
 ---
 <Shell lang={lang} title={T.title} desc={T.desc} path={path} alt={{ ar: '/dashboards/', en: '/en/dashboards/' }} extraLd={ld}>
-  <div class="wrap page-head"><span class="kicker">DASHBOARDS</span><h1>{T.h1}</h1><p>{T.lead}</p></div>
+  <div class="wrap page-head"><span class="kicker kk-en">DASHBOARDS</span><h1>{T.h1}</h1><p>{T.lead}</p></div>
   <div class="wrap">
     <nav class="dash-nav" aria-label="dashboards">{dashboards.map((d) => <a class="chip chip-link" href={`#${d.slug}`}>{d[lang].name}</a>)}</nav>
     {dashboards.map((d, i) => {

@@ -20,7 +20,7 @@ const ld = [
 ];
 ---
 <Shell lang={lang} title={title} desc={desc} path={path} alt={{ ar: '/glossary/', en: '/en/glossary/' }} extraLd={ld}>
-  <div class="wrap page-head has-art"><span class="kicker">GLOSSARY</span><h1>{u.glossary}</h1><p>{desc}</p><div class="hb-art"><Illus kind={'glossary'} /></div></div>
+  <div class="wrap page-head has-art"><span class="kicker kk-en">GLOSSARY</span><h1>{u.glossary}</h1><p>{desc}</p><div class="hb-art"><Illus kind={'glossary'} /></div></div>
   <div class="wrap post-grid">
     {sorted.map((g) => (
       <a class="post-card" href={P(lang, `/glossary/${g.slug}/`)}>

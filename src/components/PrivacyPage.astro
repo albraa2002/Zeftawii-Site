@@ -35,7 +35,7 @@ const T = ar ? {
 };
 ---
 <Shell lang={lang} title={T.title} desc={T.desc} path={path} alt={{ ar: '/privacy/', en: '/en/privacy/' }}>
-  <div class="wrap page-head"><span class="kicker">PRIVACY</span><h1>{T.h1}</h1><p>{T.intro}</p><small>{T.upd}</small></div>
+  <div class="wrap page-head"><span class="kicker kk-en">PRIVACY</span><h1>{T.h1}</h1><p>{T.intro}</p><small>{T.upd}</small></div>
   <article class="wrap prose" style="max-width:820px">
     {T.s.map(([h, items]) => (<section><h2>{h}</h2><ul>{(items as string[]).map((i) => <li>{i}</li>)}</ul></section>))}
     <p class="art-note">{T.note}</p>
