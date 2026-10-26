@@ -74,9 +74,12 @@ const colRes = [[u.tools, '/tools/'], [u.solutions, '/solutions/'], [u.blog, '/b
 <div class="mbar" role="group" aria-label="quick actions">
   <a class="btn btn-primary btn-sm" href={home + '#contact'} data-evt="cta_click" data-loc="mbar">{t.nav.cta}</a>
   <a class="btn btn-wa btn-sm" href={wa} target="_blank" rel="noopener" data-evt="whatsapp_click" data-loc="mbar">{L.chat}</a>
+  <button type="button" class="btn btn-ghost btn-sm mb-chat" id="mb-chat" hidden aria-label={ar ? 'اسأل المساعد' : 'Ask the assistant'}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5Z"/></svg></button>
 </div>
 
 <script>
+  const mc = document.getElementById('mb-chat'); const co = document.getElementById('chat-open');
+  if (mc && co) { mc.hidden = false; mc.addEventListener('click', () => co.click()); }
   const btn = document.getElementById('install-app') as HTMLButtonElement | null;
   if (btn) {
     const standalone = matchMedia('(display-mode: standalone)').matches || (navigator as any).standalone;

@@ -1,0 +1,72 @@
+/* ===== نسخة الموبايل: طبقة تجربة مستخدم مخصصة (≤700px). نفس الصفحات بدون تكرار محتوى ===== */
+@media (max-width: 700px) {
+  /* إيقاع عام أقصر */
+  section { padding-top: 2.4rem; }
+  .sec-head { margin-bottom: 1.2rem; grid-template-columns: minmax(0, 1fr); padding-top: .9rem; }
+  .sec-head::before { grid-row: auto; font-size: 1rem; }
+  .sec-head > * { grid-column: 1; }
+  .sec-head h2 { font-size: 1.45rem; }
+  .sec-head p { font-size: .92rem; line-height: 1.7; }
+  .page-head { padding-top: 1.4rem; gap: .7rem; }
+  .page-head h1 { font-size: 1.65rem; }
+  .page-head > p { font-size: .98rem; line-height: 1.75; }
+  .page-head.has-art > .hb-art { display: none; }
+  .page-head.has-art { grid-template-columns: 1fr; }
+
+  /* هيرو مضغوط: النص والزرار فوق، الرسمة صغيرة */
+  .hb { padding: 1.1rem; gap: .8rem; border-radius: 18px; }
+  .hbx { max-height: 120px; }
+  .hb h1, .hb h2 { font-size: 1.65rem; margin-bottom: .6rem; }
+  .hb p { font-size: .92rem; margin-bottom: .9rem; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .hs-slide .cta-row { gap: .5rem; }
+  .hs-slide .cta-row .btn { flex: 1 1 100%; justify-content: center; }
+  .hs-pp { display: none; }
+  .hb-me img { width: 96px; box-shadow: 0 0 0 6px color-mix(in srgb, var(--ba) 18%, transparent); }
+  .hb-me { gap: .6rem; } .hb-me ul { display: none; }
+  .hb-quote blockquote { -webkit-line-clamp: 4; font-size: 1rem; line-height: 1.7; }
+  .hb-quote figcaption { font-size: .85rem; }
+
+  /* أرقام: صف واحد مضغوط */
+  .stats { grid-template-columns: repeat(4, 1fr); gap: .4rem; margin-top: .8rem; }
+  .stat { padding: .6rem .2rem; border-top-width: 2px; }
+  .stat b { font-size: 1.15rem; }
+  .stat span { font-size: .64rem; line-height: 1.35; display: block; }
+
+  /* شريط الثقة: يتحرك أفقياً بدل 5 صفوف */
+  .trustbar { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: .5rem; margin-inline: -1rem; padding-inline: 1rem; padding-bottom: .3rem; }
+  .trustbar::-webkit-scrollbar { display: none; }
+  .trustbar li { flex: 0 0 74%; max-width: none; scroll-snap-align: start; }
+  .tb-i { width: 34px; height: 34px; }
+
+  /* كروت الخدمات: أقصر */
+  .carousel { --per: 1.12; --gap: .8rem; }
+  .track { align-items: flex-start; }
+  .track .card { padding: 1.1rem; }
+  .track .card ul { display: none; }
+  .track .card p { display: -webkit-box; -webkit-line-clamp: 4; line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .track .proj-card, .track .tool-card, .track .price-card { padding-bottom: 1rem; }
+
+  /* مشاريع الرئيسية: سلايدر أفقي بدل 3 كروت طويلة */
+  #work .proj-grid { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: -1rem; padding-inline: 1rem; padding-bottom: .4rem; }
+  #work .proj-grid::-webkit-scrollbar { display: none; }
+  #work .proj-grid > * { flex: 0 0 84%; max-width: 84%; min-width: 0; scroll-snap-align: start; }
+
+  /* وعودي: صفوف مضغوطة */
+  .pr-grid { gap: .6rem; margin-top: 1rem; }
+  .pr-grid li { display: grid; grid-template-columns: auto 1fr; column-gap: .8rem; row-gap: .1rem; padding: .8rem .9rem; }
+  .pr-grid .pr-i { grid-row: span 2; width: 36px; height: 36px; }
+  .pr-grid p { font-size: .84rem; line-height: 1.55; }
+  .pr-ver, .pr-test { padding: 1rem; }
+
+  /* الشات: أيقونة داخل الشريط السفلي بدل بالون يغطي المحتوى */
+  .chat-launcher { display: none; }
+  .mbar .mb-chat { flex: 0 0 48px; padding: 0; }
+  .mbar .mb-chat[hidden] { display: none; }
+
+  /* الأدوات والأسعار */
+  .tool-guide { padding: .8rem 1rem; }
+  .calc.tool .calc-in { gap: .8rem; }
+  .mkt { gap: .5rem; } .mkt-b { min-width: 0; flex: 1 1 140px; padding: .6rem .8rem; }
+  .cta-box { padding: 1.2rem; }
+  .cta-row .btn { flex: 1 1 100%; justify-content: center; }
+}
