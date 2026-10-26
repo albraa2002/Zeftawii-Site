@@ -1,0 +1,45 @@
+---
+// صفحة روابط للبايو (انستجرام/تيك توك/لينكدإن): رابط واحد يودّي العميل لأهم حاجة. noindex عشان ماتنافسش الصفحات الأساسية.
+import Base from '../layouts/Base.astro';
+import type { Lang } from '../i18n';
+import { CONFIG } from '../config';
+import { P } from '../content/ui';
+const { lang } = Astro.props as { lang: Lang };
+const ar = lang === 'ar';
+const wa = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(ar ? 'أهلاً، حابب أحجز استشارة مجانية' : 'Hi, I would like to book a free consultation')}`;
+const rows = [
+  { h: wa, t: ar ? 'احجز استشارة مجانية على واتساب' : 'Book a free consultation on WhatsApp', s: ar ? 'رد خلال يوم عمل' : 'Reply within one business day', k: 'wa', ext: true },
+  { h: P(lang, '/services/'), t: ar ? 'الخدمات' : 'Services', s: ar ? 'لوحات تحكم، تحليلات تسويقية، أتمتة، إدارة' : 'Dashboards, marketing analytics, automation, management' },
+  { h: P(lang, '/tools/'), t: ar ? 'أدوات مجانية' : 'Free tools', s: ar ? 'حاسبة ROAS وCPA وغيرها' : 'ROAS, CPA and more calculators' },
+  { h: P(lang, '/pricing/'), t: ar ? 'الأسعار التقريبية' : 'Pricing', s: ar ? 'بالجنيه أو بالريال' : 'In EGP or SAR' },
+  { h: P(lang, '/projects/'), t: ar ? 'مشاريع على GitHub' : 'Projects on GitHub', s: ar ? 'الكود مفتوح تراجعه بنفسك' : 'Open code you can review' },
+  { h: P(lang, '/blog/'), t: ar ? 'المدونة' : 'Blog', s: ar ? 'مقالات عملية في البيانات والتسويق' : 'Practical data and marketing articles' },
+];
+const L = CONFIG.links; const soc = [['LinkedIn', L.linkedin], ['Instagram', L.instagram], ['TikTok', L.tiktok], ['X', L.x], ['GitHub', L.github]].filter((x) => x[1]);
+const title = ar ? 'روابط | Zeftawii' : 'Links | Zeftawii';
+---
+<Base lang={lang} noindex title={title} desc={ar ? 'كل الروابط المهمة في مكان واحد.' : 'All the important links in one place.'} path={P(lang, '/links/')} alt={{ ar: '/links/', en: '/en/links/' }}>
+  <main class="lk">
+    <img class="lk-p" src="/albaraa-320.jpg" alt={ar ? 'البراء إيهاب الزفتاوي' : 'Albaraa Ehab Elzeftawy'} width="96" height="96" />
+    <h1>{CONFIG.brand} | {CONFIG.tagline}</h1>
+    <p class="lk-d">{ar ? 'محلل بيانات و BI. بحوّل بياناتك لقرارات تكبّر مبيعاتك.' : 'Data analyst and BI. I turn your data into decisions that grow sales.'}</p>
+    <nav class="lk-l" aria-label={ar ? 'الروابط' : 'Links'}>
+      {rows.map((r) => <a class={`lk-b${r.k ? ' lk-main' : ''}`} href={r.h} {...(r.ext ? { target: '_blank', rel: 'noopener' } : {})} data-evt={r.k ? 'whatsapp_click' : 'link_click'} data-loc="links_page"><b>{r.t}</b><small>{r.s}</small></a>)}
+    </nav>
+    <p class="lk-s">{soc.map(([n, h]) => <a href={h as string} target="_blank" rel="noopener noreferrer me">{n}</a>)}</p>
+    <a class="lk-lang" href={ar ? '/en/links/' : '/links/'} hreflang={ar ? 'en' : 'ar'}>{ar ? 'English' : 'عربي'}</a>
+  </main>
+</Base>
+<style is:global>
+  .lk { max-width: 480px; margin: 0 auto; padding: 2.2rem 1.2rem 3rem; text-align: center; min-height: 100dvh; }
+  .lk-p { display: block; margin-inline: auto; width: 96px; height: 96px; border-radius: 50%; object-fit: cover; border: 3px solid var(--cyan); }
+  .lk h1 { font-size: 1.35rem; margin: .9rem 0 .3rem; }
+  .lk-d { color: var(--muted); margin: 0 auto 1.6rem; max-width: 34ch; }
+  .lk-l { display: grid; gap: .7rem; }
+  .lk-b { display: grid; gap: .15rem; padding: .95rem 1rem; border-radius: 14px; border: 1px solid var(--panel-b); background: var(--panel); text-decoration: none; color: var(--text); min-height: 60px; transition: transform .2s, border-color .2s; }
+  .lk-b:hover { transform: translateY(-2px); border-color: var(--cyan); }
+  .lk-b small { color: var(--muted); font-size: .82rem; }
+  .lk-main { background: #25d366; border-color: #25d366; color: #07230f; } .lk-main small { color: #0d3a1b; }
+  .lk-s { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; margin: 1.6rem 0 1rem; }
+  .lk-s a, .lk-lang { padding: .45rem .9rem; border-radius: 999px; border: 1px solid var(--panel-b); color: var(--muted); text-decoration: none; font-size: .88rem; min-height: 40px; display: inline-flex; align-items: center; }
+</style>
