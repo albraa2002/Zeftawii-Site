@@ -166,6 +166,7 @@ main.inner > .wrap + .wrap { margin-top: 0; }
 .trustbar { list-style: none; margin: 1rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .7rem; justify-content: center; }
 .trustbar li { flex: 1 1 200px; max-width: 260px; }
 .trustbar a { display: flex; align-items: center; gap: .65rem; height: 100%; padding: .65rem .9rem; background: var(--panel); border: 1px solid var(--panel-b); border-radius: 12px; color: inherit; text-decoration: none; transition: border-color .2s, transform .2s; }
+.tb-dots { display: none; }
 .trustbar a:hover { border-color: rgb(var(--c)); transform: translateY(-2px); }
 .tb-i { display: grid; place-items: center; flex: none; width: 38px; height: 38px; border-radius: 10px; background: rgba(var(--c), .12); color: rgb(var(--c)); }
 .tb-t { display: flex; flex-direction: column; min-width: 0; line-height: 1.35; }

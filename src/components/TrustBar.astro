@@ -21,3 +21,23 @@ const items = [
     <li><a href={x.h}><span class="tb-i" set:html={icon(x.i, 22)} /><span class="tb-t"><b>{x.b}</b><small>{x.s}</small></span></a></li>
   ))}
 </ul>
+<div class="tb-dots" aria-hidden="true"></div>
+<script>
+  // موبايل: كل عنصر واخد مساحته، وبيتقلّب أوتوماتيك يمين وشمال. بيقف لما تلمسه أو لما يخرج من الشاشة.
+  const ul = document.querySelector<HTMLElement>('.trustbar');
+  const dotsBox = document.querySelector<HTMLElement>('.tb-dots');
+  if (ul && dotsBox) {
+    const mq = matchMedia('(max-width: 700px)');
+    const lis = Array.from(ul.children) as HTMLElement[];
+    const dots = lis.map((_, i) => { const d = document.createElement('button'); d.type = 'button'; d.tabIndex = -1; d.addEventListener('click', () => go(i, true)); dotsBox.appendChild(d); return d; });
+    const cur = () => { const r = ul.getBoundingClientRect(); const mid = r.left + r.width / 2; let b = 0, bd = 1e9; lis.forEach((l, i) => { const q = l.getBoundingClientRect(); const d = Math.abs(q.left + q.width / 2 - mid); if (d < bd) { bd = d; b = i; } }); return b; };
+    const mark = () => { const c = cur(); dots.forEach((d, i) => d.classList.toggle('on', i === c)); };
+    function go(i: number, user = false) { lis[i].scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', inline: 'center', block: 'nearest' }); if (user) hold = Date.now() + 7000; }
+    let hold = 0, vis = false, dir = 1;
+    ul.addEventListener('scroll', () => requestAnimationFrame(mark), { passive: true });
+    ['pointerdown', 'touchstart', 'focusin'].forEach((e) => ul.addEventListener(e, () => { hold = Date.now() + 7000; }, { passive: true }));
+    new IntersectionObserver((en) => { vis = en[0].isIntersecting; }, { threshold: 0.6 }).observe(ul);
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(() => { if (!mq.matches || !vis || document.hidden || Date.now() < hold) return; const c = cur(); if (c >= lis.length - 1) dir = -1; else if (c <= 0) dir = 1; go(c + dir); }, 3500);
+    mark();
+  }
+</script>

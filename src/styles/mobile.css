@@ -33,10 +33,16 @@
   .stat span { font-size: .64rem; line-height: 1.35; display: block; }
 
   /* شريط الثقة: يتحرك أفقياً بدل 5 صفوف */
-  .trustbar { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: .5rem; margin-inline: -1rem; padding-inline: 1rem; padding-bottom: .3rem; }
+  .trustbar { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: .6rem; margin-inline: 0; padding: 0 0 .2rem; overscroll-behavior-x: contain; }
   .trustbar::-webkit-scrollbar { display: none; }
-  .trustbar li { flex: 0 0 74%; max-width: none; scroll-snap-align: start; }
-  .tb-i { width: 34px; height: 34px; }
+  .trustbar li { flex: 0 0 100%; max-width: none; scroll-snap-align: center; scroll-snap-stop: always; }
+  .trustbar a { padding: 1rem 1.1rem; gap: .9rem; border-radius: 16px; background: var(--panel); }
+  .tb-t b { font-size: 1.05rem; } .tb-t small { font-size: .85rem; opacity: .8; }
+  .tb-i { width: 48px; height: 48px; border-radius: 14px; }
+  .tb-dots { display: flex; justify-content: center; gap: 4px; margin-top: .3rem; }
+  .tb-dots button { width: 22px; height: 22px; border: 0; background: none; padding: 0; position: relative; }
+  .tb-dots button::before { content: ''; position: absolute; inset: 8px; border-radius: 99px; background: var(--panel-b); transition: inset .25s, background .25s; }
+  .tb-dots button.on::before { inset: 8px 2px; background: var(--cyan); }
 
   /* كروت الخدمات: أقصر */
   .carousel { --per: 1.12; --gap: .8rem; }
