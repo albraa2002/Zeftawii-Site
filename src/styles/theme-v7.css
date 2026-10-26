@@ -1,0 +1,42 @@
+/* ===== الهيرو الجديد: شريط كامل العرض + حقل "فك الشفرة" التفاعلي ===== */
+.hero { padding-block: 0 1rem; }
+.hero-band { position: relative; overflow: hidden; background: radial-gradient(70% 120% at 15% 110%, rgba(76, 155, 255, .16), transparent 60%), #070b14; color: #eef2f9; padding-block: clamp(2.4rem, 5vw, 4.2rem) 1.6rem; min-height: min(84vh, 740px); display: grid; align-content: center; isolation: isolate; border-bottom: 1px solid rgba(255, 255, 255, .06); }
+.hero-band > canvas.df { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; display: block; }
+.hero-band .hs { position: relative; z-index: 1; }
+.hero-band .hb { background: none; border: 0; border-radius: 0; padding: 0; min-height: clamp(360px, 46vh, 480px); overflow: visible; }
+.hero-band .hb::before { display: none; }
+.hero-band .hb1 { grid-template-columns: minmax(0, 1fr); }
+.hero-band .hb1 .hbx { display: none; }
+.hero-band .hb1 .hb-text { max-width: 760px; }
+.hero-band .hb1 h1 { font-size: clamp(2.5rem, 6.2vw, 5.4rem); line-height: 1.12; letter-spacing: -.01em; margin-bottom: 1.2rem; }
+.hero-band .hb1 p { font-size: clamp(1.02rem, 1.5vw, 1.25rem); max-width: 54ch; color: #c3ccdb; }
+.hero-band .hb-k { border: 0; padding: 0; border-radius: 0; font-family: inherit; letter-spacing: .01em; font-size: .92rem; margin-bottom: 1.1rem; color: var(--ba); }
+.hero-band .hb .btn { padding-block: .85rem; font-size: 1.02rem; }
+.hero-band .hs-dot { background: rgba(255, 255, 255, .22); }
+.hero-band .hs-dot::after { background: #fff; }
+.hero-band .hs-btn { background: rgba(255, 255, 255, .08); border-color: rgba(255, 255, 255, .18); color: #fff; }
+.hero-band .hs-btn:hover { background: rgba(255, 255, 255, .16); }
+.hero-band .hs-ctl { margin-top: 1.6rem; }
+.df-read { position: absolute; z-index: 1; top: 1.4rem; left: 1.6rem; right: auto; display: flex; align-items: baseline; gap: .5rem; font-family: 'Inter', sans-serif; color: #8c97aa; font-size: .8rem; pointer-events: none; }
+[dir='ltr'] .df-read { left: auto; right: 1.6rem; }
+.df-read b { font-size: 1.9rem; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; min-width: 2ch; text-align: end; }
+.df-read { direction: ltr; }
+/* أرقام وثقة: بدون كروت */
+.stats { gap: 0; margin-top: 1.6rem; }
+.stat { background: none; border: 0; border-top: 0; border-inline-start: 1px solid var(--panel-b); padding: .3rem 1.4rem; text-align: start; border-radius: 0; }
+.stat:first-child { border-inline-start: 0; padding-inline-start: 0; }
+.stat b { font-size: clamp(2rem, 3.6vw, 3rem); line-height: 1.1; color: var(--text); }
+.stat span { font-size: .9rem; }
+.trustbar { margin-top: 1.6rem; justify-content: flex-start; }
+.trustbar a { background: none; border-color: var(--panel-b); }
+@media (max-width: 700px) {
+  .hero-band { min-height: 0; padding-block: 1.6rem 1rem; }
+  .hero-band .hb { min-height: 0; padding: 0; }
+  .hero-band .hb1 h1 { font-size: 2.15rem; margin-bottom: .8rem; }
+  .df-read { top: .8rem; } [dir='rtl'] .df-read { left: 1rem; } [dir='ltr'] .df-read { right: 1rem; } .df-read b { font-size: 1.3rem; }
+  .stat { padding: .3rem .6rem; } .stat b { font-size: 1.35rem; }
+}
+html[lang='en'] .hero-band .hb1 h1 { font-size: clamp(2.2rem, 4.6vw, 4.1rem); }
+html[lang='en'] .hero-band .hb1 .hb-text { max-width: 700px; }
+.hero-band > canvas.df { transition: opacity .6s ease; }
+.hero-band:has(.hb1:not(.on)) > canvas.df { opacity: .4; }

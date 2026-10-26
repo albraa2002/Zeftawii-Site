@@ -76,6 +76,9 @@ const quick = ar0 ? [
 
 <main id="main">
   <div class="hero" id="top">
+   <div class="hero-band" data-df>
+    <canvas class="df" aria-hidden="true"></canvas>
+    <div class="df-read" aria-hidden="true"><b data-df-read>0</b><span>{ar0 ? '% إشارة من الضجيج' : '% signal out of noise'}</span></div>
     <div class="wrap hs" data-hs aria-roledescription="carousel" aria-label={ar0 ? 'عروض الصفحة الرئيسية' : 'Homepage highlights'}>
       <div class="hs-track" aria-live="off"><HeroBanners lang={lang} t={t} /></div>
       <div class="hs-ctl">
@@ -85,6 +88,7 @@ const quick = ar0 ? [
         <button type="button" class="hs-btn hs-pp" data-hs-pp aria-pressed="false">{ar0 ? 'إيقاف التبديل' : 'Pause'}</button>
       </div>
     </div>
+   </div>
     <div class="wrap">
       <div class="stats rv">{t.stats.map((s) => <div class="stat"><b>{s.v}</b><span>{s.l}</span></div>)}</div>
       <TrustBar lang={lang} />
@@ -259,8 +263,10 @@ const quick = ar0 ? [
 <script>
   import { toLatinDigits, getCtx, makeRef, cleanPhone, validPhone, validEmail, stripHtml, validate, waText, waLink, enrichWaClick, throttle, submitLead, noteSentViaWa, type Lead } from '../lib/lead';
   import { initCarousels } from '../lib/carousel';
+  import { initDecode } from '../lib/decode';
   getCtx();
   initCarousels();
+  document.querySelectorAll<HTMLElement>('[data-df]').forEach(initDecode);
 
   document.querySelectorAll<HTMLElement>('[data-hs]').forEach((root) => {
     const slides = Array.from(root.querySelectorAll<HTMLElement>('.hs-slide'));
