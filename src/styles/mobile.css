@@ -119,3 +119,16 @@
   .tool-car .tool-card p { font-size: .92rem; line-height: 1.75; margin: 0; }
   .tool-car .tool-card .more { margin-top: .9rem; padding: 0; min-height: 46px; display: flex; align-items: center; justify-content: center; gap: .4rem; border-radius: 12px; background: var(--tc); color: #07101c; font-weight: 700; }
 }
+
+/* ===== Equal-height cards, actions pinned to the bottom ===== */
+@media (max-width: 700px) {
+  .carousel .track { align-items: stretch; }
+  .carousel .track > * { display: flex; flex-direction: column; height: auto; }
+  #services .track .card .card-cta { margin-top: auto; }
+  #services .track .card ul { margin-bottom: 1rem; }
+  .tool-car .tool-card p { margin-bottom: .9rem; }
+  .tool-car .tool-card .more { margin-top: auto; }
+  .price-card .btn, .price-card .price-cta { margin-top: auto; }
+}
+@media (max-width: 700px) { .price-card > .btn { margin-top: auto; align-self: stretch !important; justify-content: center; min-height: 46px; } .price-card .pt { margin-bottom: 1rem; } }
+@media (max-width: 700px) { .carousel .track > .price-card, .carousel .track > .proj-card, .carousel .track > .tool-card, .carousel .track > .card { flex: 0 0 86vw; max-width: 380px; } }
