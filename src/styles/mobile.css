@@ -104,3 +104,18 @@
   #services .track .card .card-cta { align-self: stretch; justify-content: center; margin-top: 1rem; min-height: 46px; border-radius: 12px; background: var(--sc); color: #07101c; font-size: .95rem; }
   #services .track .card .card-more { align-self: center; margin-top: .2rem; min-height: 44px; }
 }
+
+/* ===== All carousels on phones: one centered card, neighbours peek ===== */
+@media (max-width: 700px) {
+  .carousel .track { margin-inline: -1rem; padding: 14px 7vw 18px; scroll-padding-inline: 7vw; }
+  .carousel .track > * { flex: 0 0 86vw; max-width: 380px; min-width: 0; scroll-snap-align: center; scroll-snap-stop: always; }
+  /* tools: accent per tool, chip, button */
+  .tool-car .track .tool-card { --tc: #4c9bff; padding: 1.2rem 1.15rem 1.1rem; gap: .35rem; border-top: 3px solid var(--tc); background: linear-gradient(180deg, color-mix(in srgb, var(--tc) 9%, var(--panel)), var(--panel) 55%); }
+  .tool-car .track .tool-card:nth-child(1) { --tc: #4c9bff; } .tool-car .track .tool-card:nth-child(2) { --tc: #f59e0b; } .tool-car .track .tool-card:nth-child(3) { --tc: #34d399; }
+  .tool-car .track .tool-card:nth-child(4) { --tc: #a78bfa; } .tool-car .track .tool-card:nth-child(5) { --tc: #f87171; } .tool-car .track .tool-card:nth-child(6) { --tc: #2dd4bf; } .tool-car .track .tool-card:nth-child(7) { --tc: #fb7185; }
+  .tool-car .tool-card .tool-n { display: none; }
+  .tool-car .tool-card .meta { align-self: flex-start; font-size: .78rem; letter-spacing: 0; text-transform: none; font-weight: 700; padding: .2rem .65rem; border-radius: 999px; color: var(--text); background: color-mix(in srgb, var(--tc) 18%, transparent); }
+  .tool-car .tool-card h3 { font-size: 1.12rem; line-height: 1.5; margin: .3rem 0 0; overflow-wrap: anywhere; }
+  .tool-car .tool-card p { font-size: .92rem; line-height: 1.75; margin: 0; }
+  .tool-car .tool-card .more { margin-top: .9rem; padding: 0; min-height: 46px; display: flex; align-items: center; justify-content: center; gap: .4rem; border-radius: 12px; background: var(--tc); color: #07101c; font-weight: 700; }
+}
