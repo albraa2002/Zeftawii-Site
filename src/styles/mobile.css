@@ -70,3 +70,5 @@
   .cta-box { padding: 1.2rem; }
   .cta-row .btn { flex: 1 1 100%; justify-content: center; }
 }
+@media (max-width: 700px) { .mnav { padding-bottom: 5.5rem; } }
+@media (max-width: 700px) { .df-read { display: none; } .hbx { width: 100%; max-width: 340px; margin-inline: auto; } }

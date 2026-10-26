@@ -88,3 +88,28 @@ html[lang='en'] .hero-band .hb1 .hb-text { max-width: 700px; }
 @media (max-width: 1000px) { .sx-grid, .sx-pick { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 860px) { .sx-hb { grid-template-columns: 1fr; } .sx-hb p { display: block !important; } .sx-orbit { width: min(78%, 300px); order: -1; } .sx-node { width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 13px; } }
 @media (max-width: 640px) { .sx-grid, .sx-pick { grid-template-columns: 1fr; } .sx-card { padding: 1.15rem; } .sx-d { -webkit-line-clamp: 3; line-clamp: 3; } }
+
+/* ===== Header mega menus: clearer desktop panels + scrim ===== */
+@media (min-width: 1081px) {
+  html.mega-open body::after { content: ''; position: fixed; inset: 68px 0 0 0; background: rgba(4, 8, 16, .55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 40; pointer-events: none; animation: megaIn .18s ease; }
+  .mega { padding: 1.3rem 1.4rem 1.2rem; border-radius: 18px; box-shadow: 0 24px 60px rgba(0, 0, 0, .45); }
+  .mi.wide .mega { width: min(100% - 2.5rem, 900px); }
+  .mega-cols.three { grid-template-columns: 1.35fr 1.15fr .8fr; gap: 0; }
+  .mega-cols.three > div { padding-inline: 1.1rem; }
+  .mega-cols.three > div + div { border-inline-start: 1px solid var(--panel-b); }
+  .mega-cols.three > div:first-child { padding-inline-start: 0; }
+  .mega-cols.three > div:last-child { padding-inline-end: 0; }
+  .mega-h { font-size: .8rem; letter-spacing: 0; text-transform: none; font-weight: 700; color: var(--cyan); margin: 0 .6rem .6rem; }
+  .mega-link { font-size: .92rem; align-items: center; padding: .5rem .6rem; }
+  .mega-link > span:first-child { margin-top: 0; }
+}
+/* ===== Mobile menu: one clean column ===== */
+@media (max-width: 1080px) {
+  .mega-cols, .mega-cols.three { grid-template-columns: 1fr; gap: .9rem; }
+  .mega { padding: .2rem 0 1rem; }
+  .mega-h { font-size: .78rem; font-weight: 700; letter-spacing: 0; text-transform: none; color: var(--cyan); margin: .4rem .2rem .3rem; padding-bottom: .3rem; border-bottom: 1px solid var(--panel-b); }
+  .mega-link { align-items: center; min-height: 44px; padding: .5rem .5rem; font-size: .95rem; }
+  .mega-link > span:first-child { margin-top: 0; }
+  .mega-card { padding: .7rem .5rem; }
+  .mega-foot { padding: .8rem .5rem 0; }
+}

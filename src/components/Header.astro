@@ -90,8 +90,8 @@ const onSvc = act('/services'), onWork = act('/projects', '/work', '/dashboards'
   const nav = document.getElementById('nav')!; const burger = document.getElementById('burger') as HTMLButtonElement; const links = document.getElementById('nav-links')!;
   const setOpen = (o: boolean) => { nav.classList.toggle('open', o); burger.setAttribute('aria-expanded', String(o)); };
   const btns = Array.from(links.querySelectorAll<HTMLButtonElement>('.mi-btn'));
-  const closeAll = () => btns.forEach((b) => { b.setAttribute('aria-expanded', 'false'); document.getElementById(b.getAttribute('aria-controls')!)!.hidden = true; });
-  const openOne = (b: HTMLButtonElement) => { closeAll(); b.setAttribute('aria-expanded', 'true'); document.getElementById(b.getAttribute('aria-controls')!)!.hidden = false; };
+  const closeAll = () => { document.documentElement.classList.remove('mega-open'); btns.forEach((b) => { b.setAttribute('aria-expanded', 'false'); document.getElementById(b.getAttribute('aria-controls')!)!.hidden = true; }); };
+  const openOne = (b: HTMLButtonElement) => { closeAll(); document.documentElement.classList.add('mega-open'); b.setAttribute('aria-expanded', 'true'); document.getElementById(b.getAttribute('aria-controls')!)!.hidden = false; };
   const fine = matchMedia('(hover: hover) and (min-width: 961px)');
   let tm = 0;
   btns.forEach((b) => {

@@ -11,7 +11,7 @@ const ar = lang === 'ar'; const L = (a: string, e: string) => (ar ? a : e);
 // نقاط "ضجيج" بتتحول لإشارة (حتمية)
 const dots = Array.from({ length: 70 }, (_, i) => { const a = Math.sin(i * 91.7) * 43758.5453, b = Math.sin(i * 12.9 + 3) * 24634.6345; const r1 = a - Math.floor(a), r2 = b - Math.floor(b); const k = i / 69; const x = 20 + k * 470; const line = 300 - k * k * 220 - k * 40; const spread = (1 - k) * 120 + 6; return { x, y: Math.max(20, Math.min(330, line + (r2 - 0.5) * 2 * spread)), r: 2 + r1 * 2.2, k }; });
 const line = Array.from({ length: 12 }, (_, i) => { const k = i / 11; return `${20 + k * 470},${300 - k * k * 220 - k * 40}`; }).join(' ');
-const tiles = projects.map((p, i) => ({ n: p.en.name.replace('Arsenal Analytics Platform', 'Arsenal Analytics').replace('SaaS Executive Dashboard', 'SaaS Exec Board').replace('Auto-Arbitrage Sentinel', 'Auto-Arbitrage').replace('Time-Vampire Matrix', 'Time-Vampire').replace('RFM Profit Radar', 'RFM Radar'), s: p.slug, x: (i % 3) * 168 + (Math.floor(i / 3) % 2 ? 24 : 0), y: Math.floor(i / 3) * 96 }));
+const tiles = projects.map((p, i) => ({ n: p.en.name.replace('Arsenal Analytics Platform', 'Arsenal Analytics').replace('SaaS Executive Dashboard', 'SaaS Exec Board').replace('Auto-Arbitrage Sentinel', 'Auto-Arbitrage').replace('Time-Vampire Matrix', 'Time-Vampire').replace('RFM Profit Radar', 'RFM Radar'), s: p.slug, x: (i % 3) * 178, y: Math.floor(i / 3) * 106, w: i === 6 ? 520 : 164, nb: i === 6 ? 20 : 6 }));
 const q = quotes[2]; const roles = [quotes[0], quotes[1], quotes[2]].map((x) => x.role[lang]);
 ---
 <div class="hb hb1 hs-slide on" role="group" aria-roledescription="slide" aria-label="1 / 4">
@@ -40,12 +40,12 @@ const q = quotes[2]; const roles = [quotes[0], quotes[1], quotes[2]].map((x) => 
     <div class="cta-row"><a class="btn btn-primary" href={P(lang, '/projects/')}>{L('شوف المشاريع', 'See the projects')}</a><a class="btn hb-ghost" href={CONFIG.links.github} target="_blank" rel="noopener noreferrer me">GitHub</a></div>
   </div>
   <svg class="hbx" style="direction:ltr" viewBox="0 0 520 330" aria-hidden="true" dir="ltr">
-    {tiles.map((x, i) => (<g transform={`translate(${x.x + 6},${x.y + 14})`}>
-      <rect width="152" height="82" rx="12" fill="#151a24" stroke="#fff" stroke-opacity=".12" />
-      <rect x="12" y="12" width="8" height="8" rx="2" fill={['#34d399', '#4c9bff', '#f59e0b', '#f87171', '#a78bfa', '#34d399', '#4c9bff'][i]} />
-      <text x="26" y="20" font-size="11" font-weight="700" fill="#e9edf5" font-family="Inter, sans-serif">{x.n}</text>
-      {[0, 1, 2, 3, 4, 5].map((b) => <rect x={14 + b * 22} y={72 - (14 + ((i * 7 + b * 11) % 30))} width="14" height={14 + ((i * 7 + b * 11) % 30)} rx="3" fill={['#34d399', '#4c9bff', '#f59e0b', '#f87171', '#a78bfa', '#34d399', '#4c9bff'][i]} opacity={.35 + b * .1} />)}
-    </g>))}
+    {tiles.map((x, i) => { const c = ['#34d399', '#4c9bff', '#f59e0b', '#f87171', '#a78bfa', '#34d399', '#4c9bff'][i]; const step = (x.w - 28) / x.nb; return (<g transform={`translate(${x.x},${x.y + 10})`}>
+      <rect width={x.w} height="94" rx="12" fill="#151a24" stroke="#fff" stroke-opacity=".12" />
+      <rect x="14" y="13" width="8" height="8" rx="2" fill={c} />
+      <text x="28" y="21" font-size="11.5" font-weight="700" fill="#e9edf5" font-family="Inter, sans-serif">{x.n}</text>
+      {Array.from({ length: x.nb }, (_, b) => { const h = 12 + ((i * 7 + b * 11) % 30) * (x.w > 300 ? 1.1 : 1); return <rect x={14 + b * step + step * 0.12} y={84 - h} width={step * 0.76} height={h} rx="3" fill={c} opacity={.35 + (b / x.nb) * .6} />; })}
+    </g>); })}
   </svg>
 </div>
 <div class="hb hb3 hs-slide" role="group" aria-roledescription="slide" aria-label="3 / 4" aria-hidden="true">
