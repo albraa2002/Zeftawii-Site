@@ -1,0 +1,18 @@
+# ينشر المقالات المجدولة: كل ثلاثاء بيطلب من Vercel يعمل نشر جديد، والموقع بيعرض أي مقال تاريخه وصل.
+# التفعيل (مرة واحدة): Vercel > Project > Settings > Git > Deploy Hooks > اعمل Hook على فرع main وانسخ الرابط،
+# وبعدها GitHub > Settings > Secrets and variables > Actions > New secret باسم VERCEL_DEPLOY_HOOK والصق الرابط.
+name: Weekly publish
+on:
+  schedule:
+    - cron: '0 6 * * 2'
+  workflow_dispatch:
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel deploy
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "VERCEL_DEPLOY_HOOK is not set, skipping."; exit 0; fi
+          curl -fsS -X POST "$HOOK"
