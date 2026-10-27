@@ -39,11 +39,15 @@
 - https://zeftawii-site-46vp.vercel.app/en/blog/power-bi-vs-web-dashboard-vs-looker/
 - https://zeftawii-site-46vp.vercel.app/en/blog/product-break-even-before-ads/
 - https://zeftawii-site-46vp.vercel.app/en/blog/read-campaign-report-10-minutes/
+- https://zeftawii-site-46vp.vercel.app/en/blog/real-roas-salla-store/
+- https://zeftawii-site-46vp.vercel.app/en/blog/reduce-cod-returns-egypt/
 - https://zeftawii-site-46vp.vercel.app/en/blog/rfm-customer-segments/
 - https://zeftawii-site-46vp.vercel.app/en/blog/roas-vs-break-even/
 - https://zeftawii-site-46vp.vercel.app/en/blog/scope-creep-agencies/
+- https://zeftawii-site-46vp.vercel.app/en/blog/target-cpa-max-cost-per-order/
 - https://zeftawii-site-46vp.vercel.app/en/blog/vat-inclusive-margin-ksa/
 - https://zeftawii-site-46vp.vercel.app/en/blog/weekly-status-report-one-page/
+- https://zeftawii-site-46vp.vercel.app/en/blog/why-meta-numbers-differ-from-store/
 - https://zeftawii-site-46vp.vercel.app/en/blog/write-a-project-brief/
 - https://zeftawii-site-46vp.vercel.app/en/certificates/
 - https://zeftawii-site-46vp.vercel.app/en/dashboards/

@@ -127,13 +127,20 @@ const quick = ar0 ? [
   <section id="work">
     <div class="wrap">
       <div class="sec-head rv"><h2>{ar0 ? 'مشاريع بنيتها بإيدي' : 'Projects I built myself'}</h2><p>{ar0 ? 'أمثلة تحليلية على GitHub. كل مشروع بيحل مشكلة واحدة، ومكتوب بوضوح لما البيانات تجريبية.' : 'Analytics examples on GitHub. Each solves one problem, and simulated data is labelled clearly.'}</p></div>
-      <div class="proj-grid rv">
+      <div class="carousel proj-car rv" data-carousel>
+        <div class="track" tabindex="0" role="region" aria-roledescription="carousel" aria-label={ar0 ? 'مشاريع' : 'Projects'}>
         {projects.filter((x) => x.featured).slice(0, 3).map((x) => (
           <a class="post-card proj-card" href={P(lang, `/projects/${x.slug}/`)}>
             <ProjectArt kind={x.kind} lang={lang} name={x[lang].name} />
             <h3>{x[lang].name}</h3><p>{x[lang].hook}</p>
           </a>
         ))}
+        </div>
+        <div class="car-ctrl">
+          <button type="button" class="car-btn" data-dir="prev" aria-label={ar0 ? 'السابق' : 'Previous'}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg></button>
+          <div class="car-dots"></div>
+          <button type="button" class="car-btn" data-dir="next" aria-label={ar0 ? 'التالي' : 'Next'}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
+        </div>
       </div>
       <p class="work-more rv"><a class="btn btn-ghost" href={P(lang, '/projects/')}>{ar0 ? 'كل المشاريع' : 'All projects'}</a><a class="btn btn-ghost" href={P(lang, '/work/')}>{ar0 ? 'دراسات الحالة' : 'Case studies'}</a></p>
     </div>

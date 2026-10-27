@@ -1,0 +1,115 @@
+---
+// صفحة هبوط لكل سوق (إعلانات): نفس الخدمات بلهجة وعملة وأمثلة السوق. noindex عشان ماتتكرّرش مع الصفحات الأساسية.
+import Shell from './Shell.astro';
+import Pledge from './Pledge.astro';
+import { services } from '../content/services';
+import { packs } from '../content/trust';
+import { icon, svcIcons } from '../lib/icons';
+import { CONFIG } from '../config';
+import { UI, P } from '../content/ui';
+const { market } = Astro.props as { market: 'eg' | 'sa' };
+const lang = 'ar' as const; const u = UI[lang];
+const eg = market === 'eg';
+const col = ['#4c9bff', '#f59e0b', '#34d399', '#a78bfa', '#f87171', '#2dd4bf'];
+const M = eg ? {
+  path: '/eg/', other: '/sa/', otherT: 'بتشتغل في السعودية أو الخليج؟ شوف صفحة أهلنا وناسنا',
+  title: 'خدمات تحليل بيانات ولوحات تحكم لمتاجر وشركات مصر | Zeftawii',
+  desc: 'لوحات تحكم وتحليلات تسويقية بالجنيه المصري، والدفع عند الاستلام والمرتجعات والشحن داخلين في الحساب. استشارة أولى مجانية.',
+  k: 'ولاد البلد · لأصحاب المتاجر والشركات في مصر', cur: 'ج.م', cn: 'جنيه',
+  h1: 'اعرف إيه اللي بيكسّب وإيه اللي بيحرق ميزانيتك، بالجنيه وبأرقام متجرك',
+  lead: 'لوحات تحكم وتحليلات تسويقية لمتاجر وشركات مصرية. بنحسب الدفع عند الاستلام والمرتجعات وتكلفة الشحن، مش بس الرقم اللي المنصة بتعرضه.',
+  c1: 'احجز استشارة مجانية', c2: 'كلمني واتساب',
+  wa: 'أهلاً، أنا من مصر وعايز أستفسر عن خدماتك',
+  painH: 'مشاكل بنشوفها كتير في السوق المصري',
+  pains: [
+    ['المرتجعات والشحن بياكلوا ربحك', 'ROAS حلو في الإعلانات، لكن بعد المرتجعات وتكلفة الشحن الربح ممكن يختفي.'],
+    ['مش عارف أنهي حملة بتكسب', 'أرقام المنصة بتختلف عن مبيعات المتجر الفعلية، ومحتاج رقم واحد تثق فيه.'],
+    ['تقارير Excel بتاخد ساعات', 'كل أسبوع فريقك بيضيع وقت في نسخ ولصق بدل ما يحلل ويقرر.'],
+    ['عايز حد يمسك التسليمات والعملاء', 'مواعيد بتتأخر ونطاق شغل مش متحدد بين الفريق والعميل.'],
+  ],
+  svcH: 'الخدمات', svcP: 'نفس الخدمات الستة، بتتسعّر بالجنيه وبتتسلّم بنطاق مكتوب.',
+  priceH: 'الأسعار تقريباً بالجنيه', priceP: 'دي أرقام "تبدأ من" مش عرض نهائي. السعر الفعلي بعد الاستشارة المجانية ونطاق العمل المكتوب.',
+  from: 'تبدأ من', mo: '/ شهرياً', all: 'كل التفاصيل والأسعار', ask: 'اطلب الخدمة', more: 'التفاصيل',
+  ctaH: 'عايز تعرف تبدأ منين؟', ctaP: 'ابعتلي وصف بسيط لمتجرك أو شغلك وهرد عليك خلال يوم عمل، والاستشارة الأولى مجانية.',
+} : {
+  path: '/sa/', other: '/eg/', otherT: 'بتشتغل في مصر؟ شوف صفحة ولاد البلد',
+  title: 'خدمات تحليل بيانات ولوحات تحكم لمتاجر وشركات السعودية والخليج | Zeftawii',
+  desc: 'لوحات تحكم وتحليلات تسويقية بالريال، مع حساب ضريبة القيمة المضافة 15% وتكلفة الشحن والمرتجعات. الاستشارة الأولى مجانية.',
+  k: 'أهلنا وناسنا · لأصحاب المتاجر والشركات في السعودية والخليج', cur: 'ر.س', cn: 'ريال',
+  h1: 'اعرف وش اللي يربّحك في متجرك وش اللي يحرق ميزانيتك، بالريال',
+  lead: 'لوحات تحكم وتحليلات تسويقية لمتاجر وشركات في السعودية والخليج. نحسب ضريبة القيمة المضافة 15% وتكلفة الشحن والمرتجعات، مو بس الرقم اللي تعرضه المنصة.',
+  c1: 'احجز استشارة مجانية', c2: 'كلمني واتساب',
+  wa: 'هلا، حاب أستفسر عن خدماتكم',
+  painH: 'مشاكل نشوفها كثير عند أصحاب المتاجر',
+  pains: [
+    ['الربح الحقيقي ما يطلع بالحساب', 'ROAS كويس في الحملة، لكن بعد الضريبة والشحن والمرتجعات الهامش يكون أقل مما تتوقع.'],
+    ['أرقام الحملات ما تطابق مبيعاتك', 'كل منصة تنسب المبيعات لنفسها، وتحتاج رقم واحد تعتمد عليه في قراراتك.'],
+    ['تقارير تاخذ وقت الفريق كل أسبوع', 'نسخ ولصق من Excel بدل ما يشتغل الفريق على التحليل والقرار.'],
+    ['تبي أحد ينظم التسليمات والعملاء', 'مواعيد تتأخر ونطاق عمل غير واضح بين الفريق والعميل.'],
+  ],
+  svcH: 'الخدمات', svcP: 'الخدمات الست نفسها، تتسعّر بالريال وتتسلّم بنطاق عمل مكتوب.',
+  priceH: 'الأسعار التقريبية بالريال', priceP: 'هذي أرقام "تبدأ من" مو عرض نهائي. السعر الفعلي بعد الاستشارة المجانية ونطاق العمل المكتوب.',
+  from: 'تبدأ من', mo: '/ شهرياً', all: 'كل التفاصيل والأسعار', ask: 'اطلب الخدمة', more: 'التفاصيل',
+  ctaH: 'تبي تعرف من وين تبدأ؟', ctaP: 'ارسل لي وصف بسيط لمتجرك أو شغلك وأرد عليك خلال يوم عمل، والاستشارة الأولى مجانية.',
+};
+const wa = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(M.wa)}`;
+const price = (k: (typeof packs)[number]) => (eg ? k.eg : k.sa).toLocaleString('en-US');
+---
+<Shell lang={lang} noindex title={M.title} desc={M.desc} path={M.path} alt={{ ar: M.path, en: '/en/' }}>
+  <div class="wrap svc-top">
+    <div class="hb sx-hb mk-hb" style={`--ba:${eg ? '#f59e0b' : '#34d399'}`}>
+      <div class="hb-text">
+        <span class="hb-k">{M.k}</span>
+        <h1>{M.h1}</h1>
+        <p>{M.lead}</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href={P(lang, '/#contact')} data-evt="cta_click" data-loc={`market_${market}`}>{M.c1}</a>
+          <a class="btn hb-ghost" href={wa} target="_blank" rel="noopener" data-evt="whatsapp_click" data-loc={`market_${market}`}>{M.c2}</a>
+        </div>
+        <ul class="sx-stats"><li>{M.cur}</li><li>{u.free}</li></ul>
+      </div>
+      <div class="mk-pr" aria-label={M.priceH}>
+        {packs.slice(0, 4).map((k) => <div class="mk-p"><small>{k.ar.n}</small><b dir="ltr">{price(k)} <em>{M.cur}</em></b></div>)}
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <h2 class="sec-h">{M.painH}</h2>
+    <div class="mk-pains">{M.pains.map(([t, d]) => <div class="mk-pain"><b>{t}</b><p>{d}</p></div>)}</div>
+
+    <h2 class="sec-h">{M.svcH}</h2>
+    <p class="plain">{M.svcP}</p>
+    <div class="sx-grid">
+      {services.map((s, i) => (
+        <article class="sx-card" style={`--c:${col[i]}`}>
+          <div class="sx-ico" set:html={icon(svcIcons[i], 26)} />
+          <h3><a href={P(lang, `/services/${s.slug}/`)}>{s.ar.name}</a></h3>
+          <p class="sx-d">{s.ar.desc}</p>
+          <div class="sx-act">
+            <a class="btn btn-primary" href={P(lang, `/?service=${s.idx}#contact`)} data-evt="service_click" data-loc={`market_${market}`}>{M.ask}</a>
+            <a class="sx-more" href={P(lang, `/services/${s.slug}/`)}>{M.more}<span aria-hidden="true"> ←</span></a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <h2 class="sec-h">{M.priceH}</h2>
+    <p class="plain">{M.priceP}</p>
+    <ul class="mk-list">
+      {packs.map((k) => <li><span>{k.ar.n}</span><b dir="ltr">{price(k)} {M.cur}{k.per ? ' ' + M.mo : ''}</b></li>)}
+    </ul>
+    <p><a class="btn btn-ghost" href={P(lang, '/pricing/')}>{M.all}</a></p>
+
+    <Pledge lang={lang} />
+
+    <section class="sx-cta">
+      <h2>{M.ctaH}</h2><p>{M.ctaP}</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={P(lang, '/#contact')} data-evt="cta_click" data-loc={`market_${market}_bottom`}>{M.c1}</a>
+        <a class="btn hb-ghost" href={wa} target="_blank" rel="noopener" data-evt="whatsapp_click" data-loc={`market_${market}_bottom`}>{M.c2}</a>
+      </div>
+    </section>
+    <p class="mk-other"><a href={M.other}>{M.otherT}</a></p>
+  </div>
+</Shell>

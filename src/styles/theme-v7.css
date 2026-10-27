@@ -124,3 +124,22 @@ button:focus-visible, summary:focus-visible, [role='button']:focus-visible, .car
 .faq-list summary, .faq-item summary { min-height: 44px; display: flex; align-items: center; }
 .chips-row .chip-link, .chip-link { display: inline-flex; align-items: center; min-height: 40px; }
 .tool-card .tool-n { display: none; }
+@media (min-width: 961px) { .proj-car .car-ctrl { display: none; } }
+.proj-car { margin-block: 1.4rem; }
+.proj-car .track .proj-card { text-decoration: none; color: inherit; }
+
+/* ===== Market landing pages (/eg/, /sa/) ===== */
+.mk-pr { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; align-self: center; }
+.mk-p { padding: 1rem 1.1rem; border-radius: 16px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .16); display: grid; gap: .3rem; }
+.mk-p small { color: #b6c0d1; font-size: .85rem; line-height: 1.4; }
+.mk-p b { color: #fff; font-size: 1.5rem; line-height: 1.1; } .mk-p b em { font-style: normal; font-size: .85rem; color: var(--ba); font-weight: 700; }
+.mk-pains { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.2rem 0 2.4rem; }
+.mk-pain { padding: 1.1rem; border-radius: 16px; border: 1px solid var(--panel-b); border-top: 3px solid var(--cyan); background: var(--panel, var(--bg-2)); }
+.mk-pain b { display: block; line-height: 1.5; margin-bottom: .4rem; } .mk-pain p { color: var(--muted); font-size: .9rem; line-height: 1.7; margin: 0; }
+.mk-list { list-style: none; padding: 0; margin: 1rem 0 1.2rem; display: grid; gap: .5rem; max-width: 640px; }
+.mk-list li { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: .8rem 1rem; border-radius: 12px; border: 1px solid var(--panel-b); background: var(--panel, var(--bg-2)); }
+.mk-list b { white-space: nowrap; }
+.mk-other { text-align: center; margin: 1rem 0 2rem; } .mk-other a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; display: inline-flex; min-height: 44px; align-items: center; }
+@media (max-width: 1000px) { .mk-pains { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 860px) { .mk-pr { order: -1; } .mk-p b { font-size: 1.25rem; } }
+@media (max-width: 560px) { .mk-pains { grid-template-columns: 1fr; } .mk-list li { flex-direction: column; align-items: flex-start; gap: .2rem; } }
