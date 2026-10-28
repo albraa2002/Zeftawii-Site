@@ -1,0 +1,94 @@
+---
+// مولّد روابط UTM: كله في المتصفح.
+import Shell from './Shell.astro';
+import Illus from './Illus.astro';
+import type { Lang } from '../i18n';
+import { UI, P } from '../content/ui';
+import { tools } from '../content/tools';
+import { CONFIG } from '../config';
+const { lang } = Astro.props as { lang: Lang };
+const ar = lang === 'ar'; const u = UI[lang];
+const tool = tools.find((x) => x.slug === 'utm-link-builder')!; const c = tool[lang];
+const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, '/tools/utm-link-builder/');
+const others = tools.filter((x) => x.slug !== 'utm-link-builder');
+const ld = [
+  { '@type': 'WebApplication', name: c.name, description: c.desc, url: base + path, inLanguage: lang, applicationCategory: 'BusinessApplication', operatingSystem: 'Web', offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' } },
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: u.crumbHome, item: base + P(lang, '/') },
+    { '@type': 'ListItem', position: 2, name: u.tools, item: base + P(lang, '/tools/') },
+    { '@type': 'ListItem', position: 3, name: c.name, item: base + path } ] },
+];
+const L = ar ? {
+  url: 'لينك الصفحة', src: 'المصدر (utm_source)', med: 'الوسيط (utm_medium)', cmp: 'اسم الحملة (utm_campaign)', cnt: 'المحتوى (utm_content) اختياري', trm: 'الكلمة (utm_term) اختياري',
+  presets: 'اختار بسرعة', out: 'اللينك الجاهز', copy: 'انسخ اللينك', copied: 'اتنسخ', wa: 'ابعتلي استشارة على واتساب', empty: 'اكتب لينك صفحة صحيح (يبدأ بـ https://) وهيظهر اللينك هنا.',
+  tips: ['استخدم حروف صغيرة وشرطة بدل المسافة (spring-sale مش Spring Sale).', 'نفس المصدر يتكتب بنفس الشكل دايماً: facebook مش Facebook و fb.', 'متحطش بيانات شخصية في الروابط.'],
+  ph: { src: 'facebook', med: 'paid-social', cmp: 'spring-sale', cnt: 'video-1', trm: 'running-shoes' }, tipT: 'قواعد التسمية',
+} : {
+  url: 'Page URL', src: 'Source (utm_source)', med: 'Medium (utm_medium)', cmp: 'Campaign name (utm_campaign)', cnt: 'Content (utm_content) optional', trm: 'Term (utm_term) optional',
+  presets: 'Quick presets', out: 'Your link', copy: 'Copy link', copied: 'Copied', wa: 'Ask me on WhatsApp', empty: 'Enter a valid page URL (starting with https://) and the link appears here.',
+  tips: ['Use lowercase and hyphens instead of spaces (spring-sale, not Spring Sale).', 'Always write the same source the same way: facebook, not Facebook or fb.', 'Never put personal data in links.'],
+  ph: { src: 'facebook', med: 'paid-social', cmp: 'spring-sale', cnt: 'video-1', trm: 'running-shoes' }, tipT: 'Naming rules',
+};
+const presets = [['Meta', 'facebook', 'paid-social'], ['Google Ads', 'google', 'cpc'], ['TikTok', 'tiktok', 'paid-social'], ['Email', 'newsletter', 'email'], ['Instagram bio', 'instagram', 'social'], ['WhatsApp', 'whatsapp', 'social']];
+const data = JSON.stringify({ wa: CONFIG.whatsapp, copied: L.copied, copy: L.copy, msg: c.waHead, empty: L.empty });
+---
+<Shell lang={lang} title={`${c.name} | Zeftawii`} desc={c.desc} path={path} alt={{ ar: '/tools/utm-link-builder/', en: '/en/tools/utm-link-builder/' }} extraLd={ld}>
+  <div class="wrap page-head has-art"><div class="hb-art"><Illus kind={'tools'} /></div>
+    <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/tools/')}>{u.tools}</a></nav>
+    <span class="kicker kk-en">FREE TOOL</span>
+    <h1>{c.h1}</h1>
+    <p>{c.lead}</p>
+  </div>
+  <div class="wrap">
+    <div class="calc tool" id="utm" data-t={data}>
+      <div class="calc-in">
+        <label class="wide"><span class="f-l">{L.url}</span><input id="u-url" dir="ltr" inputmode="url" autocomplete="off" placeholder="https://yourstore.com/products/shoes" /></label>
+        <div class="wide u-presets"><span class="f-l">{L.presets}</span><div class="chips-row">{presets.map((p) => <button type="button" class="chip-link" data-s={p[1]} data-m={p[2]}>{p[0]}</button>)}</div></div>
+        <label><span class="f-l">{L.src}</span><input id="u-src" dir="ltr" autocomplete="off" placeholder={L.ph.src} /></label>
+        <label><span class="f-l">{L.med}</span><input id="u-med" dir="ltr" autocomplete="off" placeholder={L.ph.med} /></label>
+        <label><span class="f-l">{L.cmp}</span><input id="u-cmp" dir="ltr" autocomplete="off" placeholder={L.ph.cmp} /></label>
+        <label><span class="f-l">{L.cnt}</span><input id="u-cnt" dir="ltr" autocomplete="off" placeholder={L.ph.cnt} /></label>
+        <label><span class="f-l">{L.trm}</span><input id="u-trm" dir="ltr" autocomplete="off" placeholder={L.ph.trm} /></label>
+      </div>
+      <div class="calc-out" aria-live="polite">
+        <p class="calc-verdict" id="u-empty">{L.empty}</p>
+        <div id="u-box" hidden>
+          <h2 class="sec-h">{L.out}</h2>
+          <pre class="brief-out" id="u-out" dir="ltr" style="white-space:pre-wrap;word-break:break-all"></pre>
+          <div class="calc-cta"><span>{c.cta}</span>
+            <button type="button" class="btn btn-primary btn-sm" id="u-copy" data-evt="tool_used" data-loc="utm">{L.copy}</button>
+            <a class="btn btn-wa btn-sm" id="u-wa" target="_blank" rel="noopener" data-evt="whatsapp_click" data-loc="tool">{L.wa}</a></div>
+        </div>
+        <p class="calc-note">{c.note}</p>
+      </div>
+    </div>
+    <div class="tool-guide"><b>{L.tipT}</b><ol>{L.tips.map((x: string) => <li>{x}</li>)}</ol></div>
+    <h2 class="sec-h">{u.tools}</h2>
+    <div class="chips-row">{others.map((x) => <a class="chip-link" href={P(lang, `/tools/${x.slug}/`)}>{x[lang].name}</a>)}</div>
+  </div>
+</Shell>
+<script>
+  const root = document.getElementById('utm')!; const T = JSON.parse(root.dataset.t!);
+  const g = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const slug = (s: string) => s.trim().toLowerCase().replace(/\s+/g, '-');
+  let link = '';
+  const run = () => {
+    let raw = g('u-url').value.trim();
+    if (raw && !/^https?:\/\//i.test(raw) && /\./.test(raw)) raw = 'https://' + raw;
+    let url: URL | null = null; try { url = new URL(raw); } catch { url = null; }
+    const s = slug(g('u-src').value), m = slug(g('u-med').value), cm = slug(g('u-cmp').value);
+    const ok = !!url && !!s && !!m && !!cm;
+    ($('u-empty') as HTMLElement).hidden = ok; ($('u-box') as HTMLElement).hidden = !ok;
+    if (!ok || !url) return;
+    url.searchParams.set('utm_source', s); url.searchParams.set('utm_medium', m); url.searchParams.set('utm_campaign', cm);
+    const cn = slug(g('u-cnt').value), tr = slug(g('u-trm').value);
+    if (cn) url.searchParams.set('utm_content', cn); else url.searchParams.delete('utm_content');
+    if (tr) url.searchParams.set('utm_term', tr); else url.searchParams.delete('utm_term');
+    link = url.toString(); $('u-out').textContent = link;
+    ($('u-wa') as HTMLAnchorElement).href = `https://wa.me/${T.wa}?text=${encodeURIComponent(T.msg + '\n' + link)}`;
+  };
+  function $(id: string) { return document.getElementById(id)!; }
+  ['u-url', 'u-src', 'u-med', 'u-cmp', 'u-cnt', 'u-trm'].forEach((i) => g(i).addEventListener('input', run));
+  root.querySelectorAll<HTMLElement>('[data-s]').forEach((b) => b.addEventListener('click', () => { g('u-src').value = b.dataset.s!; g('u-med').value = b.dataset.m!; run(); }));
+  $('u-copy').addEventListener('click', async () => { const b = $('u-copy'); try { await navigator.clipboard.writeText(link); b.textContent = T.copied; setTimeout(() => { b.textContent = T.copy; }, 1500); } catch { prompt('', link); } });
+</script>

@@ -559,6 +559,24 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-46vp.vercel.app/faq/"/>
   </url>
   <url>
+    <loc>https://zeftawii-site-46vp.vercel.app/find/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-46vp.vercel.app/find/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-46vp.vercel.app/en/find/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-46vp.vercel.app/find/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-46vp.vercel.app/en/find/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-46vp.vercel.app/find/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-46vp.vercel.app/en/find/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-46vp.vercel.app/find/"/>
+  </url>
+  <url>
     <loc>https://zeftawii-site-46vp.vercel.app/glossary/</loc>
     <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
@@ -1405,6 +1423,24 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-46vp.vercel.app/tools/"/>
   </url>
   <url>
+    <loc>https://zeftawii-site-46vp.vercel.app/tools/ab-test-sample-size/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-46vp.vercel.app/tools/ab-test-sample-size/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-46vp.vercel.app/en/tools/ab-test-sample-size/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-46vp.vercel.app/tools/ab-test-sample-size/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-46vp.vercel.app/en/tools/ab-test-sample-size/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-46vp.vercel.app/tools/ab-test-sample-size/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-46vp.vercel.app/en/tools/ab-test-sample-size/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-46vp.vercel.app/tools/ab-test-sample-size/"/>
+  </url>
+  <url>
     <loc>https://zeftawii-site-46vp.vercel.app/tools/automation-savings-calculator/</loc>
     <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
@@ -1547,6 +1583,24 @@
     <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-46vp.vercel.app/tools/roas-profitability-calculator/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-46vp.vercel.app/en/tools/roas-profitability-calculator/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-46vp.vercel.app/tools/roas-profitability-calculator/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-46vp.vercel.app/tools/utm-link-builder/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-46vp.vercel.app/tools/utm-link-builder/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-46vp.vercel.app/en/tools/utm-link-builder/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-46vp.vercel.app/tools/utm-link-builder/"/>
+  </url>
+  <url>
+    <loc>https://zeftawii-site-46vp.vercel.app/en/tools/utm-link-builder/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zeftawii-site-46vp.vercel.app/tools/utm-link-builder/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zeftawii-site-46vp.vercel.app/en/tools/utm-link-builder/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zeftawii-site-46vp.vercel.app/tools/utm-link-builder/"/>
   </url>
   <url>
     <loc>https://zeftawii-site-46vp.vercel.app/work/</loc>

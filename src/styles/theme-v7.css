@@ -193,3 +193,15 @@ button:focus-visible, summary:focus-visible, [role='button']:focus-visible, .car
   .dc-bars .dc-bl{grid-area:l}.dc-bars b{grid-area:v}.dc-bars .dc-bt{grid-area:b}
   .dc-next .btn{width:100%;justify-content:center}
 }
+
+/* ===== service finder quiz ===== */
+.fd{margin:1.5rem 0 2.5rem}
+.fd-s{margin:0 0 .5rem;color:var(--muted);font-size:.88rem}
+.fd-bar{height:6px;border-radius:6px;background:rgba(var(--c),.12);margin-bottom:1rem;overflow:hidden}
+.fd-bar i{display:block;height:100%;background:var(--cyan);transition:width .3s}
+.fd h2{margin:0 0 1rem;font-size:1.3rem}
+.fd-o{display:grid;gap:.7rem}
+.fd-opt{text-align:start;padding:1rem 1.1rem;border:1px solid var(--panel-b);border-radius:12px;background:var(--panel);color:var(--text);font:inherit;cursor:pointer;min-height:48px;transition:border-color .15s,background .15s}
+.fd-opt:hover,.fd-opt:focus-visible{border-color:var(--cyan);background:rgba(var(--c),.08);outline:none}
+.fd .cta-row{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1rem}
+@media(max-width:700px){.fd .cta-row .btn{width:100%;justify-content:center}}

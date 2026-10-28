@@ -1,7 +1,7 @@
 ---
 import ToolPage from '../../components/ToolPage.astro';
 import { tools } from '../../content/tools';
-export const getStaticPaths = () => tools.filter((t) => t.kind !== 'csv').map((t) => ({ params: { slug: t.slug } }));
+export const getStaticPaths = () => tools.filter((t) => !['csv','utm'].includes(t.kind)).map((t) => ({ params: { slug: t.slug } }));
 const { slug } = Astro.params;
 ---
 <ToolPage lang="ar" slug={slug!} />

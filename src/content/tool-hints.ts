@@ -17,6 +17,17 @@ export const hints: Record<string, ToolHint> = {
       ret: { ar: 'نسبة الأوردرات اللي رجعت أو اتلغت من إجمالي الأوردرات.', en: 'Share of orders that were returned or cancelled.' },
     },
   },
+  'ab-test-sample-size': {
+    guide: {
+      ar: ['خد معدل التحويل الحالي للصفحة من آخر 30 يوم.', 'حدد أقل تحسّن يستاهل تكتشفه، مثلاً 20% يعني من 2% لـ 2.4%.', 'النتيجة بتقولك عدد الزوار لكل نسخة والمدة. متوقفش الاختبار قبلها.'],
+      en: ['Take the page conversion rate from the last 30 days.', 'Choose the smallest lift worth detecting, e.g. 20% means 2% to 2.4%.', 'The result gives visitors per variant and duration. Do not stop the test earlier.'],
+    },
+    f: {
+      base: { ar: 'تحويلات الصفحة ÷ زوارها. لو 20 طلب من 1000 زائر يبقى 2.', en: 'Page conversions ÷ visitors. 20 orders from 1000 visitors means 2.' },
+      mde: { ar: 'التحسّن النسبي، مش بالنقط. كل ما كان أصغر احتجت زوار أكتر بكتير.', en: 'The relative lift, not points. The smaller it is, the many more visitors you need.' },
+      daily: { ar: 'زوار الصفحة اليوميين من Analytics، لكل النسخ مجتمعة.', en: 'Daily page visitors from Analytics, all variants combined.' },
+    },
+  },
   'automation-savings-calculator': {
     guide: {
       ar: ['عدّ التقارير اللي بتتعمل يدوي كل شهر (أسبوعي × 4 مثلاً).', 'قدّر الوقت الحقيقي للتقرير الواحد من أول تجميع الداتا لحد التسليم.', 'النتيجة بتوريك الساعات والتكلفة اللي ممكن توفرها في السنة.'],

@@ -58,6 +58,7 @@
 - https://zeftawii-site-46vp.vercel.app/en/dashboards/
 - https://zeftawii-site-46vp.vercel.app/en/demo/client-tracker/
 - https://zeftawii-site-46vp.vercel.app/en/faq/
+- https://zeftawii-site-46vp.vercel.app/en/find/
 - https://zeftawii-site-46vp.vercel.app/en/glossary/
 - https://zeftawii-site-46vp.vercel.app/en/glossary/aov/
 - https://zeftawii-site-46vp.vercel.app/en/glossary/attribution/
@@ -105,6 +106,7 @@
 - https://zeftawii-site-46vp.vercel.app/en/solutions/shopify-store-analytics/
 - https://zeftawii-site-46vp.vercel.app/en/solutions/woocommerce-store-analytics/
 - https://zeftawii-site-46vp.vercel.app/en/tools/
+- https://zeftawii-site-46vp.vercel.app/en/tools/ab-test-sample-size/
 - https://zeftawii-site-46vp.vercel.app/en/tools/automation-savings-calculator/
 - https://zeftawii-site-46vp.vercel.app/en/tools/break-even-calculator/
 - https://zeftawii-site-46vp.vercel.app/en/tools/business-quick-check/
@@ -113,6 +115,7 @@
 - https://zeftawii-site-46vp.vercel.app/en/tools/csv-data-check/
 - https://zeftawii-site-46vp.vercel.app/en/tools/project-brief-generator/
 - https://zeftawii-site-46vp.vercel.app/en/tools/roas-profitability-calculator/
+- https://zeftawii-site-46vp.vercel.app/en/tools/utm-link-builder/
 - https://zeftawii-site-46vp.vercel.app/en/work/
 - https://zeftawii-site-46vp.vercel.app/en/work/client-tracker-demo/
 - https://zeftawii-site-46vp.vercel.app/en/work/delivery-2026/

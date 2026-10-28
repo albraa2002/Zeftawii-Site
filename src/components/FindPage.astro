@@ -1,0 +1,63 @@
+---
+// اختبار «أنهي خدمة تناسبني»: 4 أسئلة تطلع خدمة مقترحة. كله في المتصفح.
+import Shell from './Shell.astro';
+import Illus from './Illus.astro';
+import type { Lang } from '../i18n';
+import { UI, P } from '../content/ui';
+import { services } from '../content/services';
+import { CONFIG } from '../config';
+const { lang } = Astro.props as { lang: Lang };
+const ar = lang === 'ar'; const u = UI[lang];
+const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, '/find/');
+const title = ar ? 'أنهي خدمة تناسبني؟ اختبار في 4 أسئلة' : 'Which service fits me? A 4-question quiz';
+const desc = ar ? 'جاوب على 4 أسئلة قصيرة وهنقترح عليك الخدمة الأنسب لشغلك مع رابط مباشر وخطوة جاية.' : 'Answer 4 short questions and we suggest the service that best fits your business, with a direct link and next step.';
+// درجات كل اختيار لكل خدمة بالترتيب: dashboards, marketing, automation, smart tools, account mgmt, project mgmt
+const Q = ar ? [
+  { q: 'إيه أكتر حاجة بتوجعك دلوقتي؟', o: [['مش عارف أرقامي بتقول إيه', [3, 1, 0, 0, 0, 0]], ['بصرف على إعلانات ومش عارف بتكسب ولا لأ', [0, 3, 0, 1, 0, 0]], ['بضيّع وقت في تقارير بتتعمل يدوي', [1, 0, 3, 0, 0, 0]], ['العملاء والمشروعات بتتلخبط معايا', [0, 0, 0, 0, 2, 2]]] },
+  { q: 'شغلك أقرب لإيه؟', o: [['متجر إلكتروني', [1, 2, 1, 2, 0, 0]], ['وكالة أو شركة خدمات', [1, 1, 1, 0, 2, 2]], ['شركة أو فريق داخلي', [2, 0, 2, 0, 0, 1]], ['لسه بابدأ', [1, 1, 0, 1, 0, 1]]] },
+  { q: 'عاوز تطلع بإيه؟', o: [['لوحة أشوف منها كل حاجة', [3, 0, 1, 0, 0, 0]], ['قرارات واضحة عن الإعلانات والربح', [0, 3, 0, 1, 0, 0]], ['تقرير يتعمل لوحده', [0, 0, 3, 0, 0, 0]], ['نظام يرتّب العمل مع العملاء', [0, 0, 0, 0, 2, 3]]] },
+  { q: 'بيانات شغلك فين؟', o: [['Excel أو Google Sheets', [2, 0, 2, 0, 0, 0]], ['منصات إعلانات ومتجر', [1, 3, 0, 1, 0, 0]], ['متفرقة في أكتر من مكان', [1, 0, 3, 0, 0, 1]], ['مفيش بيانات منظمة أصلاً', [0, 0, 0, 0, 2, 2]]] },
+] : [
+  { q: 'What hurts most right now?', o: [['I cannot tell what my numbers say', [3, 1, 0, 0, 0, 0]], ['I spend on ads and do not know if they pay', [0, 3, 0, 1, 0, 0]], ['I waste time on manual reports', [1, 0, 3, 0, 0, 0]], ['Clients and projects get messy', [0, 0, 0, 0, 2, 2]]] },
+  { q: 'Which is closest to your business?', o: [['An online store', [1, 2, 1, 2, 0, 0]], ['An agency or service company', [1, 1, 1, 0, 2, 2]], ['A company or in-house team', [2, 0, 2, 0, 0, 1]], ['Just starting', [1, 1, 0, 1, 0, 1]]] },
+  { q: 'What do you want to end up with?', o: [['A dashboard to see everything', [3, 0, 1, 0, 0, 0]], ['Clear decisions on ads and profit', [0, 3, 0, 1, 0, 0]], ['A report that builds itself', [0, 0, 3, 0, 0, 0]], ['A system that organises client work', [0, 0, 0, 0, 2, 3]]] },
+  { q: 'Where is your data?', o: [['Excel or Google Sheets', [2, 0, 2, 0, 0, 0]], ['Ad platforms and a store', [1, 3, 0, 1, 0, 0]], ['Scattered across several places', [1, 0, 3, 0, 0, 1]], ['No organised data at all', [0, 0, 0, 0, 2, 2]]] },
+];
+const S = ar ? { step: 'سؤال', of: 'من', best: 'الأنسب ليك', view: 'شوف تفاصيل الخدمة', book: 'احجز استشارة مجانية', wa: 'ابعت على واتساب', again: 'ابدأ تاني', also: 'ممكن كمان يفيدك', note: 'اقتراح مبدئي مبني على 4 إجابات، والاستشارة المجانية بتأكده.', waMsg: 'أهلاً، عملت اختبار اختيار الخدمة وطلعتلي' } : { step: 'Question', of: 'of', best: 'Best fit for you', view: 'See service details', book: 'Book a free consultation', wa: 'Message on WhatsApp', again: 'Start again', also: 'May also help', note: 'A first suggestion from 4 answers; the free consultation confirms it.', waMsg: 'Hi, I took the service finder quiz and got' };
+const data = JSON.stringify({ Q, S, wa: CONFIG.whatsapp, svc: services.map((s) => ({ n: s[lang].name, h: P(lang, `/services/${s.slug}/`), i: s.idx, d: s[lang].desc })), base: P(lang, '/') });
+const ld = [{ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: u.crumbHome, item: base + P(lang, '/') }, { '@type': 'ListItem', position: 2, name: title, item: base + path }] }];
+---
+<Shell lang={lang} title={`${title} | Zeftawii`} desc={desc} path={path} alt={{ ar: '/find/', en: '/en/find/' }} extraLd={ld}>
+  <div class="wrap page-head has-art"><div class="hb-art"><Illus kind={'tools'} /></div>
+    <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a></nav>
+    <h1>{title}</h1>
+    <p>{desc}</p>
+  </div>
+  <div class="wrap">
+    <div id="fd" class="fd" data-t={data}></div>
+  </div>
+</Shell>
+<script>
+  const root = document.getElementById('fd')!; const T = JSON.parse(root.dataset.t!); const S = T.S;
+  let step = 0; const score = [0, 0, 0, 0, 0, 0];
+  const esc = (s: string) => s.replace(/[&<>"]/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]!));
+  function ask() {
+    const q = T.Q[step];
+    root.innerHTML = `<div class="dc-card fd-q"><p class="fd-s">${S.step} ${step + 1} ${S.of} ${T.Q.length}</p><div class="fd-bar"><i style="width:${(step / T.Q.length) * 100}%"></i></div><h2>${esc(q.q)}</h2><div class="fd-o">${q.o.map((o: any, i: number) => `<button type="button" class="fd-opt" data-i="${i}">${esc(o[0])}</button>`).join('')}</div></div>`;
+    root.querySelectorAll<HTMLElement>('.fd-opt').forEach((b) => b.addEventListener('click', () => { q.o[+b.dataset.i!][1].forEach((v: number, k: number) => (score[k] += v)); step++; step < T.Q.length ? ask() : done(); }));
+  }
+  function done() {
+    const order = score.map((v, i) => [v, i]).sort((a, b) => b[0] - a[0] || a[1] - b[1]);
+    const top = T.svc[order[0][1]]; const alt = T.svc[order[1][1]];
+    const msg = encodeURIComponent(`${S.waMsg}: ${top.n}`);
+    root.innerHTML = `<div class="dc-card dc-ins"><p class="fd-s">${S.best}</p><h2>${esc(top.n)}</h2><p>${esc(top.d)}</p>
+      <div class="cta-row"><a class="btn btn-primary" href="${top.h}" data-evt="cta_click" data-loc="find">${S.view}</a>
+      <a class="btn btn-primary" href="${T.base}?service=${top.i}#contact" data-evt="cta_click" data-loc="find">${S.book}</a>
+      <a class="btn btn-wa" target="_blank" rel="noopener" href="https://wa.me/${T.wa}?text=${msg}" data-evt="whatsapp_click" data-loc="find">${S.wa}</a></div></div>
+      <div class="dc-card"><p class="fd-s">${S.also}</p><h3><a href="${alt.h}">${esc(alt.n)}</a></h3></div>
+      <p class="tool-note">${S.note}</p><button type="button" class="btn btn-ghost" id="fd-re">${S.again}</button>`;
+    document.getElementById('fd-re')!.addEventListener('click', () => { step = 0; score.fill(0); ask(); });
+    (window as any).va?.('event', { name: 'tool_use' });
+  }
+  ask();
+</script>
