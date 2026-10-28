@@ -3,7 +3,7 @@ import type { Lang } from '../i18n';
 import { T } from '../i18n';
 export type TF = { k: string; l: string; ph?: string; t?: 'area' | 'svc'; wide?: boolean };
 export type TL = { name: string; desc: string; h1: string; lead: string; cta: string; waHead: string; note: string; f?: TF[]; r?: Record<string, string>; v?: Record<string, string>; empty?: string; q?: { area: string; items: string[] }[]; opts?: string[]; areas?: string[]; levels?: string[]; tips?: Record<string, string[]>; resT?: string };
-export type Tool = { slug: string; kind: 'roas' | 'savings' | 'cod' | 'check' | 'cpaltv' | 'be' | 'brief'; svc: number; ar: TL; en: TL };
+export type Tool = { slug: string; kind: 'roas' | 'savings' | 'cod' | 'check' | 'cpaltv' | 'be' | 'brief' | 'csv'; svc: number; ar: TL; en: TL };
 
 const roasOf = (l: Lang): TL => {
   const c = (T as any)[l].calc;
@@ -15,6 +15,9 @@ const roasOf = (l: Lang): TL => {
 
 export const tools: Tool[] = [
   { slug: 'roas-profitability-calculator', kind: 'roas', svc: 1, ar: roasOf('ar'), en: roasOf('en') },
+  { slug: 'csv-data-check', kind: 'csv', svc: 0,
+    ar: { name: 'فحص ملف البيانات (CSV) فوراً', desc: 'افتح ملف مبيعات أو إعلانات CSV في متصفحك وشوف ملخصه وجودة بياناته واتجاهه وأعلى الفئات في ثواني. الملف مبيتبعتش لأي سيرفر.', h1: 'فحص ملف البيانات: ارفع ملفك وشوف الصورة في ثواني', lead: 'اختار ملف CSV من متجرك أو إعلاناتك. هتشوف ملخص الأعمدة، مشاكل جودة البيانات، الاتجاه الزمني، وأعلى الفئات. كل ده بيحصل في متصفحك، والملف مبيتبعتش لأي مكان.', cta: 'اطلب لوحة تحكم على ملفك', waHead: 'فحص ملف بيانات', note: 'تحليل أولي تلقائي على ملفك، مش تقرير نهائي. الأرقام بتعتمد على اللي في الملف.' },
+    en: { name: 'Instant data file check (CSV)', desc: 'Open a sales or ads CSV in your browser and see its summary, data quality, trend and top categories in seconds. The file is never sent to any server.', h1: 'Data file check: upload your file and see the picture in seconds', lead: 'Pick a CSV from your store or ads. You will see a column summary, data quality issues, the trend over time and top categories. It all happens in your browser, and the file is never sent anywhere.', cta: 'Request a dashboard on my file', waHead: 'Data file check', note: 'An automatic first-pass analysis of your file, not a final report. Numbers depend on what is in the file.' } },
   { slug: 'automation-savings-calculator', kind: 'savings', svc: 2,
     ar: { name: 'حاسبة توفير وقت الأتمتة', desc: 'احسب كام ساعة وفلوس بتضيع في السنة على تقارير بتتعمل يدوي، وكام ممكن توفر بالأتمتة.', h1: 'كام بتخسر على التقارير اليدوي؟', lead: 'اكتب عدد التقارير والوقت وتكلفة الساعة، وهتشوف تكلفة الشغل اليدوي في السنة وتقدير التوفير.', cta: 'عاوز تأتمت تقاريرك؟', waHead: 'أهلاً، جربت حاسبة توفير الأتمتة وحابب أستشير:', note: 'تقدير مبسّط وليس ضماناً. نسبة التوفير الفعلية بتتحدد بعد فحص تقاريرك ومصادر بياناتها.',
       f: [{ k: 'reports', l: 'عدد التقارير في الشهر' }, { k: 'hours', l: 'الساعات لكل تقرير' }, { k: 'rate', l: 'تكلفة ساعة الشغل (بأي عملة)' }, { k: 'save', l: 'نسبة الوقت المتوقع توفيرها %', ph: '60' }],

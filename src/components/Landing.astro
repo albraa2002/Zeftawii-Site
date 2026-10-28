@@ -154,7 +154,7 @@ const quick = ar0 ? [
           {tools.map((x, i) => (
             <a class="post-card tool-card" href={P(lang, `/tools/${x.slug}/`)}>
               <span class="tool-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-              <span class="meta">{x.kind === 'check' ? (ar0 ? 'فحص سريع' : 'QUICK CHECK') : x.kind === 'brief' ? (ar0 ? 'مولّد' : 'GENERATOR') : (ar0 ? 'حاسبة' : 'CALCULATOR')}</span>
+              <span class="meta">{x.kind === 'check' ? (ar0 ? 'فحص سريع' : 'QUICK CHECK') : x.kind === 'csv' ? (ar0 ? 'فحص ملف' : 'FILE CHECK') : x.kind === 'brief' ? (ar0 ? 'مولّد' : 'GENERATOR') : (ar0 ? 'حاسبة' : 'CALCULATOR')}</span>
               <h3>{x[lang].name}</h3>
               <p>{x[lang].desc}</p>
               <span class="more">{ar0 ? 'جرّب الأداة' : 'Try the tool'} <i aria-hidden="true">{ar0 ? '←' : '→'}</i></span>

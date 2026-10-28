@@ -1,0 +1,343 @@
+---
+// فحص ملف CSV داخل المتصفح: مفيش رفع لأي سيرفر. التحليل كله JavaScript محلي.
+import Shell from './Shell.astro';
+import Illus from './Illus.astro';
+import type { Lang } from '../i18n';
+import { UI, P } from '../content/ui';
+import { tools } from '../content/tools';
+import { CONFIG } from '../config';
+const { lang } = Astro.props as { lang: Lang };
+const ar = lang === 'ar'; const u = UI[lang];
+const tool = tools.find((x) => x.slug === 'csv-data-check')!; const c = tool[lang];
+const base = CONFIG.site.replace(/\/$/, ''); const path = P(lang, '/tools/csv-data-check/');
+const others = tools.filter((x) => x.slug !== 'csv-data-check');
+const ld = [
+  { '@type': 'WebApplication', name: c.name, description: c.desc, url: base + path, inLanguage: lang, applicationCategory: 'BusinessApplication', operatingSystem: 'Web', offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' } },
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: u.crumbHome, item: base + P(lang, '/') },
+    { '@type': 'ListItem', position: 2, name: u.tools, item: base + P(lang, '/tools/') },
+    { '@type': 'ListItem', position: 3, name: c.name, item: base + path },
+  ] },
+];
+const S = ar ? {
+  pick: 'اختار ملف CSV', drop: 'أو اسحب الملف هنا', sample: 'جرّب بملف تجريبي', priv: 'الملف بيتفتح في متصفحك بس ومبيتبعتش لأي سيرفر.',
+  hintT: 'إزاي أجهّز ملفي؟', hint: ['من Excel أو Google Sheets: احفظ الورقة كـ CSV (UTF-8 لو متاح).', 'أول صف لازم يكون أسماء الأعمدة.', 'الأفضل ملف أقل من 20 ميجا (حوالي مئات الآلاف من الصفوف).'],
+  err: 'الملف مش مقروء كـ CSV. اتأكد إنه CSV أو TSV وإن أول صف فيه أسماء الأعمدة.', big: 'الملف كبير (أكتر من 20 ميجا). قسّمه أو ابعت عينة منه.', empty: 'الملف فاضي أو فيه صف واحد بس.',
+  ovT: 'نظرة عامة', rows: 'صف', cols: 'عمود', file: 'الملف',
+  colT: 'الأعمدة', c: { name: 'العمود', type: 'النوع', miss: 'فاضي', uniq: 'قيم مختلفة', stat: 'ملخص' },
+  types: { num: 'رقم', date: 'تاريخ', cat: 'فئة', text: 'نص / كود' },
+  qT: 'جودة البيانات', qOk: 'مفيش مشاكل واضحة في الفحص الأولي.',
+  trT: 'الاتجاه عبر الوقت', topT: 'أعلى الفئات', byM: 'حسب', share: 'من الإجمالي', metricNote: 'المقياس المستخدم',
+  rowsCount: 'عدد الصفوف', day: 'يوم', week: 'أسبوع', month: 'شهر', sum: 'مجموع', avg: 'متوسط', min: 'أقل', max: 'أعلى',
+  ins: 'ملاحظات سريعة', nextT: 'الخطوة الجاية', nextP: 'الفحص ده صورة أولية. لو عاوز لوحة تحكم بتتحدّث لوحدها على الملف ده بمؤشرات مرتبطة بقراراتك، ابعتلي وصف قصير.',
+  wa: 'ابعت ملخص الفحص على واتساب', reset: 'افحص ملف تاني', moreT: 'أدوات مجانية تانية',
+  q: {
+    dup: (n: number) => `${n} صف مكرر بالكامل. لو مش مقصود هيضخّم الإجماليات.`,
+    miss: (col: string, p: number) => `عمود «${col}» فاضي في ${p}% من الصفوف.`,
+    const: (col: string) => `عمود «${col}» قيمته ثابتة في كل الصفوف، غالباً مش مفيد في التحليل.`,
+    neg: (col: string, n: number) => `عمود «${col}» فيه ${n} قيمة سالبة. تأكد إنها مرتجعات أو تعديلات مقصودة.`,
+    out: (col: string, n: number) => `عمود «${col}» فيه ${n} قيمة بعيدة جداً عن الباقي (احتمال خطأ إدخال أو حالة استثنائية).`,
+    mixed: (col: string, n: number) => `عمود «${col}» رقمي لكن فيه ${n} قيمة مش رقم، وده هيخرّب الجمع.`,
+    case: (col: string, a: string, b: string) => `عمود «${col}»: «${a}» و«${b}» غالباً نفس القيمة مكتوبة بشكلين.`,
+    space: (col: string, n: number) => `عمود «${col}»: ${n} قيمة فيها مسافات زيادة في أول أو آخر النص.`,
+  },
+  i: {
+    metric: (m: string, s: string) => `المقياس الرئيسي المختار: «${m}»، ومجموعه ${s}.`,
+    trend: (a: string, b: string, p: string) => `من ${a} لـ ${b}: التغيّر ${p}.`,
+    peak: (lab: string, v: string) => `أعلى فترة: ${lab} (${v}).`,
+    low: (lab: string, v: string) => `أقل فترة: ${lab} (${v}).`,
+    conc: (n: number, p: number, col: string) => `أعلى ${n} قيم في «${col}» بتمثّل ${p}% من الإجمالي.`,
+    nometric: 'مفيش عمود رقمي واضح، فالتحليل بيعتمد على عدد الصفوف.',
+  },
+  waMsg: (f: string, r: number, cn: number, n: number) => `أهلاً، فحصت ملف (${f}) بأداة فحص البيانات: ${r} صف و${cn} عمود، و${n} ملاحظة جودة. حابب أعمل لوحة تحكم عليه.`,
+} : {
+  pick: 'Choose a CSV file', drop: 'or drag the file here', sample: 'Try a sample file', priv: 'The file opens in your browser only and is never sent to any server.',
+  hintT: 'How do I prepare my file?', hint: ['From Excel or Google Sheets: save the sheet as CSV (UTF-8 if available).', 'The first row must be the column names.', 'Best under 20 MB (hundreds of thousands of rows).'],
+  err: 'The file cannot be read as CSV. Make sure it is a CSV or TSV and its first row has column names.', big: 'The file is large (over 20 MB). Split it or send a sample.', empty: 'The file is empty or has only one row.',
+  ovT: 'Overview', rows: 'rows', cols: 'columns', file: 'File',
+  colT: 'Columns', c: { name: 'Column', type: 'Type', miss: 'Empty', uniq: 'Distinct', stat: 'Summary' },
+  types: { num: 'Number', date: 'Date', cat: 'Category', text: 'Text / ID' },
+  qT: 'Data quality', qOk: 'No obvious issues in this first pass.',
+  trT: 'Trend over time', topT: 'Top categories', byM: 'by', share: 'of total', metricNote: 'Metric used',
+  rowsCount: 'Row count', day: 'day', week: 'week', month: 'month', sum: 'Sum', avg: 'Average', min: 'Min', max: 'Max',
+  ins: 'Quick notes', nextT: 'Next step', nextP: 'This check is a first picture. If you want a dashboard that refreshes by itself on this file, with KPIs tied to your decisions, send me a short description.',
+  wa: 'Send the check summary on WhatsApp', reset: 'Check another file', moreT: 'More free tools',
+  q: {
+    dup: (n: number) => `${n} fully duplicated rows. If unintended they will inflate totals.`,
+    miss: (col: string, p: number) => `Column “${col}” is empty in ${p}% of rows.`,
+    const: (col: string) => `Column “${col}” has the same value in every row, likely not useful for analysis.`,
+    neg: (col: string, n: number) => `Column “${col}” has ${n} negative values. Check they are intended refunds or adjustments.`,
+    out: (col: string, n: number) => `Column “${col}” has ${n} values far from the rest (possible entry errors or exceptional cases).`,
+    mixed: (col: string, n: number) => `Column “${col}” is numeric but has ${n} non-numeric values, which will break sums.`,
+    case: (col: string, a: string, b: string) => `Column “${col}”: “${a}” and “${b}” are probably the same value written two ways.`,
+    space: (col: string, n: number) => `Column “${col}”: ${n} values have extra spaces at the start or end.`,
+  },
+  i: {
+    metric: (m: string, s: string) => `Main metric chosen: “${m}”, totaling ${s}.`,
+    trend: (a: string, b: string, p: string) => `From ${a} to ${b}: change ${p}.`,
+    peak: (lab: string, v: string) => `Highest period: ${lab} (${v}).`,
+    low: (lab: string, v: string) => `Lowest period: ${lab} (${v}).`,
+    conc: (n: number, p: number, col: string) => `The top ${n} values in “${col}” account for ${p}% of the total.`,
+    nometric: 'No clear numeric column, so the analysis uses the row count.',
+  },
+  waMsg: (f: string, r: number, cn: number, n: number) => `Hi, I checked a file (${f}) with the data check tool: ${r} rows, ${cn} columns and ${n} quality notes. I would like a dashboard built on it.`,
+};
+// نصوص الدوال بتتحوّل لسلاسل جاهزة قبل ما تتبعت للمتصفح
+const i18n = JSON.stringify({ lang, wa: CONFIG.whatsapp, S: JSON.parse(JSON.stringify(S, (k, v) => (typeof v === 'function' ? '__fn__' : v))) });
+const fnSrc = JSON.stringify({ q: Object.fromEntries(Object.entries(S.q).map(([k, f]) => [k, (f as Function).toString()])), i: Object.fromEntries(Object.entries(S.i).filter(([, f]) => typeof f === 'function').map(([k, f]) => [k, (f as Function).toString()])), waMsg: (S.waMsg as Function).toString() });
+---
+<Shell lang={lang} title={`${c.name} | Zeftawii`} desc={c.desc} path={path} alt={{ ar: '/tools/csv-data-check/', en: '/en/tools/csv-data-check/' }} extraLd={ld}>
+  <div class="wrap page-head has-art"><div class="hb-art"><Illus kind={'tools'} /></div>
+    <nav class="crumbs" aria-label="breadcrumb"><a href={P(lang, '/')}>{u.crumbHome}</a> <span>/</span> <a href={P(lang, '/tools/')}>{u.tools}</a></nav>
+    <span class="kicker kk-en">FREE TOOL</span>
+    <h1>{c.h1}</h1>
+    <p>{c.lead}</p>
+  </div>
+  <div class="wrap">
+    <div id="dc" data-i18n={i18n} data-fns={fnSrc}>
+      <div class="dc-drop" id="dc-drop" tabindex="-1">
+        <div class="dc-ic" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg></div>
+        <label class="btn btn-primary dc-pick" for="dc-file">{S.pick}</label>
+        <input id="dc-file" type="file" accept=".csv,.tsv,.txt,text/csv,text/plain" class="dc-file" />
+        <p class="dc-or">{S.drop}</p>
+        <button type="button" class="btn btn-ghost" id="dc-sample" data-evt="tool_use" data-loc="csv_sample">{S.sample}</button>
+        <p class="dc-priv"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> {S.priv}</p>
+      </div>
+      <details class="dc-help"><summary>{S.hintT}</summary><ul>{S.hint.map((x: string) => <li>{x}</li>)}</ul></details>
+      <p class="status dc-err" id="dc-err" role="alert" hidden></p>
+      <div id="dc-out" hidden></div>
+    </div>
+    <p class="tool-note">{c.note}</p>
+    <h2 class="sec-h">{S.moreT}</h2>
+    <div class="chips-row">{others.map((x) => <a class="chip-link" href={P(lang, `/tools/${x.slug}/`)}>{x[lang].name}</a>)}</div>
+  </div>
+</Shell>
+
+<script>
+  type Col = { name: string; vals: string[]; type: 'num' | 'date' | 'cat' | 'text'; nums: number[]; miss: number; uniq: number; dates: number[] };
+  const root = document.getElementById('dc')!;
+  const cfg = JSON.parse(root.dataset.i18n!); const fnsRaw = JSON.parse(root.dataset.fns!);
+  const S = cfg.S; const ar = cfg.lang === 'ar';
+  // الدوال اتحوّلت لنص في السيرفر عشان تعدّي في JSON؛ بنرجّعها هنا
+  const mk = (src: string) => new Function('return ' + src)();
+  for (const k of Object.keys(fnsRaw.q)) S.q[k] = mk(fnsRaw.q[k]);
+  for (const k of Object.keys(fnsRaw.i)) S.i[k] = mk(fnsRaw.i[k]);
+  S.waMsg = mk(fnsRaw.waMsg);
+
+  const $ = (id: string) => document.getElementById(id)!;
+  const fmtN = (n: number) => { const a = Math.abs(n); const d = a >= 1000 ? 0 : a >= 100 ? 1 : 2; return n.toLocaleString(ar ? 'en-US' : 'en-US', { maximumFractionDigits: d }); };
+  const esc = (s: string) => s.replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]!));
+
+  // ---------- CSV parser ----------
+  function parseCSV(text: string) {
+    text = text.replace(/^﻿/, '');
+    const first = text.split(/\r?\n/, 1)[0] || '';
+    const cands = [',', ';', '\t', '|']; let delim = ','; let best = -1;
+    for (const d of cands) { const n = first.split(d).length; if (n > best) { best = n; delim = d; } }
+    const rows: string[][] = []; let row: string[] = []; let cur = ''; let q = false;
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i];
+      if (q) { if (ch === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += ch; }
+      else if (ch === '"') q = true;
+      else if (ch === delim) { row.push(cur); cur = ''; }
+      else if (ch === '\n') { row.push(cur); rows.push(row); row = []; cur = ''; }
+      else if (ch === '\r') { /* skip */ }
+      else cur += ch;
+    }
+    if (cur !== '' || row.length) { row.push(cur); rows.push(row); }
+    return rows.filter((r) => r.some((x) => x.trim() !== ''));
+  }
+
+  // ---------- value parsers ----------
+  const AR_DIG = '٠١٢٣٤٥٦٧٨٩';
+  const norm = (s: string) => s.replace(/[٠-٩]/g, (d) => String(AR_DIG.indexOf(d))).replace(/٫/g, '.').replace(/٬/g, ',').trim();
+  function parseNum(raw: string): number | null {
+    let s = norm(raw); if (!s) return null;
+    let neg = false; if (/^\(.*\)$/.test(s)) { neg = true; s = s.slice(1, -1); }
+    s = s.replace(/[\s ]/g, '').replace(/^[^\d\-+.,]+|[^\d.,%]+$/g, '').replace(/%$/, '');
+    if (s.startsWith('-')) { neg = !neg || neg; }
+    if (!/^[-+]?[\d.,]+$/.test(s) || !/\d/.test(s)) return null;
+    let sign = 1; if (s.startsWith('-')) { sign = -1; s = s.slice(1); } else if (s.startsWith('+')) s = s.slice(1);
+    const hc = s.includes(','), hd = s.includes('.');
+    if (hc && hd) { if (s.lastIndexOf(',') > s.lastIndexOf('.')) s = s.replace(/\./g, '').replace(',', '.'); else s = s.replace(/,/g, ''); }
+    else if (hc) { if (/^\d{1,3}(,\d{3})+$/.test(s)) s = s.replace(/,/g, ''); else s = s.replace(',', '.'); }
+    else if (hd) { if (/^\d{1,3}(\.\d{3}){2,}$/.test(s)) s = s.replace(/\./g, ''); }
+    const n = Number(s); if (!isFinite(n)) return null;
+    const out = sign * n; return (neg && !raw.includes('-')) ? -Math.abs(out) : out;
+  }
+  function parseDateParts(raw: string): number[] | null {
+    const s = norm(raw); if (!s) return null;
+    let m = s.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})(?:[T\s].*)?$/);
+    if (m) return [1, +m[1], +m[2], +m[3]];
+    m = s.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{2,4})(?:[T\s].*)?$/);
+    if (m) return [2, +m[3] < 100 ? 2000 + +m[3] : +m[3], +m[1], +m[2]];
+    return null;
+  }
+
+  // ---------- analysis ----------
+  function analyze(rows: string[][]) {
+    const head = rows[0].map((h, i) => (h.trim() || `col_${i + 1}`)); const body = rows.slice(1);
+    const n = body.length;
+    const cols: Col[] = head.map((name, ci) => {
+      const vals = body.map((r) => (r[ci] ?? '').trim());
+      const filled = vals.filter((v) => v !== '');
+      const nums: number[] = []; let numOK = 0; let dateOK = 0; let dOrder = { dm: 0, md: 0 };
+      for (const v of filled.slice(0, 2000)) {
+        if (parseNum(v) !== null && !/[\/]/.test(v) && !/^\d{4}[-.]\d/.test(v)) numOK++;
+        const dp = parseDateParts(v); if (dp) { dateOK++; if (dp[0] === 2) { if (dp[2] > 12) dOrder.dm++; if (dp[3] > 12) dOrder.md++; } }
+      }
+      const sample = Math.min(filled.length, 2000) || 1;
+      let type: Col['type'] = 'text';
+      if (dateOK / sample > 0.8) type = 'date';
+      else if (numOK / sample > 0.8) type = 'num';
+      const uniq = new Set(filled).size;
+      if (type === 'text' && uniq <= Math.max(20, filled.length * 0.5) && uniq > 1 && filled.length > 0) type = 'cat';
+      if (type === 'text' && uniq <= 1) type = 'cat';
+      if (type === 'num') for (const v of vals) { const x = parseNum(v); if (x !== null) nums.push(x); }
+      const dates: number[] = [];
+      if (type === 'date') {
+        const mdFirst = dOrder.md > 0 && dOrder.dm === 0;
+        for (const v of vals) { const dp = parseDateParts(v); if (!dp) continue; let [k, y, a, b] = dp; let mo = a, d = b; if (k === 2) { if (mdFirst) { mo = a; d = b; } else { mo = b; d = a; } } const t = Date.UTC(y, mo - 1, d); if (!isNaN(t)) dates.push(t); }
+      }
+      return { name, vals, type, nums, miss: n - filled.length, uniq, dates };
+    });
+    // quality
+    const notes: string[] = [];
+    const seen = new Map<string, number>(); let dup = 0;
+    for (const r of body) { const k = r.join('\u0001'); const c = (seen.get(k) || 0) + 1; seen.set(k, c); if (c > 1) dup++; }
+    if (dup) notes.push(S.q.dup(dup));
+    for (const col of cols) {
+      const pm = Math.round((col.miss / Math.max(n, 1)) * 100);
+      if (pm >= 20) notes.push(S.q.miss(col.name, pm));
+      if (n > 5 && col.uniq === 1 && col.miss === 0) notes.push(S.q.const(col.name));
+      if (col.type === 'num') {
+        const neg = col.nums.filter((x) => x < 0).length; if (neg) notes.push(S.q.neg(col.name, neg));
+        const nonNum = col.vals.filter((v) => v !== '' && parseNum(v) === null).length; if (nonNum) notes.push(S.q.mixed(col.name, nonNum));
+        if (col.nums.length >= 8) {
+          const s = [...col.nums].sort((a, b) => a - b); const q1 = s[Math.floor(s.length * 0.25)], q3 = s[Math.floor(s.length * 0.75)]; const iqr = q3 - q1;
+          if (iqr > 0) { const out = s.filter((x) => x > q3 + 3 * iqr || x < q1 - 3 * iqr).length; if (out) notes.push(S.q.out(col.name, out)); }
+        }
+      }
+      if (col.type === 'cat') {
+        const sp = col.vals.filter((v) => v !== v.trim()).length;
+        const raw = (body.map((r) => (r[cols.indexOf(col)] ?? '')) as string[]); const spaced = raw.filter((v) => v !== '' && v !== v.trim()).length; if (spaced) notes.push(S.q.space(col.name, spaced)); void sp;
+        const lower = new Map<string, Set<string>>(); for (const v of col.vals) { if (!v) continue; const k = v.toLowerCase().replace(/\s+/g, ' '); if (!lower.has(k)) lower.set(k, new Set()); lower.get(k)!.add(v); }
+        for (const [, set] of lower) if (set.size > 1) { const [a, b] = [...set]; notes.push(S.q.case(col.name, a, b)); break; }
+      }
+    }
+    return { head, n, cols, notes: notes.slice(0, 8) };
+  }
+
+  const METRIC_RE = /(revenue|sales|amount|total|spend|cost|price|profit|إيراد|مبيعات|قيمة|اجمالي|إجمالي|صرف|تكلفة|سعر|ربح|مبلغ|sum|value)/i;
+  const BAD_METRIC = /(id|رقم|كود|code|phone|هاتف|zip)/i;
+  function pickMetric(cols: Col[]) {
+    const nums = cols.filter((c) => c.type === 'num' && c.nums.length > 3);
+    return nums.find((c) => METRIC_RE.test(c.name) && !BAD_METRIC.test(c.name)) || nums.find((c) => !BAD_METRIC.test(c.name) && c.uniq > 5) || null;
+  }
+
+  // ---------- render ----------
+  function chart(labels: string[], vals: number[]) {
+    const W = 640, H = 220, pl = 8, pb = 26, pt = 14; const max = Math.max(...vals, 1); const min = Math.min(0, ...vals);
+    const bw = (W - pl * 2) / vals.length; const sy = (v: number) => pt + (1 - (v - min) / (max - min || 1)) * (H - pt - pb);
+    const zero = sy(0);
+    const bars = vals.map((v, i) => { const x = pl + i * bw + bw * 0.12; const w = bw * 0.76; const y = Math.min(sy(v), zero); const h = Math.abs(sy(v) - zero); return `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${Math.max(h, 1).toFixed(1)}" rx="3" fill="var(--cyan)" opacity="${(0.45 + 0.55 * (i / Math.max(vals.length - 1, 1))).toFixed(2)}"><title>${esc(labels[i])}: ${fmtN(v)}</title></rect>`; }).join('');
+    const step = Math.ceil(labels.length / 6);
+    const labs = labels.map((l, i) => (i % step === 0 ? `<text x="${(pl + i * bw + bw / 2).toFixed(1)}" y="${H - 8}" text-anchor="middle" font-size="11" fill="var(--muted)">${esc(l)}</text>` : '')).join('');
+    return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(S.trT)}" dir="ltr" class="dc-svg">${bars}<line x1="${pl}" x2="${W - pl}" y1="${zero.toFixed(1)}" y2="${zero.toFixed(1)}" stroke="var(--panel-b)"/>${labs}</svg>`;
+  }
+  const ymd = (t: number) => new Date(t).toISOString().slice(0, 10);
+
+  function render(file: string, rows: string[][]) {
+    const out = $('dc-out'); const err = $('dc-err');
+    if (rows.length < 2) { err.textContent = S.empty; err.hidden = false; out.hidden = true; return; }
+    err.hidden = true;
+    const A = analyze(rows); const metric = pickMetric(A.cols);
+    const dateCol = A.cols.find((c) => c.type === 'date' && c.dates.length > 3) || null;
+    const catCols = A.cols.filter((c) => c.type === 'cat' && c.uniq >= 2 && c.uniq <= Math.max(30, A.n / 3));
+    const catCol = catCols.find((c) => /(product|category|campaign|channel|source|city|region|country|منتج|فئة|حملة|قناة|مصدر|مدينة|محافظة|دولة)/i.test(c.name)) || catCols[0] || null;
+    const idx = (c: Col) => A.cols.indexOf(c);
+    const val = (r: string[]) => (metric ? parseNum(r[idx(metric)] ?? '') : 1);
+    const body = rows.slice(1);
+
+    // trend
+    let trendHTML = ''; const insights: string[] = [];
+    if (metric) insights.push(S.i.metric(metric.name, fmtN(metric.nums.reduce((a, b) => a + b, 0))));
+    else insights.push(S.i.nometric);
+    if (dateCol) {
+      const di = idx(dateCol); const ts = dateCol.dates; const span = (Math.max(...ts) - Math.min(...ts)) / 864e5;
+      const unit = span >= 90 ? 'month' : span >= 35 ? 'week' : 'day';
+      const buckets = new Map<string, number>();
+      const mdFirst = (() => { let md = 0, dm = 0; for (const v of dateCol.vals.slice(0, 2000)) { const dp = parseDateParts(v); if (dp && dp[0] === 2) { if (dp[2] > 12) dm++; if (dp[3] > 12) md++; } } return md > 0 && dm === 0; })();
+      for (const r of body) {
+        const dp = parseDateParts(r[di] ?? ''); if (!dp) continue; let [k, y, a, b] = dp; let mo = a, d = b; if (k === 2) { if (mdFirst) { mo = a; d = b; } else { mo = b; d = a; } }
+        const t = Date.UTC(y, mo - 1, d); if (isNaN(t)) continue; let key = ymd(t);
+        if (unit === 'month') key = key.slice(0, 7); else if (unit === 'week') { const dt = new Date(t); const dow = (dt.getUTCDay() + 6) % 7; key = ymd(t - dow * 864e5); }
+        const v = val(r); if (v === null) continue; buckets.set(key, (buckets.get(key) || 0) + v);
+      }
+      let keys = [...buckets.keys()].sort(); if (keys.length > 24) keys = keys.slice(-24);
+      const vals = keys.map((k) => buckets.get(k)!);
+      if (keys.length >= 2) {
+        trendHTML = `<div class="dc-card"><h3>${S.trT} <small>(${S.metricNote}: ${esc(metric ? metric.name : S.rowsCount)} · ${S.byM} ${S[unit]})</small></h3>${chart(keys, vals)}</div>`;
+        const first = vals[0], last = vals[vals.length - 1];
+        const pc = first ? `${last >= first ? '+' : ''}${(((last - first) / Math.abs(first)) * 100).toFixed(0)}%` : '-';
+        insights.push(S.i.trend(keys[0], keys[keys.length - 1], pc));
+        const mx = vals.indexOf(Math.max(...vals)), mn = vals.indexOf(Math.min(...vals));
+        insights.push(S.i.peak(keys[mx], fmtN(vals[mx]))); if (mn !== mx) insights.push(S.i.low(keys[mn], fmtN(vals[mn])));
+      }
+    }
+    // top categories
+    let topHTML = '';
+    if (catCol) {
+      const ci = idx(catCol); const agg = new Map<string, number>(); let tot = 0;
+      for (const r of body) { const k = (r[ci] ?? '').trim(); if (!k) continue; const v = val(r); if (v === null) continue; agg.set(k, (agg.get(k) || 0) + v); tot += v; }
+      const top = [...agg.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6);
+      if (top.length && tot > 0) {
+        const mxv = top[0][1];
+        topHTML = `<div class="dc-card"><h3>${S.topT}: ${esc(catCol.name)} <small>(${esc(metric ? metric.name : S.rowsCount)})</small></h3><ul class="dc-bars">${top.map(([k, v]) => `<li><span class="dc-bl">${esc(k)}</span><span class="dc-bt"><i style="width:${Math.max(2, (v / mxv) * 100).toFixed(0)}%"></i></span><b>${fmtN(v)} <small>${((v / tot) * 100).toFixed(0)}%</small></b></li>`).join('')}</ul></div>`;
+        const k3 = Math.min(3, top.length); const p3 = Math.round((top.slice(0, k3).reduce((a, b) => a + b[1], 0) / tot) * 100); if (agg.size > k3) insights.push(S.i.conc(k3, p3, catCol.name));
+      }
+    }
+    // columns table
+    const statOf = (c: Col) => { if (c.type === 'num' && c.nums.length) { const s = c.nums.reduce((a, b) => a + b, 0); return `${S.sum} ${fmtN(s)} · ${S.avg} ${fmtN(s / c.nums.length)} · ${S.min} ${fmtN(Math.min(...c.nums))} · ${S.max} ${fmtN(Math.max(...c.nums))}`; } if (c.type === 'date' && c.dates.length) return `${ymd(Math.min(...c.dates))} → ${ymd(Math.max(...c.dates))}`; return ''; };
+    const colsHTML = `<div class="dc-card"><h3>${S.colT}</h3><div class="dc-scroll"><table class="dc-t"><thead><tr><th>${S.c.name}</th><th>${S.c.type}</th><th>${S.c.miss}</th><th>${S.c.uniq}</th><th>${S.c.stat}</th></tr></thead><tbody>${A.cols.map((c) => `<tr><td><b>${esc(c.name)}</b></td><td><span class="dc-ty dc-${c.type}">${S.types[c.type]}</span></td><td>${c.miss ? Math.round((c.miss / Math.max(A.n, 1)) * 100) + '%' : '0'}</td><td>${c.uniq}</td><td dir="ltr" class="dc-st">${esc(statOf(c))}</td></tr>`).join('')}</tbody></table></div></div>`;
+    const qHTML = `<div class="dc-card"><h3>${S.qT}</h3>${A.notes.length ? `<ul class="dc-notes">${A.notes.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : `<p class="dc-ok">${S.qOk}</p>`}</div>`;
+    const waText = encodeURIComponent(S.waMsg(file, A.n, A.cols.length, A.notes.length));
+    out.innerHTML = `
+      <div class="dc-kpis"><div><b>${A.n.toLocaleString('en-US')}</b><small>${S.rows}</small></div><div><b>${A.cols.length}</b><small>${S.cols}</small></div><div><b>${A.notes.length}</b><small>${S.qT}</small></div><div class="dc-fn"><b dir="ltr">${esc(file)}</b><small>${S.file}</small></div></div>
+      <div class="dc-card dc-ins"><h3>${S.ins}</h3><ul>${insights.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>
+      ${trendHTML}${topHTML}${qHTML}${colsHTML}
+      <div class="dc-card dc-next"><h3>${S.nextT}</h3><p>${S.nextP}</p><div class="cta-row"><a class="btn btn-wa" target="_blank" rel="noopener" href="https://wa.me/${cfg.wa}?text=${waText}" data-evt="whatsapp_click" data-loc="csv_tool">${S.wa}</a><button type="button" class="btn btn-ghost" id="dc-reset">${S.reset}</button></div></div>`;
+    out.hidden = false; $('dc-drop').hidden = true;
+    $('dc-reset').addEventListener('click', () => { out.hidden = true; $('dc-drop').hidden = false; (document.getElementById('dc-file') as HTMLInputElement).value = ''; window.scrollTo({ top: root.offsetTop - 80, behavior: 'smooth' }); });
+    out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    (window as any).va?.('event', { name: 'tool_use' });
+  }
+
+  function handleText(name: string, text: string) {
+    try { const rows = parseCSV(text); if (!rows.length || rows[0].length < 2 && rows.length < 2) throw new Error('x'); render(name, rows); }
+    catch { const e = $('dc-err'); e.textContent = S.err; e.hidden = false; }
+  }
+  function handleFile(f: File) {
+    const e = $('dc-err'); e.hidden = true;
+    if (f.size > 20 * 1024 * 1024) { e.textContent = S.big; e.hidden = false; return; }
+    const r = new FileReader(); r.onload = () => handleText(f.name, String(r.result || '')); r.onerror = () => { e.textContent = S.err; e.hidden = false; }; r.readAsText(f, 'utf-8');
+  }
+  ($('dc-file') as HTMLInputElement).addEventListener('change', (e) => { const f = (e.target as HTMLInputElement).files?.[0]; if (f) handleFile(f); });
+  const drop = $('dc-drop');
+  ['dragenter', 'dragover'].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.remove('over'); }));
+  drop.addEventListener('drop', (e) => { const f = (e as DragEvent).dataTransfer?.files?.[0]; if (f) handleFile(f); });
+
+  // ملف تجريبي فيه مشاكل متعمّدة (مكرر، فاضي، حالة أحرف مختلفة، قيمة شاذة)
+  $('dc-sample').addEventListener('click', () => {
+    const cities = ['Cairo', 'Alexandria', 'Riyadh', 'Jeddah', 'Mansoura', 'cairo ']; const prods = ['Starter', 'Business', 'Audit', 'Automation']; const lines = ['date,order_id,city,product,revenue,discount'];
+    let seed = 7; const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    for (let i = 0; i < 160; i++) {
+      const day = 1 + Math.floor((i / 160) * 150); const d = new Date(Date.UTC(2026, 0, day)); const ds = d.toISOString().slice(0, 10);
+      const price = [1500, 4000, 9000, 2500][Math.floor(rnd() * 4)] * (0.8 + rnd() * 0.5) * (1 + (i / 160) * 0.6);
+      lines.push(`${ds},${1000 + i},${cities[Math.floor(rnd() * cities.length)]},${prods[Math.floor(rnd() * prods.length)]},${i === 77 ? 480000 : price.toFixed(0)},${rnd() < 0.3 ? '' : (rnd() * 200).toFixed(0)}`);
+    }
+    lines.push(lines[20]); lines.push(lines[33]);
+    handleText('sample-sales.csv', lines.join('\n'));
+  });
+</script>
