@@ -7,7 +7,7 @@ export const CONFIG = {
   // رقم واتساب بالصيغة الدولية بدون + أو أصفار (مثال مصري: 201001234567)
   whatsapp: '201007527132',
   // مفتاح Web3Forms المجاني (من web3forms.com، بيوصلك الإيميل على الفورم)
-  web3formsKey: env.PUBLIC_WEB3FORMS_KEY || 'YOUR_WEB3FORMS_KEY',
+  web3formsKey: env.PUBLIC_WEB3FORMS_KEY || 'f7ed577e-6eee-4932-8713-ebf4cb3dcc32',
   // رابط الحجز المجاني (Cal.com أو Calendly)
   bookingUrl: env.PUBLIC_BOOKING_URL || 'https://cal.com/your-username/discovery',
   // رابط Google Apps Script (Web App) اللي بيسجّل أسئلة الشات في شيت مجاني. الفاضي = التسجيل مقفول. الشرح في docs/chat-log.md
@@ -36,7 +36,7 @@ export const CONFIG = {
   site: 'https://zeftawii-site-46vp.vercel.app',
 };
 
-export const hasKey = () => CONFIG.web3formsKey !== 'YOUR_WEB3FORMS_KEY';
+export const hasKey = () => CONFIG.web3formsKey !== 'YOUR_WEB3FORMS_KEY' && CONFIG.web3formsKey !== '';
 // لو لينك الحجز لسه placeholder بنخفي الزرار بدل ما يفتح 404
 export const hasBooking = () => !!CONFIG.bookingUrl && !CONFIG.bookingUrl.includes('your-username');
 
