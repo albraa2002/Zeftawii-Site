@@ -58,6 +58,7 @@ const onSvc = act('/services'), onWork = act('/projects', '/work', '/dashboards'
             <div><p class="mega-h">{L.tools}</p>{toolList.map((x) => <a class="mega-link" href={x.h}><span set:html={icon('tool', 18)}></span>{x.n}</a>)}</div>
             <div><p class="mega-h">{L.solutions}</p>{solutions.map((x) => <a class="mega-link" href={P(lang, `/solutions/${x.slug}/`)}><span set:html={icon(x.kind === 'store' ? 'store' : 'globe', 18)}></span>{x[lang].name}</a>)}</div>
             <div><p class="mega-h">{L.learn}</p>
+              <a class="mega-link" href={P(lang, '/find/')}><span set:html={icon('tool', 18)}></span><b>{ar ? 'أنهي خدمة تناسبني؟' : 'Which service fits me?'}</b></a>
               <a class="mega-link" href={P(lang, '/blog/')}><span set:html={icon('blog', 18)}></span>{L.blog}</a>
               <a class="mega-link" href={P(lang, '/glossary/')}><span set:html={icon('book', 18)}></span>{L.glossary}</a>
               <a class="mega-link" href={P(lang, '/resources/')}><span set:html={icon('download', 18)}></span>{L.res}</a>
