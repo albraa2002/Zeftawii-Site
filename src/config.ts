@@ -16,7 +16,7 @@ export const CONFIG = {
   // التتبع (اختياري، الفاضي = مش شغّال). GA4 مثال: 'G-XXXXXXXXXX' | Microsoft Clarity (heatmaps مجاني) مثال: 'abcd1234ef'
   // Vercel Web Analytics (مجاني على Hobby): شغّله من Vercel > Project > Analytics > Enable، وبعدها خلّي ده true
   vercelAnalytics: true,
-  ga4Id: env.PUBLIC_GA4_ID || '',
+  ga4Id: env.PUBLIC_GA4_ID || 'G-DZC2J11B4G',
   clarityId: env.PUBLIC_CLARITY_ID || '',
   // ضيف رابط كل حساب بين الفاصلتين. الفاضي بيتخفي تلقائياً من الفوتر.
   links: {
