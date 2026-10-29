@@ -225,3 +225,8 @@ button:focus-visible, summary:focus-visible, [role='button']:focus-visible, .car
 .fh-col li a:hover{color:var(--cyan)}
 .fh-all{margin-top:auto;color:var(--cyan);font-weight:700;font-size:.9rem;text-decoration:none}
 @media(max-width:900px){.fh-feat,.fh-cols{grid-template-columns:1fr}}
+
+/* header: separate Tools / Solutions / Learn menus */
+.mega .mega-list .mega-h{margin-top:.5rem}.mega .mega-list .mega-h:first-child{margin-top:0}
+.mega .mega-cols{gap:.4rem 1rem}
+@media(min-width:1081px){#mega-tools{max-width:min(92vw,640px)}}

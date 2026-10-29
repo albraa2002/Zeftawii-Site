@@ -21,7 +21,7 @@ const toolList = [...tools.map((x) => ({ n: x[lang].name, h: P(lang, `/tools/${x
 const arrow = ar ? '←' : '→';
 const cur = Astro.url.pathname.replace(/^\/en(?=\/|$)/, '') || '/';
 const act = (...pre: string[]) => (pre.some((x) => cur === x || cur.startsWith(x + '/')) ? ' on' : '');
-const onSvc = act('/services'), onWork = act('/projects', '/work', '/dashboards', '/demo'), onRes = act('/tools', '/solutions', '/blog', '/glossary', '/resources', '/faq', '/how-we-work'), onPrice = act('/pricing'), onAbout = act('/about', '/certificates');
+const onSvc = act('/services'), onWork = act('/projects', '/work', '/dashboards', '/demo'), onTools = act('/tools'), onSol = act('/solutions'), onLearn = act('/blog', '/glossary', '/resources', '/faq', '/how-we-work', '/find'), onPrice = act('/pricing'), onAbout = act('/about', '/certificates');
 ---
 <header class="nav" id="nav">
   <div class="wrap nav-in">
@@ -51,19 +51,37 @@ const onSvc = act('/services'), onWork = act('/projects', '/work', '/dashboards'
           </div>
         </div>
       </div>
-      <div class="mi wide">
-        <button type="button" class={`mi-btn${onRes}`} aria-current={onRes ? 'true' : undefined} aria-expanded="false" aria-controls="mega-res">{ar ? 'الموارد' : 'Resources'}<Fragment set:html={icon('chevron', 16)} /></button>
-        <div class="mega" id="mega-res" hidden>
-          <div class="mega-cols three">
-            <div><p class="mega-h">{L.tools}</p>{toolList.map((x) => <a class="mega-link" href={x.h}><span set:html={icon('tool', 18)}></span>{x.n}</a>)}</div>
-            <div><p class="mega-h">{L.solutions}</p>{solutions.map((x) => <a class="mega-link" href={P(lang, `/solutions/${x.slug}/`)}><span set:html={icon(x.kind === 'store' ? 'store' : 'globe', 18)}></span>{x[lang].name}</a>)}</div>
-            <div><p class="mega-h">{L.learn}</p>
-              <a class="mega-link" href={P(lang, '/find/')}><span set:html={icon('tool', 18)}></span><b>{ar ? 'أنهي خدمة تناسبني؟' : 'Which service fits me?'}</b></a>
-              <a class="mega-link" href={P(lang, '/blog/')}><span set:html={icon('blog', 18)}></span>{L.blog}</a>
-              <a class="mega-link" href={P(lang, '/glossary/')}><span set:html={icon('book', 18)}></span>{L.glossary}</a>
-              <a class="mega-link" href={P(lang, '/resources/')}><span set:html={icon('download', 18)}></span>{L.res}</a>
-              <a class="mega-link" href={P(lang, '/faq/')}><span set:html={icon('book', 18)}></span>{ar ? 'الأسئلة الشائعة' : 'FAQ'}</a>
-            </div>
+      <div class="mi">
+        <button type="button" class={`mi-btn${onTools}`} aria-current={onTools ? 'true' : undefined} aria-expanded="false" aria-controls="mega-tools">{L.tools}<Fragment set:html={icon('chevron', 16)} /></button>
+        <div class="mega narrow" id="mega-tools" hidden>
+          <div class="mega-cols">
+            <div>{toolList.slice(0, 5).map((x) => <a class="mega-link" href={x.h}><span set:html={icon('tool', 18)}></span>{x.n}</a>)}</div>
+            <div>{toolList.slice(5).map((x) => <a class="mega-link" href={x.h}><span set:html={icon('tool', 18)}></span>{x.n}</a>)}</div>
+          </div>
+          <a class="mega-foot" href={P(lang, '/tools/')}>{L.allTools} <i>{arrow}</i></a>
+        </div>
+      </div>
+      <div class="mi">
+        <button type="button" class={`mi-btn${onSol}`} aria-current={onSol ? 'true' : undefined} aria-expanded="false" aria-controls="mega-sol">{L.solutions}<Fragment set:html={icon('chevron', 16)} /></button>
+        <div class="mega narrow" id="mega-sol" hidden>
+          <div class="mega-list">
+            <p class="mega-h">{L.stores}</p>
+            {solutions.filter((x) => x.kind === 'store').map((x) => <a class="mega-link" href={P(lang, `/solutions/${x.slug}/`)}><span set:html={icon('store', 18)}></span>{x[lang].name}</a>)}
+            <p class="mega-h">{L.markets}</p>
+            {solutions.filter((x) => x.kind !== 'store').map((x) => <a class="mega-link" href={P(lang, `/solutions/${x.slug}/`)}><span set:html={icon('globe', 18)}></span>{x[lang].name}</a>)}
+          </div>
+          <a class="mega-foot" href={P(lang, '/solutions/')}>{L.allSol} <i>{arrow}</i></a>
+        </div>
+      </div>
+      <div class="mi">
+        <button type="button" class={`mi-btn${onLearn}`} aria-current={onLearn ? 'true' : undefined} aria-expanded="false" aria-controls="mega-learn">{L.learn}<Fragment set:html={icon('chevron', 16)} /></button>
+        <div class="mega narrow" id="mega-learn" hidden>
+          <div class="mega-list">
+            <a class="mega-link two" href={P(lang, '/find/')}><span set:html={icon('tool', 18)}></span><span><b>{ar ? 'أنهي خدمة تناسبني؟' : 'Which service fits me?'}</b><small>{ar ? 'اختبار في 4 أسئلة' : 'A 4-question quiz'}</small></span></a>
+            <a class="mega-link two" href={P(lang, '/blog/')}><span set:html={icon('blog', 18)}></span><span><b>{L.blog}</b><small>{ar ? 'شروحات من شغل فعلي' : 'Write-ups from real work'}</small></span></a>
+            <a class="mega-link two" href={P(lang, '/glossary/')}><span set:html={icon('book', 18)}></span><span><b>{L.glossary}</b><small>{ar ? 'المصطلحات بالمعادلة والمثال' : 'Terms with formula and example'}</small></span></a>
+            <a class="mega-link two" href={P(lang, '/resources/')}><span set:html={icon('download', 18)}></span><span><b>{L.res}</b><small>{ar ? 'قوالب جاهزة للتحميل' : 'Ready-to-download templates'}</small></span></a>
+            <a class="mega-link two" href={P(lang, '/faq/')}><span set:html={icon('book', 18)}></span><span><b>{ar ? 'الأسئلة الشائعة' : 'FAQ'}</b><small>{ar ? 'إجابات قبل ما تسأل' : 'Answers before you ask'}</small></span></a>
           </div>
         </div>
       </div>
