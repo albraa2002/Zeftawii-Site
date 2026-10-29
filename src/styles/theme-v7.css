@@ -205,3 +205,23 @@ button:focus-visible, summary:focus-visible, [role='button']:focus-visible, .car
 .fd-opt:hover,.fd-opt:focus-visible{border-color:var(--cyan);background:rgba(var(--c),.08);outline:none}
 .fd .cta-row{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1rem}
 @media(max-width:700px){.fd .cta-row .btn{width:100%;justify-content:center}}
+
+/* ===== home: free hub ===== */
+#free{padding-block:clamp(2.5rem,6vw,4.5rem)}
+.fh-feat{display:grid;grid-template-columns:1.4fr 1fr;gap:1rem;margin-bottom:1rem}
+.fh-hero{display:grid;grid-template-columns:auto 1fr;gap:.4rem 1rem;align-items:center;padding:1.4rem;border:1px solid var(--panel-b);border-radius:16px;background:var(--panel);color:var(--text);text-decoration:none;transition:border-color .2s,transform .2s}
+.fh-hero.main{background:linear-gradient(135deg,rgba(var(--c),.16),rgba(var(--c),.04));border-color:rgba(var(--c),.45)}
+.fh-hero:hover{border-color:var(--cyan);transform:translateY(-2px)}
+.fh-ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:rgba(var(--c),.15);color:var(--cyan)}
+.fh-tx{display:grid;gap:.25rem}.fh-tx b{font-size:1.1rem;line-height:1.35}.fh-tx small{color:var(--text-2);font-size:.9rem;line-height:1.55}
+.fh-go{grid-column:2;justify-self:start;margin-top:.4rem;color:var(--cyan);font-weight:700;font-size:.92rem}
+.fh-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.fh-col{padding:1.2rem;border:1px solid var(--panel-b);border-radius:16px;background:var(--panel);display:flex;flex-direction:column}
+.fh-h{display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem;color:var(--cyan)}
+.fh-h b{color:var(--text);font-size:1.02rem}
+.fh-h em{margin-inline-start:auto;font-style:normal;font-size:.78rem;padding:2px 9px;border-radius:999px;background:rgba(var(--c),.12);color:var(--cyan);white-space:nowrap}
+.fh-col ul{list-style:none;margin:0 0 .9rem;padding:0;display:grid;gap:.1rem}
+.fh-col li a{display:block;padding:.5rem .2rem;color:var(--text);text-decoration:none;font-size:.93rem;border-bottom:1px solid var(--panel-b)}
+.fh-col li a:hover{color:var(--cyan)}
+.fh-all{margin-top:auto;color:var(--cyan);font-weight:700;font-size:.9rem;text-decoration:none}
+@media(max-width:900px){.fh-feat,.fh-cols{grid-template-columns:1fr}}

@@ -21,6 +21,8 @@ import HeroBanners from './HeroBanners.astro';
 import { quotes } from '../content/testimonials';
 import { certCount } from '../content/certs';
 import { tools } from '../content/tools';
+import { glossary as glossaryAll } from '../content/glossary';
+import { solutions as solAll } from '../content/solutions';
 import { CONFIG, hasKey, hasBooking, hasLog } from '../config';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -58,16 +60,19 @@ const socials = Object.entries(CONFIG.links as Record<string, string>)
   .map(([k, url]) => ({ ...socialDefs[k], url }));
 const ar0 = lang === 'ar';
 const uq = UIX[lang];
-const quick = ar0 ? [
-  { i: 'tool', t: uq.tools, d: '6 حاسبات مجانية', h: PX(lang, '/tools/') },
-  { i: 'book', t: uq.glossary, d: '20 مصطلح بالشرح', h: PX(lang, '/glossary/') },
-  { i: 'store', t: uq.solutions, d: 'سلة · شوبيفاي · ووكومرس', h: PX(lang, '/solutions/') },
-  { i: 'blog', t: uq.blog, d: 'شروحات من شغل فعلي', h: PX(lang, '/blog/') },
+const hubN = { tools: tools.length, terms: glossaryAll.length, sols: solAll.length, posts: posts.length };
+const hubFeat = [
+  { h: PX(lang, '/tools/csv-data-check/'), i: 'chart', t: ar0 ? 'ارفع ملف CSV وشوف الصورة في ثواني' : 'Upload a CSV and see the picture in seconds', d: ar0 ? 'ملخص وجودة بيانات واتجاه وأعلى الفئات. الملف مبيتبعتش لأي سيرفر.' : 'Summary, data quality, trend and top categories. The file never leaves your browser.', b: ar0 ? 'جرّب الأداة' : 'Try the tool' },
+  { h: PX(lang, '/find/'), i: 'tool', t: ar0 ? 'أنهي خدمة تناسبني؟' : 'Which service fits me?', d: ar0 ? '4 أسئلة وتعرف تبدأ منين.' : '4 questions and you know where to start.', b: ar0 ? 'ابدأ الاختبار' : 'Start the quiz' },
+];
+const hubCols = ar0 ? [
+  { i: 'tool', t: 'أدوات مجانية', n: `${hubN.tools} أدوات`, h: PX(lang, '/tools/'), items: tools.slice(0, 5).map((x) => [x.ar.name, PX(lang, `/tools/${x.slug}/`)]) },
+  { i: 'store', t: 'حلول للمتاجر والأسواق', n: `${hubN.sols} حلول`, h: PX(lang, '/solutions/'), items: solAll.slice(0, 5).map((x) => [x.ar.name, PX(lang, `/solutions/${x.slug}/`)]) },
+  { i: 'book', t: 'تعلّم', n: `${hubN.posts} مقال و ${hubN.terms} مصطلح`, h: PX(lang, '/blog/'), items: [['المدونة', PX(lang, '/blog/')], ['قاموس المصطلحات', PX(lang, '/glossary/')], ['قوالب مجانية', PX(lang, '/resources/')], ['الأسئلة الشائعة', PX(lang, '/faq/')]] },
 ] : [
-  { i: 'tool', t: uq.tools, d: '6 free calculators', h: PX(lang, '/tools/') },
-  { i: 'book', t: uq.glossary, d: '20 terms explained', h: PX(lang, '/glossary/') },
-  { i: 'store', t: uq.solutions, d: 'Salla · Shopify · WooCommerce', h: PX(lang, '/solutions/') },
-  { i: 'blog', t: uq.blog, d: 'Write-ups from real work', h: PX(lang, '/blog/') },
+  { i: 'tool', t: 'Free tools', n: `${hubN.tools} tools`, h: PX(lang, '/tools/'), items: tools.slice(0, 5).map((x) => [x.en.name, PX(lang, `/tools/${x.slug}/`)]) },
+  { i: 'store', t: 'Store and market solutions', n: `${hubN.sols} solutions`, h: PX(lang, '/solutions/'), items: solAll.slice(0, 5).map((x) => [x.en.name, PX(lang, `/solutions/${x.slug}/`)]) },
+  { i: 'book', t: 'Learn', n: `${hubN.posts} articles, ${hubN.terms} terms`, h: PX(lang, '/blog/'), items: [['Blog', PX(lang, '/blog/')], ['Glossary', PX(lang, '/glossary/')], ['Free templates', PX(lang, '/resources/')], ['FAQ', PX(lang, '/faq/')]] },
 ];
 ---
 <a class="skip" href="#main">{t.skip}</a>
@@ -143,6 +148,30 @@ const quick = ar0 ? [
         </div>
       </div>
       <p class="work-more rv"><a class="btn btn-ghost" href={P(lang, '/projects/')}>{ar0 ? 'كل المشاريع' : 'All projects'}</a><a class="btn btn-ghost" href={P(lang, '/work/')}>{ar0 ? 'دراسات الحالة' : 'Case studies'}</a></p>
+    </div>
+  </section>
+
+  <section id="free">
+    <div class="wrap">
+      <div class="sec-head rv"><h2>{ar0 ? 'كل ده مجاني، جرّبه قبل ما تتواصل' : 'All of this is free. Try it before you get in touch'}</h2><p>{ar0 ? 'أدوات وحلول ومحتوى بنيتهم من شغل فعلي. مفيش تسجيل ومفيش بطاقة.' : 'Tools, solutions and content built from real work. No sign-up and no card.'}</p></div>
+      <div class="fh-feat rv">
+        {hubFeat.map((x, i) => (
+          <a class={`fh-hero${i === 0 ? ' main' : ''}`} href={x.h} data-evt="cta_click" data-loc="home_free">
+            <span class="fh-ic" set:html={icon(x.i, 26)}></span>
+            <span class="fh-tx"><b>{x.t}</b><small>{x.d}</small></span>
+            <span class="fh-go">{x.b}</span>
+          </a>
+        ))}
+      </div>
+      <div class="fh-cols rv">
+        {hubCols.map((c) => (
+          <div class="fh-col">
+            <div class="fh-h"><span set:html={icon(c.i, 20)}></span><b>{c.t}</b><em>{c.n}</em></div>
+            <ul>{c.items.map((it) => (<li><a href={it[1]}>{it[0]}</a></li>))}</ul>
+            <a class="fh-all" href={c.h}>{ar0 ? 'شوف الكل' : 'See all'}</a>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
